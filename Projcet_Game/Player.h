@@ -43,10 +43,9 @@ class Player
 
 
 	sf::Clock clock;
-
 	sf::Sprite hero;
 	sf::Event ev;
-
+	int i = 0;
 
 
 	bool leftFLAG = false;
@@ -71,7 +70,6 @@ public:
 
 
 	//public functions----------------------------------
-
 	void animateBreath();
 	void animateWalk();
 	void animateAttackMele();
