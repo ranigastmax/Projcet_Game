@@ -40,7 +40,7 @@ class Player
 	std::vector<sf::IntRect> distanceAttackLEFT;
 	std::vector<sf::IntRect> death;
 	// #endregion 
-
+//witam
 
 	sf::Clock clock;
 	sf::Sprite hero;
