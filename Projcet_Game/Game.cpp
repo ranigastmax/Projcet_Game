@@ -8,6 +8,7 @@ void Game::initializeViriables()
 {
 	this->window = nullptr;
 	this->player = new Player;
+	this->p1 = new Button(200,200,"textures/button.png", "textures/button2.png", "textures/button1.png",5,5);
 }
 void Game::initializeWindow()
 {
@@ -16,6 +17,9 @@ void Game::initializeWindow()
 
 	this->window = new sf::RenderWindow(this->videoMode, "projekt");
 	this->window->setFramerateLimit(90);
+
+
+
 }
 
 
@@ -25,6 +29,7 @@ Game::Game()
 	this->initializeViriables();
 	this->initializeWindow();
 
+
 }
 
 
@@ -32,6 +37,7 @@ Game::~Game()
 {
 	delete this->window;
 	delete this->player;
+	delete this->p1;
 }
 
 
@@ -74,7 +80,15 @@ void Game::render()
 	this->window->clear();
 	//-----------------------------
 
+	if (p1->isClicked())
+	{
 	this->player->render(*this->window);
+	}
+	else
+	{
+	this->p1->render(*this->window);
+	}
+
 	this->window->display();
 }
 
@@ -82,6 +96,7 @@ void Game::update()
 {
 	//there is game
 
+	this->p1->isMouseOver(*this->window);
 	this->updateEvents();
 
 

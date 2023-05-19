@@ -5,6 +5,7 @@
 #include<vector>
 #include<SFML/Graphics.hpp>
 #include"Player.h"
+#include"Button.h"
 class Game
 {
 	//class that act as game engine
@@ -15,6 +16,9 @@ class Game
 	sf::VideoMode videoMode;
 	sf::Event ev;
 	Player* player;
+	Button* p1;
+	sf::Mouse mouse;
+
 
 
 
@@ -38,6 +42,7 @@ public:
 	void updateEvents();
 	void render();
 	void update();
+
 
 };
 
