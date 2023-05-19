@@ -34,6 +34,7 @@ Player::Player()
     this->loadTexture("textures/death_right_40x40.png", death_texture);
     //end of loadnig all textures
     this->hero.setTexture(walk_down_texture);
+    this->hero.setTextureRect(sf::IntRect(9, 9, 19, 24));
     this->hero.setPosition(300, 400);
     this->hero.setScale(2.f, 2.f);
     this->initIntRect();
@@ -96,6 +97,7 @@ void Player::animateWalk()
                 i++;
         }
     }
+
 
     //walk right
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
