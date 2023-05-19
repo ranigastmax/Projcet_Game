@@ -12,7 +12,7 @@ void Player::loadTexture(std::string path, sf::Texture& textureName)
     if (!textureName.loadFromFile(path)) {
         std::cerr << "Could not load texture" << std::endl;
     }
-    
+
 }
 
 Player::Player()
@@ -33,7 +33,7 @@ Player::Player()
     this->loadTexture("textures/attack_left_40x40.png", attack_distance_left_texture);
     this->loadTexture("textures/death_right_40x40.png", death_texture);
     //end of loadnig all textures
-    this->hero.setTexture(walk_down_texture);
+    this->hero.setTexture(breath_texture);
     this->hero.setTextureRect(sf::IntRect(9, 9, 19, 24));
     this->hero.setPosition(300, 400);
     this->hero.setScale(2.f, 2.f);
@@ -61,7 +61,8 @@ void Player::render(sf::RenderTarget& target)
 
 void Player::update()
 {
-
+    animateBreath();
+    playerMove();
 
 }
 
@@ -70,76 +71,87 @@ void Player::update()
 void Player::animateBreath()
 {
     //breath
-    if (clock.getElapsedTime().asSeconds() > 1)
-    {
-        this->hero.setTexture(breath_texture);
-    }
-
+        if (clock.getElapsedTime().asSeconds() > 0.6)
+        {
+            //this->hero.setTexture(breath_texture);
+            if (this->i == 3) { this->i = 0; }
+            this->hero.setTextureRect(breath[i]);
+            i++;
+            clock.restart();
+        }
+  
 
 }
 
 void Player::animateWalk()
 {
-    //walk left
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    {
+        //walk left
 
-        this->hero.setTexture(walk_left_texture);
-        std::cout << "ustawiam texture w lewo" << std::endl;
-        leftFLAG = true;
-        rightFLAG = false;
-        downFLAG = false;
-        upFLAG = false;
-        if ((leftFLAG)&&(clock.getElapsedTime().asSeconds()>0.5))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
-            if (this->i == 6) { this->i = 0; }
-            this->hero.setTextureRect(walkLeft[i]);
+
+            this->hero.setTexture(walk_left_texture);
+            std::cout << "ustawiam texture w lewo" << std::endl;
+            leftFLAG = true;
+            rightFLAG = false;
+            downFLAG = false;
+            upFLAG = false;
+
+            if ((leftFLAG) && (clock.getElapsedTime().asSeconds() > 0.3))
+            {
+                if (this->i == 6) { this->i = 0; }
+                this->hero.setTextureRect(walkLeft[i]);
                 i++;
+                clock.restart();
+            }
         }
-    }
 
-
-    //walk right
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    {
-        this->hero.setTexture(walk_right_texture);
-        std::cout << "ustawiam texture w prawo" << std::endl;
-        rightFLAG = true;
-        leftFLAG = false;
-        downFLAG = false;
-        upFLAG = false;
-        if ((rightFLAG) && (clock.getElapsedTime().asSeconds() > 0.5))
+        //walk right
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
-            if (this->i == 6) { this->i = 0; }
-            this->hero.setTextureRect(walkRight[i]);
-            i++;
+            this->hero.setTexture(walk_right_texture);
+            std::cout << "ustawiam texture w prawo" << std::endl;
+            rightFLAG = true;
+            leftFLAG = false;
+            downFLAG = false;
+            upFLAG = false;
+                std::cout << clock.getElapsedTime().asSeconds() << std::endl;
+               std::cout << i << std::endl;
+            if ((rightFLAG) && (clock.getElapsedTime().asSeconds() > 0.3))
+            {
+                if (this->i == 6) { this->i = 0; }
+                this->hero.setTextureRect(walkRight[i]);
+                i++;
+                clock.restart();
+            }
         }
-    }
+        else { rightFLAG = false; }
 
-    //walk down-left-rigt
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-    {
-        this->hero.setTexture(walk_down_texture);
-        std::cout << "ustawiam texture w dol" << std::endl;
-        downFLAG = true;
-        leftFLAG = false;
-        rightFLAG = false;
-        upFLAG = false;
-       
-    }
 
-    //walk up-left right
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    {
-        this->hero.setTexture(walk_up_texture);
-        std::cout << "ustawiam texture w gore" << std::endl;
+        //walk down-left-rigt
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        {
+            this->hero.setTexture(walk_down_texture);
+            std::cout << "ustawiam texture w dol" << std::endl;
+            downFLAG = true;
+            leftFLAG = false;
+            rightFLAG = false;
+            upFLAG = false;
+        }
 
-        upFLAG = true;
-        downFLAG = false;
-        leftFLAG = false;
-        rightFLAG = false;
-       
-    }
+        //walk up-left right
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        {
+            this->hero.setTexture(walk_up_texture);
+            std::cout << "ustawiam texture w gore" << std::endl;
+
+            upFLAG = true;
+            downFLAG = false;
+            leftFLAG = false;
+            rightFLAG = false;
+        }
+
+
 
 }
 
@@ -200,6 +212,16 @@ void Player::animateAttackDistance()
 void Player::animateDeath()
 {
     this->hero.setTexture(death_texture);
+}
+
+void Player::playerMove()
+{
+    //if (upFLAG) { this->hero_speedY = -1; }
+    //if (downFLAG) { this->hero_speedY = 1; }
+    //if (leftFLAG) { this->hero_speedX = -1; }
+    //if (rightFLAG) { this->hero_speedX = 1; }
+
+    this->hero.move(hero_speedX, hero_speedY);
 }
 
 void Player::initIntRect()
@@ -325,3 +347,4 @@ void Player::initIntRect()
 
 
 }
+

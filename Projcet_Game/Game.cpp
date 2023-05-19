@@ -80,14 +80,16 @@ void Game::render()
 	this->window->clear();
 	//-----------------------------
 
-	if (p1->isClicked())
-	{
+	//if (p1->isClicked())
+	//{
+	//this->player->render(*this->window);
+	//}
+	//else
+	//{
+	//this->p1->render(*this->window);
+	//}
 	this->player->render(*this->window);
-	}
-	else
-	{
 	this->p1->render(*this->window);
-	}
 
 	this->window->display();
 }
@@ -95,7 +97,7 @@ void Game::render()
 void Game::update()
 {
 	//there is game
-
+	this->player->update();
 	this->p1->isMouseOver(*this->window);
 	this->updateEvents();
 

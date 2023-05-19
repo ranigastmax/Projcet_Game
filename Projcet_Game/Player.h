@@ -40,7 +40,7 @@ class Player
 	std::vector<sf::IntRect> distanceAttackLEFT;
 	std::vector<sf::IntRect> death;
 	// #endregion 
-//witam
+
 
 	sf::Clock clock;
 	sf::Sprite hero;
@@ -52,7 +52,9 @@ class Player
 	bool rightFLAG = false;
 	bool downFLAG = false;
 	bool upFLAG = false;
-	float hero_speed;
+	float hero_speedX = 0;
+	float hero_speedY = 0;
+	
 
 	void initPlayer();
 
@@ -76,5 +78,6 @@ public:
 	void animateAttackDistance();
 	void animateDeath();
 	void initIntRect();
+	void playerMove();
 };
 
