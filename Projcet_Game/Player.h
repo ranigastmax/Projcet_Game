@@ -77,6 +77,6 @@ public:
 	void animateAttackDistance();
 	void animateDeath();
 	void initIntRect();
-	void playerMove();
+	
 };
 

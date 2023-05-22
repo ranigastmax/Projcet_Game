@@ -61,8 +61,7 @@ void Player::render(sf::RenderTarget& target)
 
 void Player::update()
 {
-    playerMove();
-
+    this->hero.move(hero_speedX, hero_speedY);
 }
 
 
@@ -70,8 +69,6 @@ void Player::update()
 void Player::animateBreath()
 {
     //breath
-
-
         if (clock.getElapsedTime().asSeconds() > 0.6)
         {
             this->hero.setTexture(breath_texture);
@@ -80,8 +77,6 @@ void Player::animateBreath()
             i++;
             clock.restart();
         }
-        
-            std::cout << "gowno" << std::endl;
         this->hero_speedX = 0;
         this->hero_speedY = 0;
         this->leftFLAG = false;
@@ -98,7 +93,8 @@ void Player::animateWalk()
         {
 
             this->hero.setTexture(walk_left_texture);
-            std::cout << "ustawiam texture w lewo" << std::endl;
+            this->hero_speedX = -1;
+            //std::cout << "ustawiam texture w lewo" << std::endl;
             leftFLAG = true;
             rightFLAG = false;
             downFLAG = false;
@@ -106,8 +102,7 @@ void Player::animateWalk()
 
             if ((leftFLAG) && (clock.getElapsedTime().asSeconds() > 0.3))
             {
-                if (this->i == 6) { this->i = 0; }
-                std::cout << i << std::endl;
+                if (this->i >= 6) { this->i = 0; }
                 this->hero.setTextureRect(walkLeft[i]);
                 i++;
                 clock.restart();
@@ -118,7 +113,8 @@ void Player::animateWalk()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
             this->hero.setTexture(walk_right_texture);
-            std::cout << "ustawiam texture w prawo" << std::endl;
+            this->hero_speedX = 1;
+            //std::cout << "ustawiam texture w prawo" << std::endl;
             rightFLAG = true;
             leftFLAG = false;
             downFLAG = false;
@@ -126,8 +122,7 @@ void Player::animateWalk()
 
             if ((rightFLAG) && (clock.getElapsedTime().asSeconds() > 0.3))
             {
-                if (this->i == 6) { this->i = 0; }
-                std::cout << i << std::endl;
+                if (this->i >= 6) { this->i = 0; }
                 this->hero.setTextureRect(walkRight[i]);
                 i++;
                 clock.restart();
@@ -138,7 +133,8 @@ void Player::animateWalk()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
             this->hero.setTexture(walk_down_texture);
-            std::cout << "ustawiam texture w dol" << std::endl;
+            this->hero_speedY = 1;
+            //std::cout << "ustawiam texture w dol" << std::endl;
             downFLAG = true;
             leftFLAG = false;
             rightFLAG = false;
@@ -146,7 +142,7 @@ void Player::animateWalk()
 
             if (downFLAG && clock.getElapsedTime().asSeconds() > 0.3)
             {
-                if (this->i == 6) { this->i = 0; }
+                if (this->i >= 6) { this->i = 0; }
                 this->hero.setTextureRect(walkDown[i]);
                 i++;
                 clock.restart();
@@ -157,7 +153,8 @@ void Player::animateWalk()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
             this->hero.setTexture(walk_up_texture);
-            std::cout << "ustawiam texture w gore" << std::endl;
+            this->hero_speedY = -1;
+           // std::cout << "ustawiam texture w gore" << std::endl;
 
             upFLAG = true;
             downFLAG = false;
@@ -166,18 +163,12 @@ void Player::animateWalk()
 
             if (upFLAG && clock.getElapsedTime().asSeconds() > 0.3)
             {
-                if (this->i == 6) { this->i = 0; }
+                if (this->i >= 6) { this->i = 0; }
                 this->hero.setTextureRect(walkUp[i]);
                 i++;
                 clock.restart();
             }
         }
-
-
-
-   
-
-
 }
 
 void Player::animateAttackMele()
@@ -239,19 +230,6 @@ void Player::animateDeath()
     this->hero.setTexture(death_texture);
 }
 
-void Player::playerMove()
-{
-
-
-    if (upFLAG) { this->hero_speedY = -1; }
-    if (downFLAG) { this->hero_speedY = 1; }
-    if (leftFLAG) { this->hero_speedX = -1; }
-    if (rightFLAG) { this->hero_speedX = 1; }
-
-
-    std::cout << hero_speedX << std::endl;
-    this->hero.move(hero_speedX, hero_speedY);
-}
 
 void Player::initIntRect()
 {

@@ -29,7 +29,6 @@ void Button::isMouseOver(sf::RenderWindow& window)
 
 void Button::click()
 {
-	this->buttonSprite.setTexture(buttonTextureClicked);
 	clicked = true;
 }
 
