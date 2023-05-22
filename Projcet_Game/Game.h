@@ -6,6 +6,7 @@
 #include<SFML/Graphics.hpp>
 #include"Player.h"
 #include"Button.h"
+#include"Characters.h"
 class Game
 {
 	//class that act as game engine
