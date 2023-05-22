@@ -20,12 +20,17 @@ void Button::isMouseOver(sf::RenderWindow& window)
 		this->buttonSprite.setTexture(buttonTextureMouseIsOver);
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			clicked = true;
 			this->buttonSprite.setTexture(buttonTextureClicked);
 		}
 	}
 	else { this->buttonSprite.setTexture(buttonTextureNotClicked); }
 
+}
+
+void Button::click()
+{
+	this->buttonSprite.setTexture(buttonTextureClicked);
+	clicked = true;
 }
 
 sf::Sprite &Button::getSprite()

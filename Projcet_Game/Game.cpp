@@ -44,6 +44,7 @@ Game::~Game()
 
 const bool Game::running() const
 {
+
 	return this->window->isOpen();
 }
 //public
@@ -68,6 +69,9 @@ void Game::updateEvents()
 		case sf::Event::MouseButtonPressed:
 			this->player->animateAttackMele();
 			break;
+		case sf::Event::MouseButtonReleased:
+			this->p1->click();
+			break;
 		}
 		
 	}
@@ -80,16 +84,16 @@ void Game::render()
 	this->window->clear();
 	//-----------------------------
 
-	//if (p1->isClicked())
-	//{
-	//this->player->render(*this->window);
-	//}
-	//else
-	//{
-	//this->p1->render(*this->window);
-	//}
+	if (p1->isClicked())
+	{
 	this->player->render(*this->window);
+	}
+	else
+	{
 	this->p1->render(*this->window);
+	}
+	//this->player->render(*this->window);
+	//this->p1->render(*this->window);
 
 	this->window->display();
 }

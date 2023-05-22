@@ -1,7 +1,4 @@
 #pragma once
-
-
-#pragma once
 #include<SFML/Window.hpp>
 #include<iostream>
 #include<vector>
@@ -52,6 +49,8 @@ class Player
 	bool rightFLAG = false;
 	bool downFLAG = false;
 	bool upFLAG = false;
+	bool walkFLAG = false;
+	bool breathFLAG = false;
 	float hero_speedX = 0;
 	float hero_speedY = 0;
 	

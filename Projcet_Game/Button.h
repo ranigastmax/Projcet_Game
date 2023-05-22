@@ -10,6 +10,7 @@ public:
 	sf::Sprite& getSprite();
 	void render(sf::RenderTarget& target);
 	bool isClicked();
+	void click();
 
 	
 

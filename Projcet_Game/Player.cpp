@@ -61,7 +61,6 @@ void Player::render(sf::RenderTarget& target)
 
 void Player::update()
 {
-    animateBreath();
     playerMove();
 
 }
@@ -71,22 +70,30 @@ void Player::update()
 void Player::animateBreath()
 {
     //breath
+
+
         if (clock.getElapsedTime().asSeconds() > 0.6)
         {
-            //this->hero.setTexture(breath_texture);
-            if (this->i == 3) { this->i = 0; }
+            this->hero.setTexture(breath_texture);
+            if (this->i >= 4) { this->i = 0; }
             this->hero.setTextureRect(breath[i]);
             i++;
             clock.restart();
         }
-  
-
+        
+            std::cout << "gowno" << std::endl;
+        this->hero_speedX = 0;
+        this->hero_speedY = 0;
+        this->leftFLAG = false;
+        this->rightFLAG = false;
+        this->downFLAG = false;
+        this->upFLAG = false;
+        
 }
 
 void Player::animateWalk()
 {
-        //walk left
-
+       //walk left
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
 
@@ -100,6 +107,7 @@ void Player::animateWalk()
             if ((leftFLAG) && (clock.getElapsedTime().asSeconds() > 0.3))
             {
                 if (this->i == 6) { this->i = 0; }
+                std::cout << i << std::endl;
                 this->hero.setTextureRect(walkLeft[i]);
                 i++;
                 clock.restart();
@@ -115,18 +123,16 @@ void Player::animateWalk()
             leftFLAG = false;
             downFLAG = false;
             upFLAG = false;
-                std::cout << clock.getElapsedTime().asSeconds() << std::endl;
-               std::cout << i << std::endl;
+
             if ((rightFLAG) && (clock.getElapsedTime().asSeconds() > 0.3))
             {
                 if (this->i == 6) { this->i = 0; }
+                std::cout << i << std::endl;
                 this->hero.setTextureRect(walkRight[i]);
                 i++;
                 clock.restart();
             }
         }
-        else { rightFLAG = false; }
-
 
         //walk down-left-rigt
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
@@ -137,6 +143,14 @@ void Player::animateWalk()
             leftFLAG = false;
             rightFLAG = false;
             upFLAG = false;
+
+            if (downFLAG && clock.getElapsedTime().asSeconds() > 0.3)
+            {
+                if (this->i == 6) { this->i = 0; }
+                this->hero.setTextureRect(walkDown[i]);
+                i++;
+                clock.restart();
+            }
         }
 
         //walk up-left right
@@ -149,8 +163,19 @@ void Player::animateWalk()
             downFLAG = false;
             leftFLAG = false;
             rightFLAG = false;
+
+            if (upFLAG && clock.getElapsedTime().asSeconds() > 0.3)
+            {
+                if (this->i == 6) { this->i = 0; }
+                this->hero.setTextureRect(walkUp[i]);
+                i++;
+                clock.restart();
+            }
         }
 
+
+
+   
 
 
 }
@@ -216,11 +241,15 @@ void Player::animateDeath()
 
 void Player::playerMove()
 {
-    //if (upFLAG) { this->hero_speedY = -1; }
-    //if (downFLAG) { this->hero_speedY = 1; }
-    //if (leftFLAG) { this->hero_speedX = -1; }
-    //if (rightFLAG) { this->hero_speedX = 1; }
 
+
+    if (upFLAG) { this->hero_speedY = -1; }
+    if (downFLAG) { this->hero_speedY = 1; }
+    if (leftFLAG) { this->hero_speedX = -1; }
+    if (rightFLAG) { this->hero_speedX = 1; }
+
+
+    std::cout << hero_speedX << std::endl;
     this->hero.move(hero_speedX, hero_speedY);
 }
 
