@@ -7,13 +7,11 @@
 
 class Player : public Characters
 {
-	
-	
-	
 
 	void initcharacters();
-
 	void initIntRect();
+
+	int x, y;
 
 public:
 
@@ -24,6 +22,13 @@ public:
 
 
 	//public functions----------------------------------
+	void move();
+	void animateWalk();
+	void animateAttackMele();
+	void animateAttackDistance();
+	void animateDeath();
 	
+	void releasedAD();
+	void releasedWS();
 };
 

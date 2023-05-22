@@ -28,8 +28,8 @@ Game::Game()
 
 	this->initializeViriables();
 	this->initializeWindow();
-
-
+	this->x_player = 0;
+	this->y_player = 0;
 }
 
 
@@ -39,7 +39,6 @@ Game::~Game()
 	delete this->player;
 	delete this->p1;
 }
-
 
 
 const bool Game::running() const
@@ -61,10 +60,18 @@ void Game::updateEvents()
 			this->window->close();
 			break;
 		case sf::Event::KeyPressed:
+			this->player->move();
 			this->player->animateWalk();
 			break;
 		case sf::Event::KeyReleased:
-			this->player->animateBreath();
+			if ((ev.key.code == sf::Keyboard::W) || (ev.key.code == sf::Keyboard::S))
+			{
+				this->player->releasedWS();
+			}
+			if ((ev.key.code == sf::Keyboard::A) || (ev.key.code == sf::Keyboard::D))
+			{
+				this->player->releasedAD();
+			}
 			break;
 		case sf::Event::MouseButtonPressed:
 			this->player->animateAttackMele();

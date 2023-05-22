@@ -33,7 +33,6 @@ Player::Player()
     this->hero.setScale(2.f, 2.f);
     this->initIntRect();
 }
-
 Player::~Player()
 {
 }
@@ -55,7 +54,7 @@ void Player::initIntRect()
     this->walkRight.emplace_back(211,9,17,23);
 
     //walk down
-    this->walkDown.emplace_back(9,18,19,24);
+    this->walkDown.emplace_back(9,8,19,24);
     this->walkDown.emplace_back(49,8,19,24);
     this->walkDown.emplace_back(90,9,18,23);
     this->walkDown.emplace_back(131,8,17,24);
@@ -155,9 +154,137 @@ void Player::initIntRect()
     this->death.emplace_back(252,20,15,20);
     this->death.emplace_back(253,18,15,22);
     this->death.emplace_back(333,18,15,22);
-
-
-
-
+}
+void Player::move()
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    {
+        this->x = - 2;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    {
+        this->x = 2;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    {
+        this->y = 2;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    {
+        this->y = -2;
+    }
+    this->hero.move(x, y);
+}
+void Player::animateWalk()
+{
+        if (this->x < 0)
+        {
+            this->hero.setTexture(walk_left_texture);      
+        }
+        if (this->x > 0)
+        {
+            this->hero.setTexture(walk_right_texture);
+        }
+        if (this->y < 0)
+        {
+            this->hero.setTexture(walk_up_texture);       
+        }
+        if (this->y > 0)
+        {
+            this->hero.setTexture(walk_down_texture);    
+        }
+        if ((this->x < 0) && (clock.getElapsedTime().asSeconds() > 0.2))
+        {
+            if (this->i >= 6) { this->i = 0; }
+            this->hero.setTextureRect(walkLeft[i]);
+            i++;
+            clock.restart();
+        }
+        if ((this->x < 0) && (clock.getElapsedTime().asSeconds() > 0.2))
+        {
+            if (this->i >= 6) { this->i = 0; }
+            this->hero.setTextureRect(walkRight[i]);
+            i++;
+            clock.restart();
+        }
+        if ((this->y < 0) && (clock.getElapsedTime().asSeconds() > 0.2))
+        {
+            if (this->i >= 6) { this->i = 0; }
+            this->hero.setTextureRect(walkDown[i]);
+            i++;
+            clock.restart();
+        }
+        if ((this->y > 0) && (clock.getElapsedTime().asSeconds() > 0.2))
+        {
+            if (this->i >= 6) { this->i = 0; }
+            this->hero.setTextureRect(walkUp[i]);
+            i++;
+            clock.restart();
+        }
+        
 }
 
+    void Player::animateAttackMele()
+    {
+        //attack left
+        if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (leftFLAG))
+        {
+            std::cout << "ustawiam texture na atak w lewo" << std::endl;
+            this->hero.setTexture(attack_mele_left_texture);
+
+        }
+
+        //attack right
+        if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (rightFLAG))
+        {
+            std::cout << "ustawiam texture na atak w prawo" << std::endl;
+            this->hero.setTexture(attack_mele_right_texture);
+        }
+
+        //attack down-left-rigt
+        if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (downFLAG))
+        {
+            std::cout << "ustawiam texture na atak w dol" << std::endl;
+            this->hero.setTexture(attack_mele_down_texture);
+
+        }
+
+        //attack up-left-rigt
+        if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (upFLAG))
+        {
+            std::cout << "ustawiam texture na atak w gore" << std::endl;
+            this->hero.setTexture(attack_mele_up_texture);
+        }
+
+    }
+
+    void Player::animateAttackDistance()
+    {
+        //attack left
+        this->hero.setTexture(attack_distance_left_texture);
+
+
+        //attack right
+        this->hero.setTexture(attack_distance_right_texture);
+
+
+        //attack down-left-rigt
+        this->hero.setTexture(attack_distance_down_texture);
+
+
+        //attack up-left-rigt
+        this->hero.setTexture(attack_distance_up_texture);
+
+    }
+    void Player::animateDeath()
+    {
+        this->hero.setTexture(death_texture);
+    }
+    void Player::releasedAD()
+    {
+        this->x = 0;
+    }
+    void Player::releasedWS()
+    {
+        this->y = 0;
+    }

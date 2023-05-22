@@ -70,10 +70,10 @@ public:
 
 		//public functions----------------------------------
 	void animateBreath();
-	void animateWalk();
-	void animateAttackMele();
-	void animateAttackDistance();
-	void animateDeath();
+	virtual void animateWalk()=0;
+	virtual void animateAttackMele()=0;
+	virtual void animateAttackDistance()=0;
+	virtual void animateDeath()=0;
 
 	
 };

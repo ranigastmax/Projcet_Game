@@ -20,7 +20,7 @@ class Game
 	Button* p1;
 	sf::Mouse mouse;
 
-
+	int x_player, y_player;
 
 
 
