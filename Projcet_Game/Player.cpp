@@ -211,19 +211,19 @@ void Player::update()
 }
 void Player::move()
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)&&!movingRight)
     {
         movingLeft = true;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)&&!movingLeft)
     {
         movingRight = true;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)&&!movingUp)
     {
         movingDown = true;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)&&!movingDown)
     {
         movingUp = true;
     }
@@ -276,35 +276,36 @@ void Player::animateWalk()
 }
     void Player::animateAttackMele()
     {
-        
         //attack left
-        if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (movingLeft))
+        if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (hero.getTexture() == &walk_left_texture) || (hero.getTexture() == &attack_mele_left_texture))
         {
             std::cout << "ustawiam texture na atak w lewo" << std::endl;
             this->hero.setTexture(attack_mele_left_texture);
-            this->atack = true;
+            this->attack = true;
         }
 
         //attack right
-        if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (rightFLAG))
+        if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (hero.getTexture() == &walk_right_texture) || (hero.getTexture() == &attack_mele_right_texture))
         {
             std::cout << "ustawiam texture na atak w prawo" << std::endl;
             this->hero.setTexture(attack_mele_right_texture);
+            this->attack = true;
         }
 
         //attack down-left-rigt
-        if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (downFLAG))
+        if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (hero.getTexture() == &walk_down_texture) || (hero.getTexture() == &attack_mele_down_texture))
         {
             std::cout << "ustawiam texture na atak w dol" << std::endl;
             this->hero.setTexture(attack_mele_down_texture);
-
+            this->attack = true;
         }
 
         //attack up-left-rigt
-        if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (upFLAG))
+        if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (hero.getTexture() == &walk_up_texture) || (hero.getTexture() == &attack_mele_up_texture))
         {
             std::cout << "ustawiam texture na atak w gore" << std::endl;
             this->hero.setTexture(attack_mele_up_texture);
+            this->attack = true;
         }
 
     }
@@ -343,16 +344,19 @@ void Player::animateWalk()
 
     void Player::animationattack()
     {
-        if (atack)
+
+        if (attack)
         {
             
-            if (clock.getElapsedTime().asSeconds() > 0.2)
+            if (clock.getElapsedTime().asSeconds() > 0.07)
             {
-                if (this->j >= 6) { this->j = 0; atack = false; }
+                if (this->j > 6) { this->j = 0; attack = false; }
                 this->hero.setTextureRect(meleAttackLEFT[this->j]);
                 this->j++;
+
                 clock.restart();
             }
            
         }
+
     }

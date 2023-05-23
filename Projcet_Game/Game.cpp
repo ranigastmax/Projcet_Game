@@ -106,7 +106,7 @@ void Game::render()
 	}
 	else
 	{
-	//this->background->backgroundMove(*this->window);
+	this->background->backgroundMove(*this->window);
 	this->p1->render(*this->window);
 	}
 	//this->player->render(*this->window);

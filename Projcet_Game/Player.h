@@ -16,7 +16,7 @@ class Player : public Characters
 	bool movingRight;
 	bool movingUp;
 	bool movingDown;
-	bool atack;
+	bool attack;
 	int j = 0;
 public:
 
