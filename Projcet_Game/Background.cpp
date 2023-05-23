@@ -26,4 +26,14 @@ void Background::render(sf::RenderTarget& target)
     target.draw(this->map);
 }
 
+void Background::backgroundMove(sf::RenderTarget& target)
+{
+    sf::Vector2f mapPos = map.getPosition();
+    int mapWidth = map.getTexture()->getSize().x;
+    this->map_texture.setRepeated(true);
+    this->map.move(backgroundAnimationSpeed * 0.25, 0);
+    if (mapPos.x >= 0) map.setPosition(-mapWidth, mapPos.y);
+    target.draw(this->map);
+}
+
 

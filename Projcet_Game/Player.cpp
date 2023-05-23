@@ -250,6 +250,7 @@ void Player::animateWalk()
         {
             if (this->i >= 6) { this->i = 0; }
             this->hero.setTextureRect(walkLeft[i]);
+            std::cout << i << std::endl;
             i++;
             clock.restart();
         }
@@ -257,6 +258,7 @@ void Player::animateWalk()
         {
             if (this->i >= 6) { this->i = 0; }
             this->hero.setTextureRect(walkRight[i]);
+            std::cout << i << std::endl;
             i++;
             clock.restart();
         }
@@ -279,10 +281,13 @@ void Player::animateWalk()
     void Player::animateAttackMele()
     {
         //attack left
-        if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (leftFLAG))
+        if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (movingLeft))
         {
             std::cout << "ustawiam texture na atak w lewo" << std::endl;
             this->hero.setTexture(attack_mele_left_texture);
+
+
+
 
         }
 
