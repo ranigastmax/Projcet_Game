@@ -285,10 +285,11 @@ void Player::animateWalk()
         {
             std::cout << "ustawiam texture na atak w lewo" << std::endl;
             this->hero.setTexture(attack_mele_left_texture);
-
-
-
-
+            this->atack = true;
+            if (this->j >= 7) { this->j = 0; }
+            this->hero.setTextureRect(meleAttackLEFT[j]);
+            j++;
+            clock.restart();
         }
 
         //attack right
@@ -345,4 +346,15 @@ void Player::animateWalk()
     {
         movingUp = false;
         movingDown = false;
+    }
+
+    void Player::animationattack()
+    {
+        if (atack)
+        {
+            if (this->j >= 7) { this->j = 0; }
+            this->hero.setTextureRect(meleAttackLEFT[j]);
+            j++;
+           
+        }
     }

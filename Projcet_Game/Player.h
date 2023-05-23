@@ -16,7 +16,8 @@ class Player : public Characters
 	bool movingRight;
 	bool movingUp;
 	bool movingDown;
-
+	bool atack;
+	int j = 0;
 public:
 
 	//constructors-------------------------------------
@@ -34,5 +35,8 @@ public:
 	void update();
 	void releasedAD();
 	void releasedWS();
+
+
+	void animationattack();
 };
 
