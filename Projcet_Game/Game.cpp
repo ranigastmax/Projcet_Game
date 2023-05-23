@@ -6,14 +6,16 @@
 
 void Game::initializeViriables()
 {
+	
 	this->window = nullptr;
 	this->player = new Player;
+	this->background = new Background;
 	this->p1 = new Button(200,200,"textures/button.png", "textures/button2.png", "textures/button1.png",5,5);
 }
 void Game::initializeWindow()
 {
-	this->videoMode.height = 600;
-	this->videoMode.width = 800;
+	this->videoMode.height = 633;
+	this->videoMode.width = 632;
 
 	this->window = new sf::RenderWindow(this->videoMode, "projekt");
 	this->window->setFramerateLimit(90);
@@ -38,6 +40,7 @@ Game::~Game()
 	delete this->window;
 	delete this->player;
 	delete this->p1;
+	delete this->background;
 }
 
 
@@ -96,7 +99,9 @@ void Game::render()
 
 	if (p1->isClicked())
 	{
-	this->player->render(*this->window);
+		this->background->render(*this->window);
+		this->player->render(*this->window);
+	
 	}
 	else
 	{

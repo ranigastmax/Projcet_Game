@@ -7,6 +7,7 @@
 #include"Player.h"
 #include"Button.h"
 #include"Characters.h"
+#include"Background.h"
 class Game
 {
 	//class that act as game engine
@@ -18,13 +19,10 @@ class Game
 	sf::Event ev;
 	Player* player;
 	Button* p1;
+	Background* background;
 	sf::Mouse mouse;
 
 	int x_player, y_player;
-
-
-
-
 
 
 
