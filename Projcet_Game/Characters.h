@@ -74,6 +74,7 @@ public:
 	virtual void animateAttackMele()=0;
 	virtual void animateAttackDistance()=0;
 	virtual void animateDeath()=0;
+	//void bounds(sf::FloatRect);
 
 	
 };

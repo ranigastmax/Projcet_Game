@@ -7,7 +7,7 @@ class Background
 	sf::Texture map_texture;
 	sf::Sprite map;
 	float backgroundAnimationSpeed = 1;
-
+	sf::RectangleShape left, right, down, up;
 	void loadTexture(std::string path, sf::Texture& textureName);
 public:
 	Background();

@@ -42,6 +42,13 @@ void Characters::animateBreath()
         this->downFLAG = false;
         this->upFLAG = false;
     }
-   
 }
-
+/*
+void Characters::bounds(std::vector<sf::FloatRect> wall_bounds)
+{
+    if (this->hero.getGlobalBounds().intersects(bounds))
+    {
+        std::cout << "collision" << std::endl;
+    }
+}
+*/
