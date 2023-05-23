@@ -10,8 +10,12 @@ class Player : public Characters
 
 	void initcharacters();
 	void initIntRect();
-
-	int x, y;
+	float targetY, targetX;
+	float x, y;
+	bool movingLeft;
+	bool movingRight;
+	bool movingUp;
+	bool movingDown;
 
 public:
 
@@ -27,7 +31,7 @@ public:
 	void animateAttackMele();
 	void animateAttackDistance();
 	void animateDeath();
-	
+	void update();
 	void releasedAD();
 	void releasedWS();
 };

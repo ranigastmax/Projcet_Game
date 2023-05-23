@@ -60,9 +60,12 @@ void Game::updateEvents()
 			this->window->close();
 			break;
 		case sf::Event::KeyPressed:
-			this->player->move();
-			this->player->animateWalk();
-			break;
+			if (ev.key.code == sf::Keyboard::W || ev.key.code == sf::Keyboard::S || ev.key.code == sf::Keyboard::A || ev.key.code == sf::Keyboard::D)
+			{
+				this->player->move();
+				this->player->animateWalk();
+			}
+				break;
 		case sf::Event::KeyReleased:
 			if ((ev.key.code == sf::Keyboard::W) || (ev.key.code == sf::Keyboard::S))
 			{
@@ -80,8 +83,8 @@ void Game::updateEvents()
 			this->p1->click();
 			break;
 		}
-		
 	}
+		this->player->update();
 }
 
 

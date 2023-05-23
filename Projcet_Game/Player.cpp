@@ -1,14 +1,10 @@
 #include "Player.h"
 
 
-
 void Player::initcharacters()
 {
 
 }
-
-
-
 Player::Player()
 {
     //load all textures from files
@@ -32,6 +28,10 @@ Player::Player()
     this->hero.setPosition(300, 400);
     this->hero.setScale(2.f, 2.f);
     this->initIntRect();
+    movingLeft = false;
+    movingRight = false;
+    movingUp = false;
+    movingDown = false;
 }
 Player::~Player()
 {
@@ -48,10 +48,10 @@ void Player::initIntRect()
     //walk right
     this->walkRight.emplace_back(10,8,18,24);
     this->walkRight.emplace_back(50,8,18,24);
-    this->walkRight.emplace_back(91,8,17,23);
+    this->walkRight.emplace_back(91,8,17,24);
     this->walkRight.emplace_back(132,8,16,24);
     this->walkRight.emplace_back(172,8,16,24);
-    this->walkRight.emplace_back(211,9,17,23);
+    this->walkRight.emplace_back(211,8,17,24);
 
     //walk down
     this->walkDown.emplace_back(9,8,19,24);
@@ -155,66 +155,119 @@ void Player::initIntRect()
     this->death.emplace_back(253,18,15,22);
     this->death.emplace_back(333,18,15,22);
 }
+void Player::update()
+{
+    if (movingLeft)
+    {
+        this->targetX = -1;
+    }
+    else if (movingRight)
+    {
+        this->targetX = 1;
+    }
+    else
+    {
+        this->targetX = 0;
+    }
+
+    if (movingUp)
+    {
+        this->targetY = -1;
+    }
+    else if (movingDown)
+    {
+        this->targetY = 1;
+    }
+    else
+    {
+        this->targetY = 0;
+    }
+    if (this->x < this->targetX)
+    {
+        this->x += 0.5f;
+        if (this->x > this->targetX)
+            this->x = this->targetX;
+    }
+    else if (this->x > this->targetX)
+    {
+        this->x -= 0.5f;
+        if (this->x < this->targetX)
+            this->x = this->targetX;
+    }
+    if (this->y < this->targetY)
+    {
+        this->y += 0.5f;
+        if (this->y > this->targetY)
+            this->y = this->targetY;
+    }
+    else if (this->y > this->targetY)
+    {
+        this->y -= 0.5f;
+        if (this->y < this->targetY)
+            this->y = this->targetY;
+    }
+
+    this->hero.move(x, y);
+}
 void Player::move()
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        this->x = - 2;
+        movingLeft = true;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        this->x = 2;
+        movingRight = true;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
-        this->y = 2;
+        movingDown = true;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
-        this->y = -2;
+        movingUp = true;
     }
-    this->hero.move(x, y);
 }
 void Player::animateWalk()
 {
-        if (this->x < 0)
+        if (movingLeft)
         {
             this->hero.setTexture(walk_left_texture);      
         }
-        if (this->x > 0)
+        if (movingRight)
         {
             this->hero.setTexture(walk_right_texture);
         }
-        if (this->y < 0)
+        if (movingUp)
         {
             this->hero.setTexture(walk_up_texture);       
         }
-        if (this->y > 0)
+        if (movingDown)
         {
             this->hero.setTexture(walk_down_texture);    
         }
-        if ((this->x < 0) && (clock.getElapsedTime().asSeconds() > 0.2))
+        if ((movingLeft) && (clock.getElapsedTime().asSeconds() > 0.1))
         {
             if (this->i >= 6) { this->i = 0; }
             this->hero.setTextureRect(walkLeft[i]);
             i++;
             clock.restart();
         }
-        if ((this->x < 0) && (clock.getElapsedTime().asSeconds() > 0.2))
+        if ((movingRight) && (clock.getElapsedTime().asSeconds() > 0.1))
         {
             if (this->i >= 6) { this->i = 0; }
             this->hero.setTextureRect(walkRight[i]);
             i++;
             clock.restart();
         }
-        if ((this->y < 0) && (clock.getElapsedTime().asSeconds() > 0.2))
+        if ((movingDown) && (clock.getElapsedTime().asSeconds() > 0.1))
         {
             if (this->i >= 6) { this->i = 0; }
             this->hero.setTextureRect(walkDown[i]);
             i++;
             clock.restart();
         }
-        if ((this->y > 0) && (clock.getElapsedTime().asSeconds() > 0.2))
+        if ((movingUp) && (clock.getElapsedTime().asSeconds() > 0.1))
         {
             if (this->i >= 6) { this->i = 0; }
             this->hero.setTextureRect(walkUp[i]);
@@ -223,7 +276,6 @@ void Player::animateWalk()
         }
         
 }
-
     void Player::animateAttackMele()
     {
         //attack left
@@ -257,7 +309,6 @@ void Player::animateWalk()
         }
 
     }
-
     void Player::animateAttackDistance()
     {
         //attack left
@@ -282,9 +333,11 @@ void Player::animateWalk()
     }
     void Player::releasedAD()
     {
-        this->x = 0;
+        movingLeft = false;
+        movingRight = false;
     }
     void Player::releasedWS()
     {
-        this->y = 0;
+        movingUp = false;
+        movingDown = false;
     }
