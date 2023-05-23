@@ -227,69 +227,62 @@ void Player::move()
     {
         movingUp = true;
     }
+
+
 }
 void Player::animateWalk()
 {
-        if (movingLeft)
+    if (walking)
+    {
+        if (movingLeft && clock.getElapsedTime().asSeconds() > 0.2)
         {
-            this->hero.setTexture(walk_left_texture);      
-        }
-        if (movingRight)
-        {
-            this->hero.setTexture(walk_right_texture);
-        }
-        if (movingUp)
-        {
-            this->hero.setTexture(walk_up_texture);       
-        }
-        if (movingDown)
-        {
-            this->hero.setTexture(walk_down_texture);    
-        }
-        if ((movingLeft) && (clock.getElapsedTime().asSeconds() > 0.1))
-        {
+            std::cout << i << std::endl;
+            
+            this->hero.setTexture(walk_left_texture);   
             if (this->i >= 6) { this->i = 0; }
             this->hero.setTextureRect(walkLeft[i]);
-            std::cout << i << std::endl;
             i++;
             clock.restart();
         }
-        if ((movingRight) && (clock.getElapsedTime().asSeconds() > 0.1))
+        if (movingRight && clock.getElapsedTime().asSeconds() > 0.2)
         {
+            std::cout << i << std::endl;
+            this->hero.setTexture(walk_right_texture);
             if (this->i >= 6) { this->i = 0; }
             this->hero.setTextureRect(walkRight[i]);
-            std::cout << i << std::endl;
             i++;
             clock.restart();
         }
-        if ((movingDown) && (clock.getElapsedTime().asSeconds() > 0.1))
+        if (movingDown && clock.getElapsedTime().asSeconds() > 0.2)
         {
+            this->hero.setTexture(walk_down_texture);
             if (this->i >= 6) { this->i = 0; }
             this->hero.setTextureRect(walkDown[i]);
             i++;
             clock.restart();
         }
-        if ((movingUp) && (clock.getElapsedTime().asSeconds() > 0.1))
+        if (movingUp && clock.getElapsedTime().asSeconds() > 0.2)
         {
+            this->hero.setTexture(walk_up_texture);
             if (this->i >= 6) { this->i = 0; }
             this->hero.setTextureRect(walkUp[i]);
             i++;
             clock.restart();
         }
+
+ }
+
         
 }
     void Player::animateAttackMele()
     {
+        
         //attack left
         if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (movingLeft))
         {
             std::cout << "ustawiam texture na atak w lewo" << std::endl;
             this->hero.setTexture(attack_mele_left_texture);
             this->atack = true;
-            if (this->j >= 7) { this->j = 0; }
-            this->hero.setTextureRect(meleAttackLEFT[j]);
-            j++;
-            clock.restart();
         }
 
         //attack right
@@ -352,9 +345,14 @@ void Player::animateWalk()
     {
         if (atack)
         {
-            if (this->j >= 7) { this->j = 0; }
-            this->hero.setTextureRect(meleAttackLEFT[j]);
-            j++;
+            
+            if (clock.getElapsedTime().asSeconds() > 0.2)
+            {
+                if (this->j >= 6) { this->j = 0; atack = false; }
+                this->hero.setTextureRect(meleAttackLEFT[this->j]);
+                this->j++;
+                clock.restart();
+            }
            
         }
     }

@@ -25,6 +25,7 @@ public:
 	~Player();
 	//end-constructors---------------------------------
 
+	bool walking;
 
 	//public functions----------------------------------
 	void move();

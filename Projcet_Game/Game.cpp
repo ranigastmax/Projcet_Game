@@ -66,7 +66,7 @@ void Game::updateEvents()
 			if (ev.key.code == sf::Keyboard::W || ev.key.code == sf::Keyboard::S || ev.key.code == sf::Keyboard::A || ev.key.code == sf::Keyboard::D)
 			{
 				this->player->move();
-				this->player->animateWalk();
+				this->player->walking = true;
 			}
 				break;
 		case sf::Event::KeyReleased:
@@ -87,6 +87,8 @@ void Game::updateEvents()
 			break;
 		}
 	}
+		this->player->animateWalk();
+		this->player->animationattack();
 		this->player->update();
 }
 
