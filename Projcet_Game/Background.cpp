@@ -21,19 +21,19 @@ Background::Background()
     
     left.setSize(sf::Vector2f(10, 625));
     left.setFillColor(sf::Color::Red);
-    left.setPosition(30, 0);
+    left.setPosition(19, 0);
 
     right.setSize(sf::Vector2f(10, 625));
     right.setFillColor(sf::Color::Red);
-    right.setPosition(602, 0);
+    right.setPosition(603, 0);
 
     down.setSize(sf::Vector2f(620, 10));
     down.setFillColor(sf::Color::Red);
-    down.setPosition(0, 128);
+    down.setPosition(0, 85);
 
     up.setSize(sf::Vector2f(620, 10));
     up.setFillColor(sf::Color::Red);
-    up.setPosition(0, 597);
+    up.setPosition(0, 598);
 
     this->backogroundbounds();
 }
@@ -45,11 +45,11 @@ Background::~Background()
 
 void Background::render(sf::RenderTarget& target)
 {
-    target.draw(this->map);
     target.draw(this->left);
     target.draw(this->right);
     target.draw(this->up);
     target.draw(this->down);
+    target.draw(this->map);
 }
 
 void Background::backgroundMove(sf::RenderTarget& target)

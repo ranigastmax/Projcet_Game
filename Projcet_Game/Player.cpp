@@ -391,23 +391,47 @@ void Player::releasedAD()
                     float colliderRightEdge = obj.left + obj.width;
                     float colliderLeftEdge = obj.left;
                     float colliderTopEdge = obj.top;
-                    if (heroDown >= colliderTopEdge && heroDown <= colliderBottomEdge && heroLeft >= colliderLeftEdge && heroRight <= colliderRightEdge) {
-                        hero.setPosition(hero.getPosition().x, hero.getPosition().y - std::abs(heroDown - colliderTopEdge));
+                   
+                    if (heroTop < colliderTopEdge
+                        && heroDown < colliderBottomEdge
+                        && heroLeft < colliderRightEdge
+                        && heroRight > colliderLeftEdge)
+                    {
                         blockDown = true;
+                        hero.setPosition(heroLeft, colliderTopEdge - hero.getGlobalBounds().height);
                     }
-                    if (heroTop <= colliderBottomEdge&& heroTop>=colliderTopEdge && heroLeft >= colliderLeftEdge && heroRight <= colliderRightEdge) {
-                        hero.setPosition(hero.getPosition().x, hero.getPosition().y + std::abs(heroTop - colliderBottomEdge));
+
+                    //Top Collision
+                    if (heroTop > colliderTopEdge
+                        && heroDown > colliderBottomEdge
+                        && heroLeft < colliderRightEdge
+                        && heroRight > colliderLeftEdge)
+                    {
                         blockUp = true;
+                        hero.setPosition(heroLeft, colliderBottomEdge);
                     }
                     
-                  /*  if (heroDown >= colliderTopEdge && heroDown <= colliderBottomEdge
-                        && heroLeft >= colliderLeftEdge && heroRight <= colliderRightEdge) {
-                        hero.setPosition(hero.getPosition().x, hero.getPosition().y - std::abs(heroDown - colliderTopEdge));
-                        blockUp = true;
+                    //Right Collision
+                    if (heroLeft < colliderLeftEdge
+                        && heroRight < colliderRightEdge
+                        && heroTop < colliderBottomEdge
+                        && heroDown > colliderTopEdge)
+                    {
+                        blockRight = true;
+                        hero.setPosition(colliderLeftEdge - hero.getGlobalBounds().width, hero.getPosition().y);
                     }
-                */
 
+                    //Left Collision
+                    if (heroLeft > colliderLeftEdge
+                        && heroRight > colliderRightEdge
+                        && colliderTopEdge < colliderBottomEdge
+                        && heroDown > colliderTopEdge)
+                    {
+                        blockLeft = true;
+                        hero.setPosition(colliderRightEdge, heroTop);
+                    }
             }
         }
+      
     }
     
