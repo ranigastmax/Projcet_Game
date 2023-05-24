@@ -6,7 +6,9 @@ class Background
 {
 	sf::Texture map_texture;
 	sf::Sprite map;
-	float backgroundAnimationSpeed = 1;
+	sf::Sprite menuBack1;
+	sf::Sprite menuBack2;
+	float backgroundAnimationSpeed = 3;
 	sf::RectangleShape left, right, down, up;
 	void loadTexture(std::string path, sf::Texture& textureName);
 public:
