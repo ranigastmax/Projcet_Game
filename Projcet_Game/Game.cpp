@@ -55,6 +55,7 @@ const bool Game::running() const
 
 void Game::updateEvents()
 {
+		this->player->rect_collision.clear();
 	while (this->window->pollEvent(this->ev))
 	{
 		switch (this->ev.type)
@@ -89,7 +90,9 @@ void Game::updateEvents()
 	}
 		this->player->animateWalk();
 		this->player->animationattack();
+		this->player->bounds(this->background->wallbounds);
 		this->player->update();
+
 }
 
 

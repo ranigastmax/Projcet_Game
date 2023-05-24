@@ -17,7 +17,15 @@ class Player : public Characters
 	bool movingUp;
 	bool movingDown;
 	bool attack;
+	bool  blockLeft;
+	bool  blockRight;
+	bool  blockUp;
+	bool  blockDown;
 	int j = 0;
+	int heroDown;
+	int	heroTop;
+	int	heroLeft;
+	int	heroRight;
 public:
 
 	//constructors-------------------------------------
@@ -37,7 +45,7 @@ public:
 	void releasedAD();
 	void releasedWS();
 
-
+	void bounds(std::vector<sf::FloatRect>);
 	void animationattack();
 };
 

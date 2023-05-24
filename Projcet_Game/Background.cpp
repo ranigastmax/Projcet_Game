@@ -22,15 +22,15 @@ Background::Background()
     right.setFillColor(sf::Color::Red);
     right.setPosition(602, 0);
 
-    down.setSize(sf::Vector2f(602, 1));
+    down.setSize(sf::Vector2f(620, 1));
     down.setFillColor(sf::Color::Red);
     down.setPosition(0, 128);
 
-    up.setSize(sf::Vector2f(602, 1));
+    up.setSize(sf::Vector2f(620, 1));
     up.setFillColor(sf::Color::Red);
     up.setPosition(0, 597);
 
-
+    this->backogroundbounds();
 }
 
 Background::~Background()
@@ -55,6 +55,14 @@ void Background::backgroundMove(sf::RenderTarget& target)
     this->map.move(backgroundAnimationSpeed * 0.25, 0);
     if (mapPos.x >= 0) map.setPosition(-mapWidth, mapPos.y);
     target.draw(this->map);
+}
+
+void Background::backogroundbounds()
+{
+    this->wallbounds.emplace_back(left.getGlobalBounds().left, left.getGlobalBounds().top, left.getGlobalBounds().width, left.getGlobalBounds().height);
+    this->wallbounds.emplace_back(right.getGlobalBounds().left, right.getGlobalBounds().top, right.getGlobalBounds().width, right.getGlobalBounds().height);
+    this->wallbounds.emplace_back(up.getGlobalBounds().left, up.getGlobalBounds().top, up.getGlobalBounds().width, up.getGlobalBounds().height);
+    this->wallbounds.emplace_back(down.getGlobalBounds().left, down.getGlobalBounds().top, down.getGlobalBounds().width, down.getGlobalBounds().height);
 }
 
 

@@ -41,7 +41,6 @@ protected:
 	sf::Event ev;
 	int i = 0;
 
-
 	bool leftFLAG = false;
 	bool rightFLAG = false;
 	bool downFLAG = false;
@@ -56,6 +55,7 @@ protected:
 	virtual void initcharacters() = 0;
 	virtual void initIntRect() = 0;
 public:
+	std::vector<sf::FloatRect> rect_collision;
 	void loadTexture(std::string path, sf::Texture& textureName);
 	//constructors-------------------------------------
 	~Characters();
@@ -74,7 +74,7 @@ public:
 	virtual void animateAttackMele()=0;
 	virtual void animateAttackDistance()=0;
 	virtual void animateDeath()=0;
-	//void bounds(sf::FloatRect);
+	
 
 	
 };

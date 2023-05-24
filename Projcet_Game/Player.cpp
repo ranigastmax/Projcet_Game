@@ -157,11 +157,11 @@ void Player::initIntRect()
 }
 void Player::update()
 {
-    if (movingLeft)
+    if (movingLeft && !blockLeft)
     {
         this->targetX = -1;
     }
-    else if (movingRight)
+    else if (movingRight && !blockRight)
     {
         this->targetX = 1;
     }
@@ -170,11 +170,11 @@ void Player::update()
         this->targetX = 0;
     }
 
-    if (movingUp)
+    if (movingUp && !blockUp)
     {
         this->targetY = -1;
     }
-    else if (movingDown)
+    else if (movingDown &&  !blockDown)
     {
         this->targetY = 1;
     }
@@ -184,25 +184,25 @@ void Player::update()
     }
     if (this->x < this->targetX)
     {
-        this->x += 0.5f;
+        this->x += 0.02f;
         if (this->x > this->targetX)
             this->x = this->targetX;
     }
     else if (this->x > this->targetX)
     {
-        this->x -= 0.5f;
+        this->x -= 0.02f;
         if (this->x < this->targetX)
             this->x = this->targetX;
     }
     if (this->y < this->targetY)
     {
-        this->y += 0.5f;
+        this->y += 0.02f;
         if (this->y > this->targetY)
             this->y = this->targetY;
     }
     else if (this->y > this->targetY)
     {
-        this->y -= 0.5f;
+        this->y -= 0.02f;
         if (this->y < this->targetY)
             this->y = this->targetY;
     }
@@ -211,19 +211,19 @@ void Player::update()
 }
 void Player::move()
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)&&!movingRight)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)&&!movingRight&&!blockLeft)
     {
         movingLeft = true;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)&&!movingLeft)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)&&!movingLeft && !blockRight)
     {
         movingRight = true;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)&&!movingUp)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)&&!movingUp && !blockDown)
     {
         movingDown = true;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)&&!movingDown)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)&&!movingDown && !blockUp)
     {
         movingUp = true;
     }
@@ -359,4 +359,76 @@ void Player::animateWalk()
            
         }
 
+    }
+    void Player::bounds(std::vector<sf::FloatRect> wall_bounds)
+    {
+
+
+
+        for (auto obj : wall_bounds)
+        {
+            if (this->hero.getGlobalBounds().intersects(obj))
+            {
+               // std::cout << "collision" << std::endl;
+                rect_collision.push_back(obj);
+            }
+            else
+            {
+                blockLeft = false;
+                blockRight = false;
+                blockUp = false;
+                blockDown = false;
+            }
+        }
+        std::cout << rect_collision.size() << std::endl;
+        if (!rect_collision.empty())
+        {
+    heroDown = hero.getGlobalBounds().top + hero.getGlobalBounds().height;
+    heroTop = hero.getGlobalBounds().top;
+    heroLeft = hero.getGlobalBounds().left;
+    heroRight = hero.getGlobalBounds().left + hero.getGlobalBounds().width;
+   // std::cout << " --left--" << heroLeft << "--top--" << heroTop << "--right--" << heroRight << "--down--" << heroDown << std::endl;
+            for (auto& obj : rect_collision)
+            {
+             
+               // std::cout << " --left--" << obj.left << "--top--" << obj.top << "--right--" << obj.left + obj.width << "--down--" << obj.top + obj.height << std::endl;
+                if (heroRight > obj.left && heroLeft < obj.left + obj.width && heroTop > obj.top && heroDown < obj.top + obj.height)
+                {
+                    blockRight = true;
+
+
+
+
+
+
+
+                   /* if (heroRight > obj.left && heroRight < obj.left + obj.width)
+                    {
+                        std::cout << "prawo" << std::endl;
+                        blockRight = true;
+                    }
+                    else if (heroLeft < obj.left + obj.width && heroLeft > obj.left)
+                    {
+                        blockLeft = true;
+                        std::cout << "lewo" << std::endl;
+                    }*/
+                }
+                if (heroTop<obj.top + obj.height && heroDown > obj.top && heroLeft > obj.left && heroRight < obj.left + obj.width)
+                {
+                    blockUp = true;
+                    /*
+                    if (heroTop < obj.top + obj.height && heroTop > obj.top)
+                    {
+                        std::cout << "gora" << std::endl;
+                        blockUp = true;
+                    }
+                    else if (heroDown > obj.top && heroDown < obj.top + obj.height)
+                    {
+                        std::cout << "dol" << std::endl;
+                        blockDown = true;
+                    }
+                    */
+                }
+            }
+        }
     }

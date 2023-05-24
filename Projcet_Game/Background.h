@@ -10,9 +10,11 @@ class Background
 	sf::RectangleShape left, right, down, up;
 	void loadTexture(std::string path, sf::Texture& textureName);
 public:
+	std::vector<sf::FloatRect> wallbounds;
 	Background();
 	~Background();
 	void render(sf::RenderTarget& target);
 	void backgroundMove(sf::RenderTarget& target);
+	void backogroundbounds();
 };
 
