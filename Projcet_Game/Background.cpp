@@ -14,19 +14,19 @@ Background::Background()
     this->loadTexture("textures/map.png", this->map_texture);
     this->map.setPosition(0, 0);
     
-    left.setSize(sf::Vector2f(1, 625));
+    left.setSize(sf::Vector2f(10, 625));
     left.setFillColor(sf::Color::Red);
     left.setPosition(30, 0);
 
-    right.setSize(sf::Vector2f(1, 625));
+    right.setSize(sf::Vector2f(10, 625));
     right.setFillColor(sf::Color::Red);
     right.setPosition(602, 0);
 
-    down.setSize(sf::Vector2f(620, 1));
+    down.setSize(sf::Vector2f(620, 10));
     down.setFillColor(sf::Color::Red);
     down.setPosition(0, 128);
 
-    up.setSize(sf::Vector2f(620, 1));
+    up.setSize(sf::Vector2f(620, 10));
     up.setFillColor(sf::Color::Red);
     up.setPosition(0, 597);
 

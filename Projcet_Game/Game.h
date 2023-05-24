@@ -25,7 +25,6 @@ class Game
 	int x_player, y_player;
 
 
-
 	void initializeViriables();
 	void initializeWindow();
 

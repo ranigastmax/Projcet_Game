@@ -157,6 +157,10 @@ void Player::initIntRect()
 }
 void Player::update()
 {
+    if (blockRight)
+    {
+        movingRight = false;;
+    }
     if (movingLeft && !blockLeft)
     {
         this->targetX = -1;
@@ -169,7 +173,6 @@ void Player::update()
     {
         this->targetX = 0;
     }
-
     if (movingUp && !blockUp)
     {
         this->targetY = -1;
@@ -206,12 +209,9 @@ void Player::update()
         if (this->y < this->targetY)
             this->y = this->targetY;
     }
-   
         this->hero.move(x, y);
-
-
-
 }
+
 void Player::move()
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)&&!movingRight&&!blockLeft)
@@ -230,8 +230,6 @@ void Player::move()
     {
         movingUp = true;
     }
-
-
 }
 void Player::animateWalk()
 {
@@ -277,7 +275,7 @@ void Player::animateWalk()
 
         
 }
-    void Player::animateAttackMele()
+void Player::animateAttackMele()
     {
         //attack left
         if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (hero.getTexture() == &walk_left_texture) || (hero.getTexture() == &attack_mele_left_texture))
@@ -312,7 +310,7 @@ void Player::animateWalk()
         }
 
     }
-    void Player::animateAttackDistance()
+void Player::animateAttackDistance()
     {
         //attack left
         this->hero.setTexture(attack_distance_left_texture);
@@ -330,21 +328,20 @@ void Player::animateWalk()
         this->hero.setTexture(attack_distance_up_texture);
 
     }
-    void Player::animateDeath()
+void Player::animateDeath()
     {
         this->hero.setTexture(death_texture);
     }
-    void Player::releasedAD()
-    {
-        movingLeft = false;
-        movingRight = false;
-    }
+void Player::releasedAD()
+{
+    movingLeft = false;
+    movingRight = false;
+}
     void Player::releasedWS()
     {
         movingUp = false;
         movingDown = false;
     }
-
     void Player::animationattack()
     {
 
@@ -365,9 +362,6 @@ void Player::animateWalk()
     }
     void Player::bounds(std::vector<sf::FloatRect> wall_bounds)
     {
-
-
-
         for (auto obj : wall_bounds)
         {
             if (this->hero.getGlobalBounds().intersects(obj))
@@ -392,71 +386,27 @@ void Player::animateWalk()
             heroRight = hero.getGlobalBounds().left + hero.getGlobalBounds().width;
             // std::cout << " --left--" << heroLeft << "--top--" << heroTop << "--right--" << heroRight << "--down--" << heroDown << std::endl;
             for (auto& obj : rect_collision)
-            {
-
-
-
-
-                if (heroRight > obj.left && heroLeft < obj.left + obj.width && heroTop > obj.top && heroDown < obj.top + obj.height)
-                {
-                    if (heroRight > obj.left && heroRight <= obj.left + obj.width)
-                    {
-                    std::cout << heroRight << "righther" << obj.left << "objleft" << std::endl << heroRight << "heroright" << obj.left + obj.width << "objright" << std::endl;
-                        std::cout << "prawo" << std::endl;
-                        blockRight = true;
-                    }
-                    else if (heroLeft < obj.left + obj.width && heroLeft >= obj.left)
-                    {
-                        std::cout << "lewo" << std::endl;
-                        blockLeft = true;
-                    }
-                }
-                if (heroTop<obj.top + obj.height && heroDown > obj.top && heroLeft > obj.left && heroRight < obj.left + obj.width)
-                {
-                    if (heroTop < obj.top + obj.height && heroTop >= obj.top)
-                    {
-                        std::cout << "tak" << std::endl;
-                        blockUp = true;
-                    }
-                    else if (heroDown > obj.top && heroDown <= obj.top + obj.height)
-                    {
-                        std::cout << "down" << std::endl;
+            {        
+                    float colliderBottomEdge = obj.top + obj.height;
+                    float colliderRightEdge = obj.left + obj.width;
+                    float colliderLeftEdge = obj.left;
+                    float colliderTopEdge = obj.top;
+                    if (heroDown >= colliderTopEdge && heroDown <= colliderBottomEdge && heroLeft >= colliderLeftEdge && heroRight <= colliderRightEdge) {
+                        hero.setPosition(hero.getPosition().x, hero.getPosition().y - std::abs(heroDown - colliderTopEdge));
                         blockDown = true;
                     }
-                    //// std::cout << " --left--" << obj.left << "--top--" << obj.top << "--right--" << obj.left + obj.width << "--down--" << obj.top + obj.height << std::endl;
-                    // if (heroRight > obj.left && heroLeft < obj.left + obj.width && heroTop > obj.top && heroDown < obj.top + obj.height) { blockRight = true; std::cout << "prawo" << std::endl; }
-                    // else if (heroLeft < obj.left + obj.width && heroLeft > obj.left && heroTop > obj.top && heroDown < obj.top + obj.height) { blockLeft = true; std::cout << "lewo" << std::endl; }
-                    // 
+                    if (heroTop <= colliderBottomEdge&& heroTop>=colliderTopEdge && heroLeft >= colliderLeftEdge && heroRight <= colliderRightEdge) {
+                        hero.setPosition(hero.getPosition().x, hero.getPosition().y + std::abs(heroTop - colliderBottomEdge));
+                        blockUp = true;
+                    }
+                    
+                  /*  if (heroDown >= colliderTopEdge && heroDown <= colliderBottomEdge
+                        && heroLeft >= colliderLeftEdge && heroRight <= colliderRightEdge) {
+                        hero.setPosition(hero.getPosition().x, hero.getPosition().y - std::abs(heroDown - colliderTopEdge));
+                        blockUp = true;
+                    }
+                */
 
-
-
-
-                    //    /* if (heroRight > obj.left && heroRight < obj.left + obj.width)
-                    //     {
-                    //         std::cout << "prawo" << std::endl;
-                    //         blockRight = true;
-                    //     }
-                    //     else if (heroLeft < obj.left + obj.width && heroLeft > obj.left)
-                    //     {
-                    //         blockLeft = true;
-                    //         std::cout << "lewo" << std::endl;
-                    //     }*/
-                    // if (heroTop<obj.top + obj.height && heroDown > obj.top && heroLeft > obj.left && heroRight < obj.left + obj.width)
-                    // {
-                    //     blockUp = true;
-                    //     /*
-                    //     if (heroTop < obj.top + obj.height && heroTop > obj.top)
-                    //     {
-                    //         std::cout << "gora" << std::endl;
-                    //         blockUp = true;
-                    //     }
-                    //     else if (heroDown > obj.top && heroDown < obj.top + obj.height)
-                    //     {
-                    //         std::cout << "dol" << std::endl;
-                    //         blockDown = true;
-                    //     }
-                    //     */
-                }
             }
         }
     }
