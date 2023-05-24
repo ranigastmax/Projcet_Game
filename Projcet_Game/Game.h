@@ -20,6 +20,8 @@ class Game
 	Player* player;
 	Button* p1;
 	Background* background;
+	Background* menuBack1;
+	Background* menuBack2;
 	sf::Mouse mouse;
 
 	int x_player, y_player;

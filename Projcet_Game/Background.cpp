@@ -7,12 +7,17 @@ void Background::loadTexture(std::string path, sf::Texture& textureName)
         std::cerr << "Could not load texture" << std::endl;
     }
     this->map.setTexture(map_texture);
+    this->menuBack1.setTexture(map_texture);
+    this->menuBack2.setTexture(map_texture);
 }
 
 Background::Background()
 {
     this->loadTexture("textures/map.png", this->map_texture);
     this->map.setPosition(0, 0);
+
+    this->menuBack1.setPosition(-632, 0);
+    this->menuBack2.setPosition(0, 0);
     
     left.setSize(sf::Vector2f(1, 625));
     left.setFillColor(sf::Color::Red);
@@ -49,12 +54,17 @@ void Background::render(sf::RenderTarget& target)
 
 void Background::backgroundMove(sf::RenderTarget& target)
 {
-    sf::Vector2f mapPos = map.getPosition();
-    int mapWidth = map.getTexture()->getSize().x;
-    this->map_texture.setRepeated(true);
-    this->map.move(backgroundAnimationSpeed * 0.25, 0);
-    if (mapPos.x >= 0) map.setPosition(-mapWidth, mapPos.y);
-    target.draw(this->map);
+    sf::Vector2f mapPos1 = menuBack1.getPosition();
+    sf::Vector2f mapPos2 = menuBack2.getPosition();
+    int mapWidth1 = menuBack1.getTexture()->getSize().x;
+    int mapWidth2 = menuBack2.getTexture()->getSize().x;
+
+    this->menuBack1.move(backgroundAnimationSpeed * 0.25, 0);
+    this->menuBack2.move(backgroundAnimationSpeed * 0.25, 0);
+    if (mapPos1.x >= 0) menuBack1.setPosition(-mapWidth1, mapPos1.y);
+    if (mapPos2.x >= mapWidth2) menuBack1.setPosition(0, mapPos2.y);
+    target.draw(this->menuBack1);
+    target.draw(this->menuBack2);
 }
 
 void Background::backogroundbounds()

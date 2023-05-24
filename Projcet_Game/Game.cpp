@@ -10,6 +10,8 @@ void Game::initializeViriables()
 	this->window = nullptr;
 	this->player = new Player;
 	this->background = new Background;
+	this->menuBack1 = new Background;
+	this->menuBack2 = new Background;
 	this->p1 = new Button(150,150,"textures/button.png", "textures/button2.png", "textures/button1.png",5,5);
 }
 void Game::initializeWindow()
@@ -109,7 +111,8 @@ void Game::render()
 	}
 	else
 	{
-	this->background->backgroundMove(*this->window);
+	this->menuBack1->backgroundMove(*this->window);
+	this->menuBack2->backgroundMove(*this->window);
 	this->p1->render(*this->window);
 	}
 	//this->player->render(*this->window);
