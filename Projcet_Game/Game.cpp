@@ -51,9 +51,7 @@ const bool Game::running() const
 
 	return this->window->isOpen();
 }
-//public
-
-
+//public 
 
 void Game::updateEvents()
 {
