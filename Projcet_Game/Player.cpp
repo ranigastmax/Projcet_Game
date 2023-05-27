@@ -22,8 +22,13 @@ Player::Player()
     this->loadTexture("textures/attack_right_40x40.png", attack_distance_right_texture);
     this->loadTexture("textures/attack_left_40x40.png", attack_distance_left_texture);
     this->loadTexture("textures/death_right_40x40.png", death_texture);
+    this->loadTexture("textures/Sword01.png", sword_texture);
+    this->loadTexture("textures/EnergySword01.png", fire_sword_texture);
     //end of loadnig all textures
     this->hero.setTexture(breath_texture);
+    this->sword.setTexture(sword_texture);
+    this->sword.setPosition(423,8);
+    this->sword.scale(1,1);
     this->hero.setTextureRect(sf::IntRect(9, 9, 19, 24));
     this->hero.setPosition(300, 400);
     this->hero.setScale(2.f, 2.f);
@@ -32,6 +37,14 @@ Player::Player()
     movingRight = false;
     movingUp = false;
     movingDown = false;
+    scroll = false;
+    font.loadFromFile("textures/Augusta.ttf");
+    this->text.setPosition(455, 8);
+    this->text.setFont(font);
+    this->text.scale(0.6,0.6);
+    this->text.setFillColor(sf::Color(226, 226, 226));
+    
+    
 }
 Player::~Player()
 {
@@ -157,6 +170,20 @@ void Player::initIntRect()
 }
 void Player::update()
 {
+    if (scroll)
+    {
+        this->sword.setTexture(fire_sword_texture);
+        this->text.setFillColor(sf::Color(255, 33, 33));
+        this->text.setString("FIRE BALL SWORD");
+    }
+    else
+    {
+        
+        this->sword.setTexture(sword_texture);
+        this->text.setFillColor(sf::Color(226,226,226));
+        this->text.setString("IRON SWORD");
+        
+    }
     if (blockRight)
     {
         movingRight = false;;
@@ -211,7 +238,6 @@ void Player::update()
     }
         this->hero.move(x, y);
 }
-
 void Player::move()
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)&&!movingRight&&!blockLeft)
@@ -337,19 +363,19 @@ void Player::releasedAD()
     movingLeft = false;
     movingRight = false;
 }
-    void Player::releasedWS()
+void Player::releasedWS()
     {
         movingUp = false;
         movingDown = false;
     }
-    sf::FloatRect Player::herobounds()
+sf::FloatRect Player::herobounds()
     {
         return sf::FloatRect(this->hero.getGlobalBounds().left,
             this->hero.getGlobalBounds().top,
             this->hero.getGlobalBounds().width,
             this->hero.getGlobalBounds().height);
     }
-    void Player::animationattack()
+void Player::animationattack()
     {
 
         if (attack)
@@ -365,12 +391,21 @@ void Player::releasedAD()
         }
 
     }
-    sf::Sprite Player::getSprite()
+sf::Sprite Player::getSprite()
     {
         return this->hero;
     }
-
-    void Player::bounds(std::vector<sf::FloatRect> wall_bounds)
+void Player::rendertext(sf::RenderTarget& target)
+{
+    target.draw(this->text);
+    target.draw(this->sword);
+}
+void Player::scrollChange()
+    {
+        if (scroll) { scroll = false; }
+        else { scroll = true; }
+    }
+void Player::bounds(std::vector<sf::FloatRect> wall_bounds)
     {
         for (auto obj : wall_bounds)
         {

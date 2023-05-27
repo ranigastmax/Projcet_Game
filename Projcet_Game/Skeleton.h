@@ -15,7 +15,6 @@ public:
 	void animateDeath();
 	void render(sf::RenderTarget& target);
 	void boundsSkeleton(sf::FloatRect);
-	float attackspeed(float);
 private:
 	int i = 0;
 	int j = 0;

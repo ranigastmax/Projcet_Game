@@ -102,6 +102,8 @@ void Game::updateEvents()
 		case sf::Event::MouseButtonReleased:
 			this->p1->click();
 			break;
+		case sf::Event::MouseWheelMoved:
+			this->player->scrollChange();
 		}
 	}
 		this->player->animateWalk();
@@ -124,6 +126,7 @@ void Game::render()
 	if (p1->isClicked())
 	{
 		this->background->render(*this->window);
+		this->player->rendertext(*this->window);
 		this->player->render(*this->window);
 		if (this->level == 0)
 		{
