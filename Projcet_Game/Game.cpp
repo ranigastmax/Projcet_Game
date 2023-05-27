@@ -13,6 +13,8 @@ void Game::initializeViriables()
 	this->menuBack1 = new Background;
 	this->menuBack2 = new Background;
 	this->p1 = new Button(150,150,"textures/button.png", "textures/button2.png", "textures/button1.png",5,5);
+	this->skeleton1 = new Skeleton;
+	this->skeleton2 = new Skeleton;
 }
 void Game::initializeWindow()
 {
@@ -26,6 +28,20 @@ void Game::initializeWindow()
 
 }
 
+void Game::initializeEnemies(int amount)
+{
+
+	if (spawning)
+	{
+		Skeleton* enemy = new Skeleton();
+		enemies.push_back(enemy);
+	}
+	if (i < amount) { spawning = true; }
+	else { spawning = false; }
+	i++;
+	
+}
+
 
 Game::Game()
 {
@@ -34,6 +50,7 @@ Game::Game()
 	this->initializeWindow();
 	this->x_player = 0;
 	this->y_player = 0;
+	srand(time(NULL));
 }
 
 
@@ -91,6 +108,7 @@ void Game::updateEvents()
 		this->player->animateWalk();
 		this->player->animationattack();
 		this->player->bounds(this->background->wallbounds);
+		for (auto i : enemies) { i->enemymove(this->player->getSprite()); }
 		this->player->update();
 
 }
@@ -105,6 +123,10 @@ void Game::render()
 	{
 		this->background->render(*this->window);
 		this->player->render(*this->window);
+		if (this->level == 0)
+		{
+			this->initializeEnemies(5);
+		}
 	
 	}
 	else
@@ -115,6 +137,7 @@ void Game::render()
 	}
 	//this->player->render(*this->window);
 	//this->p1->render(*this->window);
+	for (auto i : enemies) { i->render(*this->window); }
 
 	this->window->display();
 }

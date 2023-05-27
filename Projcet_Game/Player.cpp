@@ -360,6 +360,11 @@ void Player::releasedAD()
         }
 
     }
+    sf::Sprite Player::getSprite()
+    {
+        return this->hero;
+    }
+
     void Player::bounds(std::vector<sf::FloatRect> wall_bounds)
     {
         for (auto obj : wall_bounds)

@@ -8,6 +8,7 @@
 #include"Button.h"
 #include"Characters.h"
 #include"Background.h"
+#include"Skeleton.h"
 class Game
 {
 	//class that act as game engine
@@ -22,13 +23,20 @@ class Game
 	Background* background;
 	Background* menuBack1;
 	Background* menuBack2;
+	std::vector<Skeleton*> enemies;
+	Skeleton* skeleton1;
+	Skeleton* skeleton2;
 	sf::Mouse mouse;
 
 	int x_player, y_player;
 
+	int level = 0;
+	int i = 0;
+	bool spawning = false;
 
 	void initializeViriables();
 	void initializeWindow();
+	void initializeEnemies(int);
 
 
 

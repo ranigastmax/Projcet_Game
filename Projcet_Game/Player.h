@@ -26,6 +26,8 @@ class Player : public Characters
 	int	heroTop;
 	int	heroLeft;
 	int	heroRight;
+
+	sf::ConvexShape swordHitBox;
 public:
 
 	//constructors-------------------------------------
@@ -44,6 +46,9 @@ public:
 	void update();
 	void releasedAD();
 	void releasedWS();
+	sf::Sprite getSprite();
+
+
 
 	void bounds(std::vector<sf::FloatRect>);
 	void animationattack();

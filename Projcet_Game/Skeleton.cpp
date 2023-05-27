@@ -13,6 +13,11 @@ Skeleton::Skeleton()
 	this->loadTexture("textures/Skeleton_Attack_Right.png", attack_mele_right_texture);
 	this->loadTexture("textures/Skeleton_Attack_Left.png", attack_mele_left_texture);
 	this->hero.setTexture(walk_down_texture);
+    this->initIntRect();
+    this->hero.setTextureRect(sf::IntRect(0, 0, 29, 38));
+
+    this->hero.setPosition((std::rand() % 542 + 30), (std::rand() % 400 + 128));
+    this->hero.setScale(1.5, 1.5);
 
 
 }
@@ -82,12 +87,45 @@ void Skeleton::initcharacters()
 {
 }
 
-void Skeleton::enemymove()
+void Skeleton::enemymove(sf::Sprite target)
 {
+    this->animateWalk();
+    direction = target.getPosition() - hero.getPosition();
+    float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+
+    direction /= length;
+
+    float spriteSpeed = 0.8;
+
+
+    hero.move(direction.x * spriteSpeed , direction.y * spriteSpeed);
+
 }
 
 void Skeleton::animateWalk()
 {
+    std::cout << direction.x <<"x" << std::endl;
+    std::cout << direction.y <<"y" << std::endl;
+
+
+    if (this->direction.y > 0) { this->hero.setTexture(walk_down_texture); }  
+    if (this->direction.x > 0) { this->hero.setTexture(walk_right_texture); }
+    if (this->direction.y < 0) { this->hero.setTexture(walk_up_texture); }
+    if (this->direction.x < 0) { this->hero.setTexture(walk_left_texture); }
+
+
+
+    if (clock.getElapsedTime().asSeconds() > 0.1)
+    {
+        if (this->i > 3) { this->i = 0; }
+        if(this->hero.getTexture() == &walk_right_texture) { this->hero.setTextureRect(walkRight[this->i]); }
+        if (this->hero.getTexture() == &walk_left_texture) { this->hero.setTextureRect(walkLeft[this->i]); }
+        if(this->hero.getTexture() == &walk_down_texture) { this->hero.setTextureRect(walkDown[this->i]); }
+        if(this->hero.getTexture() == &walk_up_texture) { this->hero.setTextureRect(walkUp[this->i]); }
+        this->i++;
+
+        clock.restart();
+    }
 
 }
 
@@ -105,3 +143,11 @@ void Skeleton::animateDeath()
 {
 
 }
+
+void Skeleton::render(sf::RenderTarget& target)
+{
+
+    target.draw(this->hero);
+}
+
+
