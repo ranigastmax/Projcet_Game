@@ -26,7 +26,12 @@ class Player : public Characters
 	int	heroTop;
 	int	heroLeft;
 	int	heroRight;
-
+	bool scroll;
+	sf::Font font;
+	sf::Text text;
+	sf::Texture sword_texture;
+	sf::Texture fire_sword_texture;
+	sf::Sprite sword;
 	sf::ConvexShape swordHitBox;
 public:
 
@@ -49,8 +54,8 @@ public:
 	sf::FloatRect herobounds();
 	sf::Sprite getSprite();
 
-
-
+	void rendertext(sf::RenderTarget& target);
+	void scrollChange();
 	void bounds(std::vector<sf::FloatRect>);
 	void animationattack();
 };
