@@ -186,7 +186,7 @@ void Player::update()
     }
     if (blockRight)
     {
-        movingRight = false;;
+        movingRight = false;
     }
     if (movingLeft && !blockLeft)
     {
@@ -422,7 +422,7 @@ void Player::bounds(std::vector<sf::FloatRect> wall_bounds)
                 blockDown = false;
             }
         }
-        std::cout << rect_collision.size() << std::endl;
+        //std::cout << rect_collision.size() << std::endl;
         if (!rect_collision.empty())
         {
             heroDown = hero.getGlobalBounds().top + hero.getGlobalBounds().height;
