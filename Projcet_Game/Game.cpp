@@ -128,6 +128,7 @@ void Game::render()
 		if (this->level == 0)
 		{
 			this->initializeEnemies(5);
+	this->skeleton1->render(*this->window);
 		}
 	
 	}
@@ -140,7 +141,6 @@ void Game::render()
 	//this->player->render(*this->window);
 	//this->p1->render(*this->window);
 	for (auto i : enemies) { i->render(*this->window); }
-	this->skeleton1->render(*this->window);
 	this->window->display();
 }
 
