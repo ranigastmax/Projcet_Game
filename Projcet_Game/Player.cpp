@@ -342,18 +342,23 @@ void Player::releasedAD()
         movingUp = false;
         movingDown = false;
     }
+    sf::FloatRect Player::herobounds()
+    {
+        return sf::FloatRect(this->hero.getGlobalBounds().left,
+            this->hero.getGlobalBounds().top,
+            this->hero.getGlobalBounds().width,
+            this->hero.getGlobalBounds().height);
+    }
     void Player::animationattack()
     {
 
         if (attack)
         {
-            
             if (clock.getElapsedTime().asSeconds() > 0.07)
             {
                 if (this->j > 6) { this->j = 0; attack = false; }
                 this->hero.setTextureRect(meleAttackLEFT[this->j]);
                 this->j++;
-
                 clock.restart();
             }
            

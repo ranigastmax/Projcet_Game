@@ -46,6 +46,7 @@ public:
 	void update();
 	void releasedAD();
 	void releasedWS();
+	sf::FloatRect herobounds();
 	sf::Sprite getSprite();
 
 

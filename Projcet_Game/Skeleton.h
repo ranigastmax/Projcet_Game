@@ -14,11 +14,13 @@ public:
 	void animateAttackDistance();
 	void animateDeath();
 	void render(sf::RenderTarget& target);
-
-
+	void boundsSkeleton(sf::FloatRect);
+	float attackspeed(float);
 private:
 	int i = 0;
+	int j = 0;
 	float hp;
 	sf::Vector2f direction;
+	bool blockmove;
 };
 

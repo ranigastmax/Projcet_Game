@@ -16,7 +16,7 @@ Skeleton::Skeleton()
     this->initIntRect();
     this->hero.setTextureRect(sf::IntRect(0, 0, 29, 38));
 
-    this->hero.setPosition((std::rand() % 542 + 30), (std::rand() % 400 + 128));
+    this->hero.setPosition((std::rand() % 542+ 30), (std::rand() % 400 + 128));
     this->hero.setScale(1.5, 1.5);
 
 
@@ -97,9 +97,14 @@ void Skeleton::enemymove(sf::Sprite target)
 
     float spriteSpeed = 0.8;
 
-
-    hero.move(direction.x * spriteSpeed , direction.y * spriteSpeed);
-
+    if (blockmove)
+    {
+        hero.move(0, 0);
+    }
+    else
+    {
+        hero.move(direction.x * spriteSpeed, direction.y * spriteSpeed);
+    }
 }
 
 void Skeleton::animateWalk()
@@ -115,7 +120,7 @@ void Skeleton::animateWalk()
 
 
 
-    if (clock.getElapsedTime().asSeconds() > 0.1)
+    if (clock.getElapsedTime().asSeconds() > 0.3&& !blockmove)
     {
         if (this->i > 3) { this->i = 0; }
         if(this->hero.getTexture() == &walk_right_texture) { this->hero.setTextureRect(walkRight[this->i]); }
@@ -131,7 +136,43 @@ void Skeleton::animateWalk()
 
 void Skeleton::animateAttackMele()
 {
-
+    if (blockmove&& clock.getElapsedTime().asSeconds() > 0.2)
+    {
+        //attack left
+        if ((hero.getTexture() == &walk_left_texture) || (hero.getTexture() == &attack_mele_left_texture))
+        {
+            this->hero.setTexture(attack_mele_left_texture);
+            if (this->j > 3) { this->j = 0; }
+            this->hero.setTextureRect(meleAttackLEFT[this->j]);
+            this->j++;
+        }
+        //attack right
+        if ((hero.getTexture() == &walk_right_texture) || (hero.getTexture() == &attack_mele_right_texture))
+        {
+            this->hero.setTexture(attack_mele_right_texture);
+            if (this->j > 3) { this->j = 0; }
+            this->hero.setTextureRect(meleAttackRIGHT[this->j]);
+            this->j++;
+        }
+        //attack down-left-rigt
+        if ((hero.getTexture() == &walk_down_texture) || (hero.getTexture() == &attack_mele_down_texture))
+        {
+            this->hero.setTexture(attack_mele_down_texture);
+            if (this->j > 3) { this->j = 0; }
+            this->hero.setTextureRect(meleAttackDOWN[this->j]);
+            this->j++;
+        }
+        
+         //attack up-left-rigt
+        if ((hero.getTexture() == &walk_up_texture) || (hero.getTexture() == &attack_mele_up_texture))
+        {
+            this->hero.setTexture(attack_mele_up_texture);
+            if (this->j > 3) { this->j = 0; }
+            this->hero.setTextureRect(meleAttackUP[this->j]);
+            this->j++;
+        }
+        clock.restart();
+    }
 }
 
 void Skeleton::animateAttackDistance()
@@ -148,6 +189,68 @@ void Skeleton::render(sf::RenderTarget& target)
 {
 
     target.draw(this->hero);
+}
+void Skeleton::boundsSkeleton(sf::FloatRect herobounds)
+{
+    if (this->hero.getGlobalBounds().intersects(herobounds))
+    {
+        float heroDown = hero.getGlobalBounds().top + hero.getGlobalBounds().height;
+        float heroTop = hero.getGlobalBounds().top;
+        float heroLeft = hero.getGlobalBounds().left;
+        float heroRight = hero.getGlobalBounds().left + hero.getGlobalBounds().width;
+        
+        
+        float colliderBottomEdge = herobounds.top + herobounds.height;
+        float colliderRightEdge = herobounds.left + herobounds.width;
+        float colliderLeftEdge = herobounds.left;
+        float colliderTopEdge = herobounds.top;
+
+            if (heroTop < colliderTopEdge
+                && heroDown < colliderBottomEdge
+                && heroLeft < colliderRightEdge
+                && heroRight > colliderLeftEdge)
+            {
+                blockmove = true;
+            
+            }
+
+            //Top Collision
+            if (heroTop > colliderTopEdge
+                && heroDown > colliderBottomEdge
+                && heroLeft < colliderRightEdge
+                && heroRight > colliderLeftEdge)
+            {
+                blockmove = true;
+            
+            }
+
+            //Right Collision
+            if (heroLeft < colliderLeftEdge
+                && heroRight < colliderRightEdge
+                && heroTop < colliderBottomEdge
+                && heroDown > colliderTopEdge)
+            {
+                blockmove = true;
+           
+            }
+
+            //Left Collision
+            if (heroLeft > colliderLeftEdge
+                && heroRight > colliderRightEdge
+                && colliderTopEdge < colliderBottomEdge
+                && heroDown > colliderTopEdge)
+            {
+                blockmove = true;
+          
+            }
+    
+    }
+    else
+    {
+        blockmove = false;
+    }
+
+
 }
 
 

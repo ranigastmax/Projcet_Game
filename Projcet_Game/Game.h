@@ -27,7 +27,7 @@ class Game
 	Skeleton* skeleton1;
 	Skeleton* skeleton2;
 	sf::Mouse mouse;
-
+	sf::Clock enemyAttacksSeed;
 	int x_player, y_player;
 
 	int level = 0;
