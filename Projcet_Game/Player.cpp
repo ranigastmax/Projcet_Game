@@ -378,7 +378,7 @@ sf::FloatRect Player::herobounds()
 void Player::animationattack()
     {
 
-        if (attack)
+        if (attack&&!scroll)
         {
             if (clock.getElapsedTime().asSeconds() > 0.07)
             {
@@ -389,6 +389,7 @@ void Player::animationattack()
             }
            
         }
+        else { i = 0; }
 
     }
 sf::Sprite Player::getSprite()
