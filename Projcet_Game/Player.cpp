@@ -25,6 +25,24 @@ Player::Player()
     this->loadTexture("textures/Sword01.png", sword_texture);
     this->loadTexture("textures/EnergySword01.png", fire_sword_texture);
     //end of loadnig all textures
+   
+    //text settings
+    font.loadFromFile("textures/Augusta.ttf");
+    this->text.setPosition(455, 8);
+    this->text.setFont(font);
+    this->text.scale(0.6,0.6);
+    this->text.setFillColor(sf::Color(226, 226, 226));
+
+
+    //set init stats
+    movingLeft = false;
+    movingRight = false;
+    movingUp = false;
+    movingDown = false;
+    scroll = false;
+
+    adjustHp(50);
+
     this->hero.setTexture(breath_texture);
     this->sword.setTexture(sword_texture);
     this->sword.setPosition(423,8);
@@ -33,16 +51,6 @@ Player::Player()
     this->hero.setPosition(300, 400);
     this->hero.setScale(2.f, 2.f);
     this->initIntRect();
-    movingLeft = false;
-    movingRight = false;
-    movingUp = false;
-    movingDown = false;
-    scroll = false;
-    font.loadFromFile("textures/Augusta.ttf");
-    this->text.setPosition(455, 8);
-    this->text.setFont(font);
-    this->text.scale(0.6,0.6);
-    this->text.setFillColor(sf::Color(226, 226, 226));
     
     
 }
@@ -263,7 +271,7 @@ void Player::animateWalk()
     {
         if (movingLeft && clock.getElapsedTime().asSeconds() > 0.2)
         {
-            std::cout << i << std::endl;
+            //std::cout << i << std::endl;
             
             this->hero.setTexture(walk_left_texture);   
             if (this->i >= 6) { this->i = 0; }

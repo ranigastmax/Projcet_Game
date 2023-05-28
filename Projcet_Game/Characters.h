@@ -21,7 +21,8 @@ protected:
 	sf::Texture attack_distance_right_texture;
 	sf::Texture attack_distance_left_texture;
 	sf::Texture death_texture;
-	sf::Texture texture;
+	sf::Texture walk_texture;
+	sf::Texture attack_texture;
 	std::vector<sf::IntRect> breath;
 	std::vector<sf::IntRect> walkUp;
 	std::vector<sf::IntRect> walkDown;
@@ -50,6 +51,7 @@ protected:
 	bool breathFLAG = false;
 	float hero_speedX = 0;
 	float hero_speedY = 0;
+	float hp;
 
 
 	//virtual always need to call !!!!!!!!!!!!!!!
@@ -63,6 +65,11 @@ public:
 	~Characters();
 	//end-constructors---------------------------------
 	
+	//getters/setters
+	sf::Sprite getSprite();
+	void adjustHp(float);
+
+
 
 
 	// render/update-----------------------------------
