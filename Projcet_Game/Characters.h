@@ -51,6 +51,7 @@ protected:
 	bool breathFLAG = false;
 	float hero_speedX = 0;
 	float hero_speedY = 0;
+	float hp;
 
 
 	//virtual always need to call !!!!!!!!!!!!!!!
@@ -64,6 +65,11 @@ public:
 	~Characters();
 	//end-constructors---------------------------------
 	
+	//getters/setters
+	sf::Sprite getSprite();
+	void adjustHp(float);
+
+
 
 
 	// render/update-----------------------------------

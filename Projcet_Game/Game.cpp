@@ -111,7 +111,8 @@ void Game::updateEvents()
 		this->player->bounds(this->background->wallbounds);
 		this->skeleton1->boundsSkeleton(this->player->herobounds());
 		this->skeleton1->enemymove(this->player->getSprite());
-		this->skeleton1->animateAttackMele();
+		this->skeleton1->attackMele(this->player);
+		//this->skeleton1->animateAttackMele();
 		for (auto i : enemies) { i->enemymove(this->player->getSprite()); }
 		this->player->update();
 

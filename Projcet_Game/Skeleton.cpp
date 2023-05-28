@@ -2,17 +2,6 @@
 
 Skeleton::Skeleton()
 {
-
-	/*this->loadTexture("textures/Skeleton_Walk_Up.png", walk_up_texture);
-	this->loadTexture("textures/Skeleton_Walk_Down.png", walk_down_texture);
-	this->loadTexture("textures/Skeleton_Walk_Right.png", walk_right_texture);
-	this->loadTexture("textures/Skeleton_Walk_Left.png", walk_left_texture);
-	this->loadTexture("textures/", death_texture);
-	this->loadTexture("textures/Skeleton_Attack_up", attack_mele_up_texture);
-	this->loadTexture("textures/Skeleton_Attack_Down.png", attack_mele_down_texture);
-	this->loadTexture("textures/Skeleton_Attack_Right.png", attack_mele_right_texture);
-	this->loadTexture("textures/Skeleton_Attack_Left.png", attack_mele_left_texture);*/
-	//this->hero.setTexture(walk_down_texture);
     this->loadTexture("textures/zombie_walk.png", this->walk_texture);
     this->loadTexture("textures/zombie_attack.png", this->attack_texture);
     this->hero.setTexture(walk_texture);
@@ -103,8 +92,6 @@ void Skeleton::initIntRect()
     this->meleAttackRIGHT.emplace_back(235,69,18,27);
 
   
-
-
     //attack down mele
     this->meleAttackDOWN.emplace_back(9,4,13,28);
     this->meleAttackDOWN.emplace_back(40,4,14,28);
@@ -116,11 +103,6 @@ void Skeleton::initIntRect()
     this->meleAttackDOWN.emplace_back(233,5,14,27);
     
     
-    
-    
-   
-
-
     //attac up mele
     this->meleAttackUP.emplace_back(9,36,13,28);
     this->meleAttackUP.emplace_back(41, 36,14,28);
@@ -186,7 +168,7 @@ void Skeleton::animateWalk()
 
 void Skeleton::animateAttackMele()
 {
-    if (blockmove && clock.getElapsedTime().asSeconds() > 0.2)
+    if (blockmove && clock.getElapsedTime().asSeconds() > 0.15)
     {
         std::cout << moveRight << "right" << std::endl;
         std::cout << moveUp << "up" << std::endl;
@@ -233,9 +215,32 @@ void Skeleton::animateDeath()
 
 }
 
+void Skeleton::attackMele(Characters* object)
+{
+    if (this->hero.getGlobalBounds().intersects(object->getSprite().getGlobalBounds()))
+    {
+        if (this->blockmove)
+        {
+            this->hitboxSet();
+            this->animateAttackMele();
+            if (this->hitBox.getGlobalBounds().intersects(object->getSprite().getGlobalBounds()))
+            {
+                if(delay.getElapsedTime().asSeconds()>1)
+                { 
+                    object->adjustHp(-5);
+                    std::cout << "hit//////////////////////////////////////////////////////////////" << std::endl;
+                    delay.restart();
+                }
+                
+            }
+
+        }
+    }
+
+}
+
 void Skeleton::render(sf::RenderTarget& target)
 {
-
     target.draw(this->hero);
 }
 void Skeleton::boundsSkeleton(sf::FloatRect herobounds)
@@ -253,6 +258,7 @@ void Skeleton::boundsSkeleton(sf::FloatRect herobounds)
         float colliderLeftEdge = herobounds.left;
         float colliderTopEdge = herobounds.top;
 
+            //Bottom Collision
             if (heroTop < colliderTopEdge
                 && heroDown < colliderBottomEdge
                 && heroLeft < colliderRightEdge
@@ -301,9 +307,33 @@ void Skeleton::boundsSkeleton(sf::FloatRect herobounds)
 
 }
 
-void Skeleton::attack()
+void Skeleton::hitboxSet()
 {
-    //this->hitBox.setPoint(1,)
+    float heroDown = hero.getGlobalBounds().top + hero.getGlobalBounds().height;
+    float heroTop = hero.getGlobalBounds().top;
+    float heroLeft = hero.getGlobalBounds().left;
+    float heroRight = hero.getGlobalBounds().left + hero.getGlobalBounds().width;
+    if (moveDown) 
+    { 
+        this->hitBox.setSize(sf::Vector2f(24,15));
+        this->hitBox.setPosition(heroLeft,heroDown); 
+    }
+    if (moveUp)
+    {
+        this->hitBox.setSize(sf::Vector2f(24, 15));
+        this->hitBox.setPosition(heroLeft, heroTop-20);
+    }
+    if (moveRight)
+    {
+        this->hitBox.setSize(sf::Vector2f(15, 34));
+        this->hitBox.setPosition(heroRight, heroTop);
+    }
+    if (moveLeft)
+    {
+        this->hitBox.setSize(sf::Vector2f(15, 34));
+        this->hitBox.setPosition(heroLeft-20, heroTop);
+    }
+
 }
 
 

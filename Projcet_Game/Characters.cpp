@@ -17,6 +17,16 @@ Characters::~Characters()
 {
 }
 
+sf::Sprite Characters::getSprite()
+{
+    return this->hero;
+}
+
+void Characters::adjustHp(float amount)
+{
+    this->hp += amount;
+}
+
 void Characters::render(sf::RenderTarget& target)
 {
 	target.draw(this->hero);

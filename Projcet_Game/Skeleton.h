@@ -16,14 +16,18 @@ public:
 	void render(sf::RenderTarget& target);
 	void boundsSkeleton(sf::FloatRect);
 	float attackspeed(float);
-	void attack();
+	void hitboxSet();
+	void attackMele(Characters* object);
+	
 private:
 	int i = 0;
 	int j = 0;
 	float hp;
 	sf::Vector2f direction;
-	sf::ConvexShape hitBox;
+	sf::RectangleShape hitBox;
 	bool blockmove;
+
+	sf::Clock delay;
 
 	bool moveRight;
 	bool moveLeft;
