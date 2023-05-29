@@ -8,22 +8,22 @@ void Player::initcharacters()
 Player::Player()
 {
     //load all textures from files
-    this->loadTexture("textures/idle_down_40x40.png", breath_texture);
-    this->loadTexture("textures/run_up_40x40.png", walk_up_texture);
-    this->loadTexture("textures/run_down_40x40.png", walk_down_texture);
-    this->loadTexture("textures/run_right_40x40.png", walk_right_texture);
-    this->loadTexture("textures/run_left_40x40.png", walk_left_texture);
-    this->loadTexture("textures/attack_up_40x40.png", attack_mele_up_texture);
-    this->loadTexture("textures/attack_down_40x40.png", attack_mele_down_texture);
-    this->loadTexture("textures/attack_right_40x40.png", attack_mele_right_texture);
-    this->loadTexture("textures/attack_left_40x40.png", attack_mele_left_texture);
-    this->loadTexture("textures/attack_up_40x40.png", attack_distance_up_texture);
-    this->loadTexture("textures/attack_down_40x40.png", attack_distance_down_texture);
-    this->loadTexture("textures/attack_left_40x40.png", attack_distance_left_texture);
-    this->loadTexture("textures/death_right_40x40.png", death_texture);
+    this->loadTexture("textures/idle_down.png", breath_texture);
+    this->loadTexture("textures/run_up.png", walk_up_texture);
+    this->loadTexture("textures/run_down.png", walk_down_texture);
+    this->loadTexture("textures/run_right.png", walk_right_texture);
+    this->loadTexture("textures/run_left.png", walk_left_texture);
+    this->loadTexture("textures/attack_up.png", attack_mele_up_texture);
+    this->loadTexture("textures/attack_down.png", attack_mele_down_texture);
+    this->loadTexture("textures/attack_right.png", attack_mele_right_texture);
+    this->loadTexture("textures/attack_left.png", attack_mele_left_texture);
+    this->loadTexture("textures/attack_up.png", attack_distance_up_texture);
+    this->loadTexture("textures/attack_down.png", attack_distance_down_texture);
+    this->loadTexture("textures/attack_left.png", attack_distance_left_texture);
+    this->loadTexture("textures/death_right.png", death_texture);
     this->loadTexture("textures/Sword01.png", sword_texture);
     this->loadTexture("textures/EnergySword01.png", fire_sword_texture);
-    this->loadTexture("textures/attack_right_distance_40x40.png", attack_distance_right_texture);
+    this->loadTexture("textures/attack_right_distance.png", attack_distance_right_texture);
     //end of loadnig all textures
    
     //text settings
