@@ -400,7 +400,7 @@ sf::FloatRect Player::herobounds()
 void Player::animationattack()
     {
         //setting texture rect
-        if (attack)
+        if (attack&&!scroll)
         {
             if (clock.getElapsedTime().asSeconds() > 0.07)
             {
@@ -427,7 +427,35 @@ void Player::animationattack()
                 this->j++;
                 clock.restart();
             }
-    }
+        }
+        else if (attack && scroll)
+        {
+            if (clock.getElapsedTime().asSeconds() > 0.07)
+            {
+                if (this->j > 6) { this->j = 0; attack = false; }
+                if (hero.getTexture() == &attack_distance_right_texture)
+                {
+                    this->hero.setTextureRect(distanceAttackRIGHT[this->j]);
+                }
+
+                if (hero.getTexture() == &attack_distance_left_texture)
+                {
+                    this->hero.setTextureRect(distanceAttackLEFT[this->j]);
+                }
+
+                if (hero.getTexture() == &attack_distance_up_texture)
+                {
+                    this->hero.setTextureRect(distanceAttackUP[this->j]);
+                }
+
+                if (hero.getTexture() == &attack_distance_down_texture)
+                {
+                    this->hero.setTextureRect(distanceAttackDOWN[this->j]);
+                }
+                this->j++;
+                clock.restart();
+            }
+        }
 }
 sf::Sprite Player::getSprite()
     {
