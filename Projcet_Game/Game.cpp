@@ -133,7 +133,7 @@ void Game::render()
 		if (this->level == 0)
 		{
 			this->initializeEnemies(5);
-	this->skeleton1->render(*this->window);
+			this->skeleton1->render(*this->window);
 		}
 	
 	}

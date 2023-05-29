@@ -399,21 +399,36 @@ sf::FloatRect Player::herobounds()
     }
 void Player::animationattack()
     {
-
-        if (attack&&!scroll)
+        //setting texture rect
+        if (attack)
         {
             if (clock.getElapsedTime().asSeconds() > 0.07)
             {
                 if (this->j > 6) { this->j = 0; attack = false; }
-                this->hero.setTextureRect(meleAttackLEFT[this->j]);
+                if (hero.getTexture() == &attack_mele_right_texture)
+                {
+                    this->hero.setTextureRect(meleAttackRIGHT[this->j]);
+                }
+
+                if (hero.getTexture() == &attack_mele_left_texture)
+                {
+                    this->hero.setTextureRect(meleAttackLEFT[this->j]);
+                }
+
+                if (hero.getTexture() == &attack_mele_up_texture)
+                {
+                    this->hero.setTextureRect(meleAttackUP[this->j]);
+                }
+
+                if (hero.getTexture() == &attack_mele_down_texture)
+                {
+                    this->hero.setTextureRect(meleAttackDOWN[this->j]);
+                }
                 this->j++;
                 clock.restart();
             }
-
-        }
-        else { i = 0; }
-     
     }
+}
 sf::Sprite Player::getSprite()
     {
         return this->hero;
