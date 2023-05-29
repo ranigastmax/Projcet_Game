@@ -257,7 +257,6 @@ void Skeleton::boundsSkeleton(sf::FloatRect herobounds)
         float colliderRightEdge = herobounds.left + herobounds.width;
         float colliderLeftEdge = herobounds.left;
         float colliderTopEdge = herobounds.top;
-
             //Bottom Collision
             if (heroTop < colliderTopEdge
                 && heroDown < colliderBottomEdge
@@ -267,7 +266,6 @@ void Skeleton::boundsSkeleton(sf::FloatRect herobounds)
                 blockmove = true;
             
             }
-
             //Top Collision
             if (heroTop > colliderTopEdge
                 && heroDown > colliderBottomEdge
@@ -275,9 +273,7 @@ void Skeleton::boundsSkeleton(sf::FloatRect herobounds)
                 && heroRight > colliderLeftEdge)
             {
                 blockmove = true;
-            
             }
-
             //Right Collision
             if (heroLeft < colliderLeftEdge
                 && heroRight < colliderRightEdge
@@ -287,7 +283,6 @@ void Skeleton::boundsSkeleton(sf::FloatRect herobounds)
                 blockmove = true;
            
             }
-
             //Left Collision
             if (heroLeft > colliderLeftEdge
                 && heroRight > colliderRightEdge
@@ -297,7 +292,6 @@ void Skeleton::boundsSkeleton(sf::FloatRect herobounds)
                 blockmove = true;
           
             }
-    
     }
     else
     {

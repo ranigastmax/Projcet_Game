@@ -98,6 +98,7 @@ void Game::updateEvents()
 			break;
 		case sf::Event::MouseButtonPressed:
 			this->player->animateAttackMele();
+			this->player->animateAttackDistance();
 			break;
 		case sf::Event::MouseButtonReleased:
 			this->p1->click();
