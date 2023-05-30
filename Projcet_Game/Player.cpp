@@ -17,9 +17,9 @@ Player::Player()
     this->loadTexture("textures/attack_down.png", attack_mele_down_texture);
     this->loadTexture("textures/attack_right.png", attack_mele_right_texture);
     this->loadTexture("textures/attack_left.png", attack_mele_left_texture);
-    this->loadTexture("textures/attack_up.png", attack_distance_up_texture);
-    this->loadTexture("textures/attack_down.png", attack_distance_down_texture);
-    this->loadTexture("textures/attack_left.png", attack_distance_left_texture);
+    this->loadTexture("textures/attack_distance_up.png", attack_distance_up_texture);
+    this->loadTexture("textures/attack_distance_down.png", attack_distance_down_texture);
+    this->loadTexture("textures/attack_distance_left.png", attack_distance_left_texture);
     this->loadTexture("textures/death_right.png", death_texture);
     this->loadTexture("textures/Sword01.png", sword_texture);
     this->loadTexture("textures/EnergySword01.png", fire_sword_texture);
@@ -42,7 +42,7 @@ Player::Player()
     scroll = false;
 
     adjustHp(50);
-
+   
     this->hero.setTexture(breath_texture);
     this->sword.setTexture(sword_texture);
     this->sword.setPosition(423,8);
@@ -57,6 +57,7 @@ Player::Player()
 Player::~Player()
 {
 }
+
 void Player::initIntRect()
 {
     //walk left
@@ -133,7 +134,7 @@ void Player::initIntRect()
     this->distanceAttackLEFT.emplace_back(93,8,15,24);
     this->distanceAttackLEFT.emplace_back(127,6,22,26);
     this->distanceAttackLEFT.emplace_back(160,4,28,30);
-    this->distanceAttackLEFT.emplace_back(179,9,31,26);
+    this->distanceAttackLEFT.emplace_back(201,10,27,25);
     this->distanceAttackLEFT.emplace_back(251,9,17,23);
 
     //attac down distance
@@ -159,8 +160,8 @@ void Player::initIntRect()
     this->distanceAttackRIGHT.emplace_back(51,8,17,24);
     this->distanceAttackRIGHT.emplace_back(88,8,20,24);
     this->distanceAttackRIGHT.emplace_back(129,8,20,24);
-    this->distanceAttackRIGHT.emplace_back(176,9,24,23);
-    this->distanceAttackRIGHT.emplace_back(216,11,27,25);
+    this->distanceAttackRIGHT.emplace_back(176,9,25,23);
+    this->distanceAttackRIGHT.emplace_back(216,11,26,23);
     this->distanceAttackRIGHT.emplace_back(256,10,16,22);
     //breath
     this->breath.emplace_back(10,9,18,23);
@@ -397,7 +398,7 @@ sf::FloatRect Player::herobounds()
             this->hero.getGlobalBounds().width,
             this->hero.getGlobalBounds().height);
     }
-void Player::animationattack()
+void Player::animationattack(sf::Vector2f mouse_position)
     {
         //setting texture rect
         if (attack&&!scroll)
@@ -454,8 +455,23 @@ void Player::animationattack()
                 }
                 this->j++;
                 clock.restart();
+                this->fireball = new Fireball(sf::FloatRect(hero.getGlobalBounds().left,
+                    hero.getGlobalBounds().top,
+                    hero.getGlobalBounds().width,
+                    hero.getGlobalBounds().height),mouse_position);
+                fireball_fly = true;
+                fireball->move();
+
             }
         }
+}
+void Player::render(sf::RenderTarget& target)
+{
+    if (fireball_fly)
+    {
+        target.draw(fireball->render());
+    }
+    target.draw(this->hero);
 }
 sf::Sprite Player::getSprite()
     {
@@ -465,6 +481,7 @@ void Player::rendertext(sf::RenderTarget& target)
 {
     target.draw(this->text);
     target.draw(this->sword);
+
 }
 void Player::scrollChange()
     {

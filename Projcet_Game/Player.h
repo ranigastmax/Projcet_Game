@@ -4,6 +4,7 @@
 #include<vector>
 #include<SFML/Graphics.hpp>
 #include"Characters.h"
+#include"Fireball.h"
 
 class Player : public Characters
 {
@@ -33,6 +34,10 @@ class Player : public Characters
 	sf::Texture fire_sword_texture;
 	sf::Sprite sword;
 	sf::ConvexShape swordHitBox;
+	Fireball* fireball;
+	bool fireball_fly;
+	
+	
 public:
 
 	//constructors-------------------------------------
@@ -53,10 +58,10 @@ public:
 	void releasedWS();
 	sf::FloatRect herobounds();
 	sf::Sprite getSprite();
-
 	void rendertext(sf::RenderTarget& target);
 	void scrollChange();
 	void bounds(std::vector<sf::FloatRect>);
-	void animationattack();
+	void animationattack(sf::Vector2f mouse_position);
+	void render(sf::RenderTarget& target);
 };
 

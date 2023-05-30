@@ -105,10 +105,12 @@ void Game::updateEvents()
 			break;
 		case sf::Event::MouseWheelMoved:
 			this->player->scrollChange();
+			break;
+			
 		}
 	}
 		this->player->animateWalk();
-		this->player->animationattack();
+		this->player->animationattack(mouse_position);
 		this->player->bounds(this->background->wallbounds);
 		this->skeleton1->boundsSkeleton(this->player->herobounds());
 		this->skeleton1->enemymove(this->player->getSprite());
@@ -155,6 +157,6 @@ void Game::update()
 	this->player->update();
 	this->p1->isMouseOver(*this->window);
 	this->updateEvents();
-
+	mouse_position = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 
 }

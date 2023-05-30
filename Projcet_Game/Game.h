@@ -29,6 +29,7 @@ class Game
 	sf::Mouse mouse;
 	sf::Clock enemyAttacksSeed;
 	int x_player, y_player;
+	sf::Vector2f mouse_position;
 
 	int level = 0;
 	int i = 0;

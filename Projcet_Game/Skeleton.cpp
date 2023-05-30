@@ -170,10 +170,10 @@ void Skeleton::animateAttackMele()
 {
     if (blockmove && clock.getElapsedTime().asSeconds() > 0.15)
     {
-        std::cout << moveRight << "right" << std::endl;
-        std::cout << moveUp << "up" << std::endl;
-        std::cout << moveLeft << "left" << std::endl;
-        std::cout << moveDown << "down" << std::endl;
+      //  std::cout << moveRight << "right" << std::endl;
+       // std::cout << moveUp << "up" << std::endl;
+      //  std::cout << moveLeft << "left" << std::endl;
+      //  std::cout << moveDown << "down" << std::endl;
             this->hero.setTexture(attack_texture);
         if(moveRight)
         {
@@ -228,7 +228,7 @@ void Skeleton::attackMele(Characters* object)
                 if(delay.getElapsedTime().asSeconds()>1)
                 { 
                     object->adjustHp(-5);
-                    std::cout << "hit//////////////////////////////////////////////////////////////" << std::endl;
+                 //   std::cout << "hit//////////////////////////////////////////////////////////////" << std::endl;
                     delay.restart();
                 }
                 
