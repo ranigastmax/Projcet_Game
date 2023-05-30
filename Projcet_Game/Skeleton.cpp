@@ -209,12 +209,10 @@ void Skeleton::animateAttackDistance()
 {
 
 }
-
 void Skeleton::animateDeath()
 {
 
 }
-
 void Skeleton::attackMele(Characters* object)
 {
     if (this->hero.getGlobalBounds().intersects(object->getSprite().getGlobalBounds()))
@@ -228,7 +226,7 @@ void Skeleton::attackMele(Characters* object)
                 if(delay.getElapsedTime().asSeconds()>1)
                 { 
                     object->adjustHp(-5);
-                 //   std::cout << "hit//////////////////////////////////////////////////////////////" << std::endl;
+                    std::cout << "hit//////////////////////////////////////////////////////////////" << std::endl;
                     delay.restart();
                 }
                 
@@ -237,6 +235,11 @@ void Skeleton::attackMele(Characters* object)
         }
     }
 
+}
+
+sf::FloatRect Skeleton::enemyFloatRect()
+{
+    return sf::FloatRect(hero.getGlobalBounds().left, hero.getGlobalBounds().top, hero.getGlobalBounds().width, hero.getGlobalBounds().height);
 }
 
 void Skeleton::render(sf::RenderTarget& target)

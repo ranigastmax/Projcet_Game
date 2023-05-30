@@ -18,6 +18,7 @@ public:
 	float attackspeed(float);
 	void hitboxSet();
 	void attackMele(Characters* object);
+	sf::FloatRect enemyFloatRect();
 	
 private:
 	int i = 0;

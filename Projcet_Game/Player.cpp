@@ -57,7 +57,6 @@ Player::Player()
 Player::~Player()
 {
 }
-
 void Player::initIntRect()
 {
     //walk left
@@ -455,13 +454,14 @@ void Player::animationattack(sf::Vector2f mouse_position)
                 }
                 this->j++;
                 clock.restart();
-                this->fireball = new Fireball(sf::FloatRect(hero.getGlobalBounds().left,
-                    hero.getGlobalBounds().top,
-                    hero.getGlobalBounds().width,
-                    hero.getGlobalBounds().height),mouse_position);
-                fireball_fly = true;
-                fireball->move();
-
+                if (j == 4)
+                {
+                    this->fireball = new Fireball(sf::FloatRect(hero.getGlobalBounds().left,
+                        hero.getGlobalBounds().top,
+                        hero.getGlobalBounds().width,
+                        hero.getGlobalBounds().height), mouse_position);
+                        fireball_fly = true;
+                }
             }
         }
 }
@@ -472,6 +472,20 @@ void Player::render(sf::RenderTarget& target)
         target.draw(fireball->render());
     }
     target.draw(this->hero);
+}
+void Player::getBounds(std::vector<sf::FloatRect> &enemy_bounds,std::vector<sf::FloatRect> &wall_bounds)
+{
+        if (fireball_fly)
+        {
+            fireball->movef();
+            fireball->animate();
+            if (fireball->collision(enemy_bounds,wall_bounds))
+            {
+               delete this->fireball;
+               fireball_fly = false;
+                std::cout << "zesrany projekt" << std::endl;
+            }
+        }
 }
 sf::Sprite Player::getSprite()
     {

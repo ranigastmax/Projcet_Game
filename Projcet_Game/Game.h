@@ -24,6 +24,7 @@ class Game
 	Background* menuBack1;
 	Background* menuBack2;
 	std::vector<Skeleton*> enemies;
+	std::vector<sf::FloatRect> enemiesBounds;
 	Skeleton* skeleton1;
 	Skeleton* skeleton2;
 	sf::Mouse mouse;

@@ -26,11 +26,10 @@ void Game::initializeWindow()
 
 
 }
-
 void Game::initializeEnemies(int amount)
 {
 
-	/*if (spawning)
+	if (spawning)
 	{
 		Skeleton* enemy = new Skeleton();
 		enemies.push_back(enemy);
@@ -38,10 +37,8 @@ void Game::initializeEnemies(int amount)
 	if (i < amount) { spawning = true; }
 	else { spawning = false; }
 	i++;
-	*/
+	
 }
-
-
 Game::Game()
 {
 
@@ -51,8 +48,6 @@ Game::Game()
 	this->y_player = 0;
 	srand(time(NULL));
 }
-
-
 Game::~Game()
 {
 	delete this->window;
@@ -60,18 +55,16 @@ Game::~Game()
 	delete this->p1;
 	delete this->background;
 }
-
-
 const bool Game::running() const
 {
 
 	return this->window->isOpen();
 }
 //public 
-
 void Game::updateEvents()
 {
 		this->player->rect_collision.clear();
+
 	while (this->window->pollEvent(this->ev))
 	{
 		switch (this->ev.type)
@@ -153,10 +146,18 @@ void Game::render()
 
 void Game::update()
 {
+	
 	//there is game
+	this->player->getBounds(enemiesBounds, background->wallbounds);
 	this->player->update();
 	this->p1->isMouseOver(*this->window);
 	this->updateEvents();
 	mouse_position = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
-
+	enemiesBounds.clear();
+	for (auto skeleton : enemies)
+	{
+		
+		enemiesBounds.push_back(skeleton->enemyFloatRect());
+	}
+	
 }
