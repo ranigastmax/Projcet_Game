@@ -4,6 +4,7 @@
 #include<iostream>
 class Background
 {
+
 	sf::Texture map_texture;
 	sf::Sprite map;
 	sf::Sprite menuBack1;

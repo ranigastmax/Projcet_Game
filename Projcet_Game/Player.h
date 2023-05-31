@@ -64,5 +64,6 @@ public:
 	void animationattack(sf::Vector2f mouse_position);
 	void render(sf::RenderTarget& target);
 	void getBounds(std::vector<sf::FloatRect> &enemy_bounds, std::vector<sf::FloatRect> &wall_bounds);
+	void weponChange();
 };
 

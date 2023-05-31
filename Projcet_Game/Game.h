@@ -25,8 +25,6 @@ class Game
 	Background* menuBack2;
 	std::vector<Skeleton*> enemies;
 	std::vector<sf::FloatRect> enemiesBounds;
-	Skeleton* skeleton1;
-	Skeleton* skeleton2;
 	sf::Mouse mouse;
 	sf::Clock enemyAttacksSeed;
 	int x_player, y_player;

@@ -25,7 +25,6 @@ Player::Player()
     this->loadTexture("textures/EnergySword01.png", fire_sword_texture);
     this->loadTexture("textures/attack_right_distance.png", attack_distance_right_texture);
     //end of loadnig all textures
-   
     //text settings
     font.loadFromFile("textures/Augusta.ttf");
     this->text.setPosition(455, 8);
@@ -487,6 +486,17 @@ void Player::getBounds(std::vector<sf::FloatRect> &enemy_bounds,std::vector<sf::
             }
         }
 }
+void Player::weponChange()
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
+    {
+        scroll = false;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
+    {
+        scroll = true;
+    }
+}
 sf::Sprite Player::getSprite()
     {
         return this->hero;
@@ -498,10 +508,11 @@ void Player::rendertext(sf::RenderTarget& target)
 
 }
 void Player::scrollChange()
-    {
-        if (scroll) { scroll = false; }
-        else { scroll = true; }
-    }
+{ 
+   if (scroll) { scroll = false; }
+   else { scroll = true; }
+   std::cout << "dup" << std::endl;   
+}
 void Player::bounds(std::vector<sf::FloatRect> wall_bounds)
     {
         for (auto obj : wall_bounds)

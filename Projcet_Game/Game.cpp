@@ -11,9 +11,7 @@ void Game::initializeViriables()
 	this->background = new Background;
 	this->menuBack1 = new Background;
 	this->menuBack2 = new Background;
-	this->p1 = new Button(150,150,"textures/button.png", "textures/button2.png", "textures/button1.png",5,5);
-	this->skeleton1 = new Skeleton;
-	//this->skeleton2 = new Skeleton;
+	this->p1 = new Button(150, 150, "textures/button.png", "textures/button2.png", "textures/button1.png", 5, 5);
 }
 void Game::initializeWindow()
 {
@@ -37,7 +35,7 @@ void Game::initializeEnemies(int amount)
 	if (i < amount) { spawning = true; }
 	else { spawning = false; }
 	i++;
-	
+
 }
 Game::Game()
 {
@@ -63,7 +61,7 @@ const bool Game::running() const
 //public 
 void Game::updateEvents()
 {
-		this->player->rect_collision.clear();
+	this->player->rect_collision.clear();
 
 	while (this->window->pollEvent(this->ev))
 	{
@@ -78,7 +76,8 @@ void Game::updateEvents()
 				this->player->move();
 				this->player->walking = true;
 			}
-				break;
+			this->player->weponChange();
+			break;
 		case sf::Event::KeyReleased:
 			if ((ev.key.code == sf::Keyboard::W) || (ev.key.code == sf::Keyboard::S))
 			{
@@ -105,10 +104,13 @@ void Game::updateEvents()
 		this->player->animateWalk();
 		this->player->animationattack(mouse_position);
 		this->player->bounds(this->background->wallbounds);
-		this->skeleton1->boundsSkeleton(this->player->herobounds());
-		this->skeleton1->enemymove(this->player->getSprite());
-		this->skeleton1->attackMele(this->player);
-		//this->skeleton1->animateAttackMele();
+		for (auto skeleton : enemies)
+		{
+			skeleton->boundsSkeleton(this->player->herobounds());
+			skeleton->enemymove(this->player->getSprite());
+			skeleton->attackMele(this->player);
+			//this->skeleton1->animateAttackMele();
+		}
 		for (auto i : enemies) { i->enemymove(this->player->getSprite()); }
 		this->player->update();
 
@@ -128,7 +130,7 @@ void Game::render()
 		if (this->level == 0)
 		{
 			this->initializeEnemies(5);
-			this->skeleton1->render(*this->window);
+			
 		}
 	
 	}
