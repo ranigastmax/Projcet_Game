@@ -28,6 +28,10 @@ class Player : public Characters
 	int	heroLeft;
 	int	heroRight;
 	bool scroll;
+	sf::Texture stamina_texture;
+	sf::Texture hp_texture;
+	sf::Sprite HP;
+	sf::Sprite STAMINA;
 	sf::Font font;
 	sf::Text text;
 	sf::Texture sword_texture;
@@ -48,6 +52,7 @@ public:
 	bool walking;
 
 	//public functions----------------------------------
+	
 	void move();
 	void animateWalk();
 	void animateAttackMele();

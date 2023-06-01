@@ -33,8 +33,8 @@ sf::Sprite Fireball::render()
 
 void Fireball::movef()
 {
-    std::cout << "----------------------------" << fireball->getGlobalBounds().left << std::endl;
-    std::cout << "----------------------------" << fireball->getGlobalBounds().top << std::endl;
+    //::cout << "----------------------------" << fireball->getGlobalBounds().left << std::endl;
+   // std::cout << "----------------------------" << fireball->getGlobalBounds().top << std::endl;
     fireball->move(direction.x * speed, direction.y * speed);
 
     move = true;

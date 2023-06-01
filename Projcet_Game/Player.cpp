@@ -24,6 +24,9 @@ Player::Player()
     this->loadTexture("textures/Sword01.png", sword_texture);
     this->loadTexture("textures/EnergySword01.png", fire_sword_texture);
     this->loadTexture("textures/attack_right_distance.png", attack_distance_right_texture);
+    this->loadTexture("textures/HpChange.png", hp_texture);
+    this->loadTexture("textures/StaminaChange.png", stamina_texture);
+
     //end of loadnig all textures
     //text settings
     font.loadFromFile("textures/Augusta.ttf");
@@ -41,7 +44,12 @@ Player::Player()
     scroll = false;
 
     adjustHp(50);
-   
+    this->HP.setTexture(hp_texture);
+    this->STAMINA.setTexture(stamina_texture);
+    this->HP.setPosition(476,23);
+    this->STAMINA.setPosition(454, 69);
+    this->HP.scale(0.96, 0.45);
+    this->STAMINA.scale(0.98, 0.38);
     this->hero.setTexture(breath_texture);
     this->sword.setTexture(sword_texture);
     this->sword.setPosition(423,8);
@@ -455,6 +463,7 @@ void Player::animationattack(sf::Vector2f mouse_position)
                 clock.restart();
                 if (j == 4)
                 {
+                   
                     this->fireball = new Fireball(sf::FloatRect(hero.getGlobalBounds().left,
                         hero.getGlobalBounds().top,
                         hero.getGlobalBounds().width,
@@ -471,6 +480,8 @@ void Player::render(sf::RenderTarget& target)
         target.draw(fireball->render());
     }
     target.draw(this->hero);
+    target.draw(this->HP);
+    target.draw(this->STAMINA);
 }
 void Player::getBounds(std::vector<sf::FloatRect> &enemy_bounds,std::vector<sf::FloatRect> &wall_bounds)
 {
