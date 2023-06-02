@@ -49,9 +49,12 @@ protected:
 	bool upFLAG = false;
 	bool walkFLAG = false;
 	bool breathFLAG = false;
+
 	float hero_speedX = 0;
 	float hero_speedY = 0;
+
 	float hp;
+	float maxHP;
 
 
 	//virtual always need to call !!!!!!!!!!!!!!!

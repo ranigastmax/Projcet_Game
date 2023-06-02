@@ -6,6 +6,8 @@ class Background
 {
 
 	sf::Texture map_texture;
+	sf::Texture mapBACK1_texture;
+	sf::Texture mapBACK2_texture;
 	sf::Sprite map;
 	sf::Sprite menuBack1;
 	sf::Sprite menuBack2;

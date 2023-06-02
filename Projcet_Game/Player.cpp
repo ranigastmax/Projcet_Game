@@ -43,17 +43,23 @@ Player::Player()
     movingDown = false;
     scroll = false;
 
-    adjustHp(50);
+    //hp settings
+    adjustHp(this->maxHP);
     this->HP.setTexture(hp_texture);
+    this->HP.setPosition(497,40);
+
+    //stamina settings
     this->STAMINA.setTexture(stamina_texture);
-    this->HP.setPosition(476,23);
     this->STAMINA.setPosition(454, 69);
-    this->HP.scale(0.96, 0.45);
     this->STAMINA.scale(0.98, 0.38);
-    this->hero.setTexture(breath_texture);
+    
+    //sword settings
     this->sword.setTexture(sword_texture);
     this->sword.setPosition(423,8);
     this->sword.scale(1,1);
+    
+    //hero settings
+    this->hero.setTexture(breath_texture);
     this->hero.setTextureRect(sf::IntRect(9, 9, 19, 24));
     this->hero.setPosition(300, 400);
     this->hero.setScale(2.f, 2.f);
@@ -159,8 +165,7 @@ void Player::initIntRect()
     this->distanceAttackUP.emplace_back(169, 0, 17, 32);
     this->distanceAttackUP.emplace_back(208, 0, 17, 32);
     this->distanceAttackUP.emplace_back(251, 6, 15, 26);
-   /* 
-  */  
+
     //attac right distance
     this->distanceAttackRIGHT.emplace_back(11,8,17,24);
     this->distanceAttackRIGHT.emplace_back(51,8,17,24);
@@ -188,6 +193,12 @@ void Player::initIntRect()
 }
 void Player::update()
 {
+    //hp bar changes
+    this->hpDisplay = (this->hp / this->maxHP) * 92;
+    this->HP.setTextureRect(sf::IntRect(0, 0, hpDisplay, 18));
+
+
+    //weapon info change
     if (scroll)
     {
         this->sword.setTexture(fire_sword_texture);
@@ -202,6 +213,8 @@ void Player::update()
         this->text.setString("IRON SWORD");
         
     }
+
+    //smooth move
     if (blockRight)
     {
         movingRight = false;

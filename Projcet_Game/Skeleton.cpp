@@ -128,7 +128,7 @@ void Skeleton::enemymove(sf::Sprite target)
 
     direction /= length;
 
-    float spriteSpeed = 0.8;
+    float spriteSpeed = 0.5;
 
     if (blockmove)
     {

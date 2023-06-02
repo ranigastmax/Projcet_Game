@@ -129,7 +129,7 @@ void Game::render()
 		this->player->render(*this->window);
 		if (this->level == 0)
 		{
-			this->initializeEnemies(5);
+			this->initializeEnemies(1);
 			
 		}
 	

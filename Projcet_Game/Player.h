@@ -28,6 +28,8 @@ class Player : public Characters
 	int	heroLeft;
 	int	heroRight;
 	bool scroll;
+	float hpDisplay;
+	float maxHP = 50;
 	sf::Texture stamina_texture;
 	sf::Texture hp_texture;
 	sf::Sprite HP;

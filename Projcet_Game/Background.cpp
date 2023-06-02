@@ -7,13 +7,18 @@ void Background::loadTexture(std::string path, sf::Texture& textureName)
         std::cerr << "Could not load texture" << std::endl;
     }
     this->map.setTexture(map_texture);
-    this->menuBack1.setTexture(map_texture);
-    this->menuBack2.setTexture(map_texture);
+
 }
 
 Background::Background()
 {
     this->loadTexture("textures/map.png", this->map_texture);
+    this->loadTexture("textures/mapBACK.png", this->mapBACK1_texture);
+    this->loadTexture("textures/mapBACK2.png", this->mapBACK2_texture);
+
+    this->menuBack1.setTexture(mapBACK2_texture);
+    this->menuBack2.setTexture(mapBACK1_texture);
+
     this->map.setPosition(0, 0);
 
     this->menuBack1.setPosition(-632, 0);
