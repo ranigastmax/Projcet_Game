@@ -53,9 +53,10 @@ Player::Player()
     this->HP.setPosition(497,40);
 
     //stamina settings
+    adjustStamina(this->maxStamina);
     this->STAMINA.setTexture(stamina_texture);
-    this->STAMINA.setPosition(454, 69);
-    this->STAMINA.scale(0.98, 0.38);
+    this->STAMINA.setPosition(497, 70);
+     
     
     //sword settings
     this->sword.setTexture(sword_texture);
@@ -241,6 +242,19 @@ void Player::update()
     //hp bar changes
     this->hpDisplay = (this->hp / this->maxHP) * 92;
     this->HP.setTextureRect(sf::IntRect(0, 0, hpDisplay, 18));
+
+    //stamina bar changes
+    this->staminaDisplay = (this->stamina / this->maxStamina) * 92;
+    this->STAMINA.setTextureRect(sf::IntRect(0, 0, staminaDisplay, 18));
+
+    
+    //stamina recovery
+    if (staminaClock.getElapsedTime().asSeconds() > 0.1)
+    { 
+        adjustStamina(1);
+        if (stamina >= this->maxStamina) { this->stamina == this->maxStamina; }
+        staminaClock.restart();
+    }
     
 
     //weapon info change
@@ -374,10 +388,21 @@ void Player::animateWalk()
         }
     }      
 }
+void Player::adjustStamina(int amount)
+{
+    this->stamina += amount;
+
+}
+
+
 void Player::animateAttackMele()
     {
     if (!scroll)
     {
+        //stamina adjust
+        if(!attack)
+        adjustStamina(-10);
+
         //attack left
         if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (hero.getTexture() == &walk_left_texture) || (hero.getTexture() == &attack_mele_left_texture))
         {
@@ -415,6 +440,10 @@ void Player::animateAttackDistance()
     {
     if (scroll)
     {
+        //stamina adjust
+        if(!attack)
+        adjustStamina(-20);
+
         //attack left
         if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (hero.getTexture() == &walk_left_texture) || (hero.getTexture() == &attack_distance_left_texture))
         {
