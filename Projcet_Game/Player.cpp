@@ -74,7 +74,7 @@ Player::Player()
 }
 Player::~Player()
 {
-    delete this->fireball;
+
 }
 void Player::initIntRect()
 {

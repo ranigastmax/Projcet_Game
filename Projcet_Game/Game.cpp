@@ -13,6 +13,10 @@ void Game::initializeViriables()
 	this->menuBack2 = new Background;
 	this->p1 = new Button(150, 150, "textures/button.png", "textures/button2.png", "textures/button1.png", 5, 5);
 }
+
+
+
+
 void Game::initializeWindow()
 {
 	this->videoMode.height = 633;
@@ -21,9 +25,10 @@ void Game::initializeWindow()
 	this->window = new sf::RenderWindow(this->videoMode, "projekt");
 	this->window->setFramerateLimit(90);
 
-
-
 }
+
+
+
 void Game::initializeEnemies(int amount)
 {
 
@@ -37,6 +42,12 @@ void Game::initializeEnemies(int amount)
 	i++;
 
 }
+
+
+
+
+
+
 Game::Game()
 {
 
@@ -46,6 +57,9 @@ Game::Game()
 	this->y_player = 0;
 	srand(time(NULL));
 }
+
+
+
 Game::~Game()
 {
 	delete this->window;
@@ -53,18 +67,23 @@ Game::~Game()
 	delete this->p1;
 	delete this->background;
 }
+
+
+
+
 const bool Game::running() const
 {
 
 	return this->window->isOpen();
 }
 //public 
+
+
+
 void Game::updateEvents()
 {
-	if (!player->herodeath())
-	{
 		this->player->rect_collision.clear();
-	}
+
 	while (this->window->pollEvent(this->ev))
 	{
 		switch (this->ev.type)
@@ -120,6 +139,7 @@ void Game::updateEvents()
 		this->player->animateWalk();
 		this->player->animationattack(mouse_position);
 		this->player->bounds(this->background->wallbounds);
+	}
 		for (auto skeleton : enemies)
 		{
 			skeleton->boundsSkeleton(this->player->herobounds());
@@ -129,7 +149,6 @@ void Game::updateEvents()
 		}
 		for (auto i : enemies) { i->enemymove(this->player->getSprite()); }
 		this->player->update();
-	}
 
 }
 
