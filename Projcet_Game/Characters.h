@@ -22,6 +22,8 @@ protected:
 	sf::Texture attack_distance_left_texture;
 	sf::Texture death_texture_left;
 	sf::Texture death_texture_right;
+	sf::Texture death_texture_up;
+	sf::Texture death_texture_down;
 	sf::Texture walk_texture;
 	sf::Texture attack_texture;
 	std::vector<sf::IntRect> breath;
