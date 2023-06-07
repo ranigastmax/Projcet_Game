@@ -29,7 +29,11 @@ class Game
 	sf::Clock enemyAttacksSeed;
 	int x_player, y_player;
 	sf::Vector2f mouse_position;
-	
+	sf::Font gameOverFONT;
+	sf::Text gameOverText;
+	sf::Clock clock;
+	sf::Sprite blood;
+	sf::Texture blood_teture;
 	int level = 0;
 	int i = 0;
 	bool spawning = false;
