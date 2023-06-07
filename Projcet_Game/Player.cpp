@@ -685,6 +685,7 @@ void Player::render(sf::RenderTarget& target)
     target.draw(this->HP);
     target.draw(this->STAMINA);
     target.draw(this->swordHitBox);
+    target.draw(this->blood);
 }
 
 void Player::getBounds(std::vector<sf::FloatRect> &enemy_bounds,std::vector<sf::FloatRect> &wall_bounds)
