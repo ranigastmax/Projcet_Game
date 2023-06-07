@@ -8,34 +8,26 @@
 
 class Player : public Characters
 {
-
+	//init functions
 	void initcharacters();
 	void initIntRect();
+	int j = 0;
+	
+	//move 
 	float targetY, targetX;
 	float x, y;
 	bool movingLeft;
 	bool movingRight;
 	bool movingUp;
 	bool movingDown;
-	bool attack;
 	bool  blockLeft;
 	bool  blockRight;
 	bool  blockUp;
 	bool  blockDown;
-	int j = 0;
-	int heroDown;
-	int	heroTop;
-	int	heroLeft;
-	int	heroRight;
+	
+	//attack 
+	bool attack;
 	bool scroll;
-	float hpDisplay;
-	float maxHP = 50;
-	sf::Texture stamina_texture;
-	sf::Texture hp_texture;
-	sf::Sprite HP;
-	sf::Sprite STAMINA;
-	sf::Font font;
-	sf::Text text;
 	sf::Texture sword_texture;
 	sf::Texture fire_sword_texture;
 	sf::Sprite sword;
@@ -43,6 +35,28 @@ class Player : public Characters
 	Fireball* fireball;
 	bool fireball_fly;
 	
+	//player bounds
+	int heroDown;
+	int	heroTop;
+	int	heroLeft;
+	int	heroRight;
+
+	//hp and stamina 
+	sf::Clock staminaClock;
+	float hpDisplay;
+	float maxHP = 50;
+	float staminaDisplay;
+	float stamina;
+	float maxStamina = 100;
+	float staminaRecovery = 1;
+	sf::Texture stamina_texture;
+	sf::Texture hp_texture;
+	sf::Sprite HP;
+	sf::Sprite STAMINA;
+	
+	//other
+	sf::Font font;
+	sf::Text text;
 	
 public:
 
@@ -72,5 +86,6 @@ public:
 	void render(sf::RenderTarget& target);
 	void getBounds(std::vector<sf::FloatRect> &enemy_bounds, std::vector<sf::FloatRect> &wall_bounds);
 	void weponChange();
+	void adjustStamina(int);
 };
 

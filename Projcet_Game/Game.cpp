@@ -116,6 +116,7 @@ void Game::updateEvents()
 	}
 	if (!player->herodeath())
 	{
+		
 		this->player->animateWalk();
 		this->player->animationattack(mouse_position);
 		this->player->bounds(this->background->wallbounds);
