@@ -53,7 +53,7 @@ Player::Player()
     this->HP.setPosition(497,40);
 
     //stamina settings
-    adjustStamina(this->maxStamina);
+    adjustStamina(this->maxStamina+10);
     this->STAMINA.setTexture(stamina_texture);
     this->STAMINA.setPosition(497, 70);
      

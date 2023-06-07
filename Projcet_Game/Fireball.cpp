@@ -44,7 +44,7 @@ void Fireball::animate()
 {
     if (move && clock.getElapsedTime().asSeconds() > 0.1)
     {
-        if (i == 3) { i = 0; }
+        if (i == 2) { i = 0; }
         fireball->setTextureRect(frames[i]);
         i++;
         clock.restart();
