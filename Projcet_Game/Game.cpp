@@ -61,8 +61,10 @@ const bool Game::running() const
 //public 
 void Game::updateEvents()
 {
-	this->player->rect_collision.clear();
-
+	if (!player->herodeath())
+	{
+		this->player->rect_collision.clear();
+	}
 	while (this->window->pollEvent(this->ev))
 	{
 		switch (this->ev.type)
@@ -73,10 +75,15 @@ void Game::updateEvents()
 		case sf::Event::KeyPressed:
 			if (ev.key.code == sf::Keyboard::W || ev.key.code == sf::Keyboard::S || ev.key.code == sf::Keyboard::A || ev.key.code == sf::Keyboard::D)
 			{
-				this->player->move();
-				this->player->walking = true;
+
+				if (!player->herodeath())
+				{
+					this->player->move();
+					this->player->walking = true;
+				}
 			}
 			this->player->weponChange();
+	
 			break;
 		case sf::Event::KeyReleased:
 			if ((ev.key.code == sf::Keyboard::W) || (ev.key.code == sf::Keyboard::S))
@@ -89,18 +96,26 @@ void Game::updateEvents()
 			}
 			break;
 		case sf::Event::MouseButtonPressed:
-			this->player->animateAttackMele();
-			this->player->animateAttackDistance();
+			if (!player->herodeath())
+			{
+				this->player->animateAttackMele();
+				this->player->animateAttackDistance();
+			}
 			break;
 		case sf::Event::MouseButtonReleased:
 			this->p1->click();
 			break;
 		case sf::Event::MouseWheelMoved:
-			this->player->scrollChange();
+			if (!player->herodeath())
+			{
+				this->player->scrollChange();
+			}
 			break;
 			
 		}
 	}
+	if (!player->herodeath())
+	{
 		this->player->animateWalk();
 		this->player->animationattack(mouse_position);
 		this->player->bounds(this->background->wallbounds);
@@ -113,6 +128,7 @@ void Game::updateEvents()
 		}
 		for (auto i : enemies) { i->enemymove(this->player->getSprite()); }
 		this->player->update();
+	}
 
 }
 
@@ -140,18 +156,22 @@ void Game::render()
 	this->menuBack2->backgroundMove(*this->window);
 	this->p1->render(*this->window);
 	}
-	//this->player->render(*this->window);
-	//this->p1->render(*this->window);
 	for (auto i : enemies) { i->render(*this->window); }
 	this->window->display();
 }
 
 void Game::update()
 {
-	
+	if (player->herodeath())
+	{
+		player->animateDeath();
+	}
 	//there is game
-	this->player->getBounds(enemiesBounds, background->wallbounds);
-	this->player->update();
+	if (!player->herodeath())
+	{
+		this->player->getBounds(enemiesBounds, background->wallbounds);
+	}
+		this->player->update();
 	this->p1->isMouseOver(*this->window);
 	this->updateEvents();
 	mouse_position = window->mapPixelToCoords(sf::Mouse::getPosition(*window));

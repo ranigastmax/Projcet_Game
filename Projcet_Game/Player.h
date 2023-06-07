@@ -54,7 +54,7 @@ public:
 	bool walking;
 
 	//public functions----------------------------------
-	
+	bool herodeath();
 	void move();
 	void animateWalk();
 	void animateAttackMele();

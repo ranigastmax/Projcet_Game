@@ -205,26 +205,6 @@ void Player::initIntRect()
     this->death_right.emplace_back(255,23,24, 24);
     this->death_right.emplace_back(294,24,26, 24);
     this->death_right.emplace_back(334,24,26, 24);
-    // nie zrobiony
-    this->death_up.emplace_back(13, 8, 18, 24);
-    this->death_up.emplace_back(52, 8, 17, 24);
-    this->death_up.emplace_back(92, 10, 18, 24);
-    this->death_up.emplace_back(132, 11, 18, 24);
-    this->death_up.emplace_back(171, 12, 17, 24);
-    this->death_up.emplace_back(209, 15, 18, 24);
-    this->death_up.emplace_back(242, 23, 24, 24);
-    this->death_up.emplace_back(281, 24, 26, 24);
-    this->death_up.emplace_back(321, 24, 26, 24);
-
-    this->death_down.emplace_back(10, 8, 18, 24);
-    this->death_down.emplace_back(50, 9, 18, 23);
-    this->death_down.emplace_back(90,10,18,22);
-    this->death_down.emplace_back(130,12,18,20);
-    this->death_down.emplace_back(170,15,18,17);
-    this->death_down.emplace_back(210,18,18,14);
-    this->death_down.emplace_back(252,20,15,20);
-    this->death_down.emplace_back(293,18,15,22);
-    this->death_down.emplace_back(333,18,15,22);
 
 }
 bool Player::herodeath()

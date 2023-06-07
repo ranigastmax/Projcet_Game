@@ -20,7 +20,8 @@ protected:
 	sf::Texture attack_distance_down_texture;
 	sf::Texture attack_distance_right_texture;
 	sf::Texture attack_distance_left_texture;
-	sf::Texture death_texture;
+	sf::Texture death_texture_left;
+	sf::Texture death_texture_right;
 	sf::Texture walk_texture;
 	sf::Texture attack_texture;
 	std::vector<sf::IntRect> breath;
@@ -36,7 +37,10 @@ protected:
 	std::vector<sf::IntRect> distanceAttackDOWN;
 	std::vector<sf::IntRect> distanceAttackRIGHT;
 	std::vector<sf::IntRect> distanceAttackLEFT;
-	std::vector<sf::IntRect> death;
+	std::vector<sf::IntRect> death_left;
+	std::vector<sf::IntRect> death_right;
+	std::vector<sf::IntRect> death_down;
+	std::vector<sf::IntRect> death_up;
 
 	sf::Clock clock;
 	sf::Sprite hero;
