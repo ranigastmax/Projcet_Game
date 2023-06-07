@@ -55,7 +55,8 @@ class Player : public Characters
 	//other
 	sf::Font font;
 	sf::Text text;
-	
+	sf::Sprite blood;
+	sf::Texture blood_teture;
 public:
 
 	//constructors-------------------------------------

@@ -15,8 +15,6 @@ void Game::initializeViriables()
 }
 
 
-
-
 void Game::initializeWindow()
 {
 	this->videoMode.height = 633;
@@ -26,7 +24,6 @@ void Game::initializeWindow()
 	this->window->setFramerateLimit(90);
 
 }
-
 
 
 void Game::initializeEnemies(int amount)
@@ -44,10 +41,6 @@ void Game::initializeEnemies(int amount)
 }
 
 
-
-
-
-
 Game::Game()
 {
 
@@ -56,8 +49,17 @@ Game::Game()
 	this->x_player = 0;
 	this->y_player = 0;
 	srand(time(NULL));
+	if (!gameOverFONT.loadFromFile("textures/Exquisite Corpse.ttf"))
+	{
+		std::cout << "nie udalo sie zaladowac font a" << std::endl;
+	}
+	gameOverText.setFont(gameOverFONT);
+	gameOverText.setString("GAME OVER");
+	gameOverText.setCharacterSize(100);
+	gameOverText.setFillColor(sf::Color(125, 7, 7, 0)); 
+	gameOverText.setPosition(85,250);
+	
 }
-
 
 
 Game::~Game()
@@ -69,15 +71,12 @@ Game::~Game()
 }
 
 
-
-
 const bool Game::running() const
 {
 
 	return this->window->isOpen();
 }
 //public 
-
 
 
 void Game::updateEvents()
@@ -144,12 +143,17 @@ void Game::updateEvents()
 		{
 			skeleton->boundsSkeleton(this->player->herobounds());
 			skeleton->enemymove(this->player->getSprite());
-			skeleton->attackMele(this->player);
+			if (!player->herodeath())
+			{
+				skeleton->attackMele(this->player);
+			}
 			//this->skeleton1->animateAttackMele();
 		}
 		for (auto i : enemies) { i->enemymove(this->player->getSprite()); }
-		this->player->update();
-
+		if (!player->herodeath())
+		{
+			this->player->update();
+		}
 }
 
 
@@ -177,6 +181,15 @@ void Game::render()
 	this->p1->render(*this->window);
 	}
 	for (auto i : enemies) { i->render(*this->window); }
+	if (player->herodeath())
+	{
+		this->window->draw(gameOverText);
+		if (clock.getElapsedTime().asSeconds() < 3)
+		{
+			float color = clock.getElapsedTime().asSeconds() * 80;
+			gameOverText.setFillColor(sf::Color(125, 7, 7, color));
+		}
+	}
 	this->window->display();
 }
 
@@ -189,6 +202,7 @@ void Game::update()
 	//there is game
 	if (!player->herodeath())
 	{
+		clock.restart();
 		this->player->getBounds(enemiesBounds, background->wallbounds);
 	}
 		this->player->update();

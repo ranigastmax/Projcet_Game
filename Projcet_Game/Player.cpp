@@ -5,6 +5,7 @@ void Player::initcharacters()
 {
 
 }
+
 Player::Player()
 {
 
@@ -30,6 +31,7 @@ Player::Player()
     this->loadTexture("textures/attack_right_distance.png", attack_distance_right_texture);
     this->loadTexture("textures/HpChange.png", hp_texture);
     this->loadTexture("textures/StaminaChange.png", stamina_texture);
+    this->loadTexture("textures/BloodOverlay.png", blood_teture);
 
     //end of loadnig all textures
     //text settings
@@ -38,7 +40,10 @@ Player::Player()
     this->text.setFont(font);
     this->text.scale(0.6,0.6);
     this->text.setFillColor(sf::Color(226, 226, 226));
-
+    blood.setTexture(blood_teture);
+    blood.setColor(sf::Color(255, 255, 255, 0));
+    blood.scale(2.53, 4.15);
+    
 
     //set init stats
     movingLeft = false;
@@ -72,10 +77,12 @@ Player::Player()
     
     
 }
+
 Player::~Player()
 {
 
 }
+
 void Player::initIntRect()
 {
     //walk left
@@ -189,23 +196,23 @@ void Player::initIntRect()
     //death
     this->death_left.emplace_back(13,8,18,24);
     this->death_left.emplace_back(52,8,17,24);
-    this->death_left.emplace_back(92,10,18, 24);
-    this->death_left.emplace_back(132,11,18, 24);
-    this->death_left.emplace_back(171,12,17, 24);
-    this->death_left.emplace_back(209,15,18, 24);
-    this->death_left.emplace_back(242,23,24, 24);
-    this->death_left.emplace_back(281,24,26, 24);
-    this->death_left.emplace_back(321,24,26, 24);
+    this->death_left.emplace_back(92,8,18, 24);
+    this->death_left.emplace_back(132,8,18, 24);
+    this->death_left.emplace_back(171,8,17, 24);
+    this->death_left.emplace_back(209,8,18, 24);
+    this->death_left.emplace_back(242,8,24, 24);
+    this->death_left.emplace_back(281,8,26, 24);
+    this->death_left.emplace_back(321,8,26, 24);
 
     this->death_right.emplace_back(10,8,18,24);
     this->death_right.emplace_back(51,8,18,24);
-    this->death_right.emplace_back(91,10,18, 24);
-    this->death_right.emplace_back(131,11,18, 24);
-    this->death_right.emplace_back(172,12,17, 24);
-    this->death_right.emplace_back(214,15,18, 24);
-    this->death_right.emplace_back(255,23,24, 24);
-    this->death_right.emplace_back(294,24,26, 24);
-    this->death_right.emplace_back(334,24,26, 24);
+    this->death_right.emplace_back(91,8,18, 24);
+    this->death_right.emplace_back(131,8,18, 24);
+    this->death_right.emplace_back(172,8,17, 24);
+    this->death_right.emplace_back(214,8,18, 24);
+    this->death_right.emplace_back(255,8,24, 24);
+    this->death_right.emplace_back(294,8,26, 24);
+    this->death_right.emplace_back(334,8,26, 24);
    
     this->death_up.emplace_back(13,8,15,24);
     this->death_up.emplace_back(53,8,15,24);
@@ -218,31 +225,38 @@ void Player::initIntRect()
     this->death_up.emplace_back(173, 15, 15, 18);
 
     this->death_down.emplace_back(10, 8, 18, 24);
-    this->death_down.emplace_back(50, 9, 18, 23);
-    this->death_down.emplace_back(90,10,18,22);
-    this->death_down.emplace_back(130,12,18,20);
-    this->death_down.emplace_back(170,15,18,17);
-    this->death_down.emplace_back(210,18,18,14);
-    this->death_down.emplace_back(252,20,15,20);
-    this->death_down.emplace_back(293,18,15,22);
-    this->death_down.emplace_back(333,18,15,22);
+    this->death_down.emplace_back(50, 8, 18, 24);
+    this->death_down.emplace_back(90,8,18,24);
+    this->death_down.emplace_back(130,8,18,24);
+    this->death_down.emplace_back(170,8,18,24);
+    this->death_down.emplace_back(210,8,18,24);
+    this->death_down.emplace_back(252,8,15,31);
+    this->death_down.emplace_back(293,8,15,31);
+    this->death_down.emplace_back(333,8,15,31);
 
 }
+
 bool Player::herodeath()
 {
-    if (hpDisplay == 0)
+    if (hpDisplay <= 0)
     {
         return true;
         i = 0;
     }
     else return false;
 }
+
 void Player::update()
 {
     //hp bar changes
+    
     this->hpDisplay = (this->hp / this->maxHP) * 92;
-    this->HP.setTextureRect(sf::IntRect(0, 0, hpDisplay, 18));
-
+    float hpDisplayAlpha = (1.0f - (this->hp / this->maxHP)) * 255;
+    blood.setColor(sf::Color(255, 255, 255, static_cast<sf::Uint8>(hpDisplayAlpha)));
+    if (hpDisplay >= 0)
+    {
+        this->HP.setTextureRect(sf::IntRect(0, 0, hpDisplay, 18));
+    }
     //stamina bar changes
     this->staminaDisplay = (this->stamina / this->maxStamina) * 92;
     this->STAMINA.setTextureRect(sf::IntRect(0, 0, staminaDisplay, 18));
@@ -330,6 +344,7 @@ void Player::update()
     }
         this->hero.move(x, y);
 }
+
 void Player::move()
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)&&!movingRight&&!blockLeft)
@@ -349,6 +364,7 @@ void Player::move()
         movingUp = true;
     }
 }
+
 void Player::animateWalk()
 {
     if (walking)
@@ -390,11 +406,11 @@ void Player::animateWalk()
         }
     }      
 }
+
 void Player::adjustStamina(float amount)
 {
     this->stamina += amount;
 }
-
 
 void Player::animateAttackMele()
     {
@@ -437,6 +453,7 @@ void Player::animateAttackMele()
         }
     }
 }
+
 void Player::animateAttackDistance()
     {
     if (scroll&&stamina >= 20)
@@ -471,60 +488,67 @@ void Player::animateAttackDistance()
         }
     }
 }
+
 void Player::animateDeath()
 {
-    if (clock.getElapsedTime().asSeconds() > 0.3 && ((hero.getTexture() == &walk_left_texture) ||
-        (hero.getTexture() == &attack_mele_left_texture) || (hero.getTexture() == &attack_distance_left_texture)||
-        (hero.getTexture()==&death_texture_left)))
+    if (i != 8)
     {
-    this->hero.setTexture(death_texture_left);
-        if (i == 8) { i = 0; }
-        this->hero.setTextureRect(death_left[i]);
-        i++;
-        clock.restart();
+        if (clock.getElapsedTime().asSeconds() > 0.3 && ((hero.getTexture() == &walk_left_texture) ||
+            (hero.getTexture() == &attack_mele_left_texture) || (hero.getTexture() == &attack_distance_left_texture) ||
+            (hero.getTexture() == &death_texture_left)))
+        {
+            this->hero.setTexture(death_texture_left);
+
+            this->hero.setTextureRect(death_left[i]);
+            i++;
+            clock.restart();
+        }
+        if (clock.getElapsedTime().asSeconds() > 0.3 && ((hero.getTexture() == &walk_right_texture)
+            || (hero.getTexture() == &attack_mele_right_texture) ||
+            (hero.getTexture() == &attack_distance_right_texture)
+            || (hero.getTexture() == &death_texture_right)))
+        {
+            this->hero.setTexture(death_texture_right);
+
+            this->hero.setTextureRect(death_right[i]);
+            i++;
+            clock.restart();
+        }
+        if (clock.getElapsedTime().asSeconds() > 0.3 && ((hero.getTexture() == &walk_down_texture) ||
+            (hero.getTexture() == &attack_mele_down_texture) || (hero.getTexture() == &attack_distance_down_texture) ||
+            (hero.getTexture() == &death_texture_down)))
+        {
+            this->hero.setTexture(death_texture_down);
+
+            this->hero.setTextureRect(death_down[i]);
+            i++;
+            clock.restart();
+        }
+        if (clock.getElapsedTime().asSeconds() > 0.3 && ((hero.getTexture() == &walk_up_texture) ||
+            (hero.getTexture() == &attack_mele_up_texture) || (hero.getTexture() == &attack_distance_up_texture) ||
+            (hero.getTexture() == &death_texture_up)))
+        {
+            this->hero.setTexture(death_texture_up);
+
+            this->hero.setTextureRect(death_up[i]);
+            i++;
+            clock.restart();
+        }
     }
-    if (clock.getElapsedTime().asSeconds() > 0.3 && ((hero.getTexture() == &walk_right_texture)
-        || (hero.getTexture() == &attack_mele_right_texture)||
-        (hero.getTexture() == &attack_distance_right_texture)
-        || (hero.getTexture() == &death_texture_right)))
-    {
-        this->hero.setTexture(death_texture_right);
-        if (i == 8) { i = 0; }
-        this->hero.setTextureRect(death_right[i]);
-        i++;
-        clock.restart();
-    }
-     if (clock.getElapsedTime().asSeconds() > 0.3 && ((hero.getTexture() == &walk_down_texture) ||
-        (hero.getTexture() == &attack_mele_down_texture) || (hero.getTexture() == &attack_distance_down_texture)||
-        (hero.getTexture()==&death_texture_down)))
-    {
-    this->hero.setTexture(death_texture_down);
-        if (i == 8) { i = 0; }
-        this->hero.setTextureRect(death_down[i]);
-        i++;
-        clock.restart();
-    }
-     if (clock.getElapsedTime().asSeconds() > 0.3 && ((hero.getTexture() == &walk_up_texture) ||
-         (hero.getTexture() == &attack_mele_up_texture) || (hero.getTexture() == &attack_distance_up_texture) ||
-         (hero.getTexture() == &death_texture_up)))
-     {
-         this->hero.setTexture(death_texture_up);
-         if (i == 8) { i = 0; }
-         this->hero.setTextureRect(death_up[i]);
-         i++;
-         clock.restart();
-     }
 }
+
 void Player::releasedAD()
 {
     movingLeft = false;
     movingRight = false;
 }
+
 void Player::releasedWS()
     {
         movingUp = false;
         movingDown = false;
     }
+
 sf::FloatRect Player::herobounds()
     {
         return sf::FloatRect(this->hero.getGlobalBounds().left,
@@ -532,6 +556,7 @@ sf::FloatRect Player::herobounds()
             this->hero.getGlobalBounds().width,
             this->hero.getGlobalBounds().height);
     }
+
 void Player::animationattack(sf::Vector2f mouse_position)
     {
         //setting texture rect
@@ -601,6 +626,7 @@ void Player::animationattack(sf::Vector2f mouse_position)
             }
         }
 }
+
 void Player::render(sf::RenderTarget& target)
 {
     if (fireball_fly)
@@ -610,7 +636,9 @@ void Player::render(sf::RenderTarget& target)
     target.draw(this->hero);
     target.draw(this->HP);
     target.draw(this->STAMINA);
+    target.draw(this->blood);
 }
+
 void Player::getBounds(std::vector<sf::FloatRect> &enemy_bounds,std::vector<sf::FloatRect> &wall_bounds)
 {
         if (fireball_fly)
@@ -625,6 +653,7 @@ void Player::getBounds(std::vector<sf::FloatRect> &enemy_bounds,std::vector<sf::
             }
         }
 }
+
 void Player::weponChange()
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
@@ -636,22 +665,26 @@ void Player::weponChange()
         scroll = true;
     }
 }
+
 sf::Sprite Player::getSprite()
     {
         return this->hero;
     }
+
 void Player::rendertext(sf::RenderTarget& target)
 {
     target.draw(this->text);
     target.draw(this->sword);
 
 }
+
 void Player::scrollChange()
 { 
    if (scroll) { scroll = false; }
    else { scroll = true; }
    std::cout << "dup" << std::endl;   
 }
+
 void Player::bounds(std::vector<sf::FloatRect> wall_bounds)
     {
         for (auto obj : wall_bounds)
@@ -726,4 +759,4 @@ void Player::bounds(std::vector<sf::FloatRect> wall_bounds)
         }
       
     }
-    
+
