@@ -50,8 +50,6 @@ class Player : public Characters
 	float maxStamina = 100;
 	float staminaRecovery = 1;
 	sf::Texture stamina_texture;
-	sf::Texture hp_texture;
-	sf::Sprite HP;
 	sf::Sprite STAMINA;
 	
 	//other
@@ -86,6 +84,6 @@ public:
 	void render(sf::RenderTarget& target);
 	void getBounds(std::vector<sf::FloatRect> &enemy_bounds, std::vector<sf::FloatRect> &wall_bounds);
 	void weponChange();
-	void adjustStamina(int);
+	void adjustStamina(float);
 };
 

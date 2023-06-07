@@ -59,6 +59,8 @@ protected:
 
 	float hp;
 	float maxHP;
+	sf::Texture hp_texture;
+	sf::Sprite HP;
 
 
 	//virtual always need to call !!!!!!!!!!!!!!!

@@ -250,9 +250,11 @@ void Player::update()
     
     //stamina recovery
     if (staminaClock.getElapsedTime().asSeconds() > 0.1)
-    { 
-        adjustStamina(1);
-        if (stamina >= this->maxStamina) { this->stamina == this->maxStamina; }
+    {
+        std::cout << stamina << std::endl;
+        adjustStamina(0.5);
+        if (stamina >= this->maxStamina) { this->stamina = this->maxStamina; }
+        if (stamina <= 0) { this->stamina = 0; }
         staminaClock.restart();
     }
     
@@ -388,16 +390,15 @@ void Player::animateWalk()
         }
     }      
 }
-void Player::adjustStamina(int amount)
+void Player::adjustStamina(float amount)
 {
     this->stamina += amount;
-
 }
 
 
 void Player::animateAttackMele()
     {
-    if (!scroll)
+    if (!scroll&&stamina>=10)
     {
         //stamina adjust
         if(!attack)
@@ -438,7 +439,7 @@ void Player::animateAttackMele()
 }
 void Player::animateAttackDistance()
     {
-    if (scroll)
+    if (scroll&&stamina >= 20)
     {
         //stamina adjust
         if(!attack)
