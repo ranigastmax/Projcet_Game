@@ -23,8 +23,8 @@ Player::Player()
     this->loadTexture("textures/attack_distance_left.png", attack_distance_left_texture);
     this->loadTexture("textures/death_left.png", death_texture_left);
     this->loadTexture("textures/death_right.png", death_texture_right);
-    this->loadTexture("textures/death_left.png", death_texture_left);
-    this->loadTexture("textures/death_right.png", death_texture_right);
+    this->loadTexture("textures/death_down.png", death_texture_down);
+    this->loadTexture("textures/death_up.png", death_texture_up);
     this->loadTexture("textures/Sword01.png", sword_texture);
     this->loadTexture("textures/EnergySword01.png", fire_sword_texture);
     this->loadTexture("textures/attack_right_distance.png", attack_distance_right_texture);
@@ -205,16 +205,16 @@ void Player::initIntRect()
     this->death_right.emplace_back(255,23,24, 24);
     this->death_right.emplace_back(294,24,26, 24);
     this->death_right.emplace_back(334,24,26, 24);
-    // nie zrobiony
-    this->death_up.emplace_back(13, 8, 18, 24);
-    this->death_up.emplace_back(52, 8, 17, 24);
-    this->death_up.emplace_back(92, 10, 18, 24);
-    this->death_up.emplace_back(132, 11, 18, 24);
-    this->death_up.emplace_back(171, 12, 17, 24);
-    this->death_up.emplace_back(209, 15, 18, 24);
-    this->death_up.emplace_back(242, 23, 24, 24);
-    this->death_up.emplace_back(281, 24, 26, 24);
-    this->death_up.emplace_back(321, 24, 26, 24);
+   
+    this->death_up.emplace_back(13,8,15,24);
+    this->death_up.emplace_back(53,8,15,24);
+    this->death_up.emplace_back(93,10,15,22);
+    this->death_up.emplace_back(133,13,15,20);
+    this->death_up.emplace_back(173,15,15,18);
+    this->death_up.emplace_back(173, 15, 15, 18);
+    this->death_up.emplace_back(173, 15, 15, 18);
+    this->death_up.emplace_back(173, 15, 15, 18);
+    this->death_up.emplace_back(173, 15, 15, 18);
 
     this->death_down.emplace_back(10, 8, 18, 24);
     this->death_down.emplace_back(50, 9, 18, 23);
@@ -464,7 +464,26 @@ void Player::animateDeath()
         i++;
         clock.restart();
     }
-
+     if (clock.getElapsedTime().asSeconds() > 0.3 && ((hero.getTexture() == &walk_down_texture) ||
+        (hero.getTexture() == &attack_mele_down_texture) || (hero.getTexture() == &attack_distance_down_texture)||
+        (hero.getTexture()==&death_texture_down)))
+    {
+    this->hero.setTexture(death_texture_down);
+        if (i == 8) { i = 0; }
+        this->hero.setTextureRect(death_down[i]);
+        i++;
+        clock.restart();
+    }
+     if (clock.getElapsedTime().asSeconds() > 0.3 && ((hero.getTexture() == &walk_up_texture) ||
+         (hero.getTexture() == &attack_mele_up_texture) || (hero.getTexture() == &attack_distance_up_texture) ||
+         (hero.getTexture() == &death_texture_up)))
+     {
+         this->hero.setTexture(death_texture_up);
+         if (i == 8) { i = 0; }
+         this->hero.setTextureRect(death_up[i]);
+         i++;
+         clock.restart();
+     }
 }
 void Player::releasedAD()
 {
