@@ -58,5 +58,10 @@ void Characters::animateBreath()
     }
 }
 
+int Characters::getHP()
+{
+    return this->hp;
+}
+
 
 

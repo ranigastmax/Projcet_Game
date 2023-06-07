@@ -95,7 +95,7 @@ public:
 	virtual void animateAttackDistance()=0;
 	virtual void animateDeath()=0;
 	
-
+	int getHP();
 	
 };
 

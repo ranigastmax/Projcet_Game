@@ -31,7 +31,7 @@ class Player : public Characters
 	sf::Texture sword_texture;
 	sf::Texture fire_sword_texture;
 	sf::Sprite sword;
-	sf::ConvexShape swordHitBox;
+	sf::RectangleShape swordHitBox;
 	Fireball* fireball;
 	bool fireball_fly;
 	
@@ -83,7 +83,10 @@ public:
 	void animationattack(sf::Vector2f mouse_position);
 	void render(sf::RenderTarget& target);
 	void getBounds(std::vector<sf::FloatRect> &enemy_bounds, std::vector<sf::FloatRect> &wall_bounds);
+	void acctualBounds();
 	void weponChange();
 	void adjustStamina(float);
+	void hitboxSet(int);
+	void swordDamage(Characters& targer);
 };
 

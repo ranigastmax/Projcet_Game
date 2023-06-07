@@ -239,6 +239,8 @@ bool Player::herodeath()
 }
 void Player::update()
 {
+    this->acctualBounds();
+
     //hp bar changes
     this->hpDisplay = (this->hp / this->maxHP) * 92;
     this->HP.setTextureRect(sf::IntRect(0, 0, hpDisplay, 18));
@@ -251,7 +253,7 @@ void Player::update()
     //stamina recovery
     if (staminaClock.getElapsedTime().asSeconds() > 0.1)
     {
-        std::cout << stamina << std::endl;
+        //std::cout << stamina << std::endl;
         adjustStamina(0.5);
         if (stamina >= this->maxStamina) { this->stamina = this->maxStamina; }
         if (stamina <= 0) { this->stamina = 0; }
@@ -272,6 +274,7 @@ void Player::update()
         this->sword.setTexture(sword_texture);
         this->text.setFillColor(sf::Color(226,226,226));
         this->text.setString("IRON SWORD");
+        this->hitboxSet(2);
         
     }
 
@@ -400,6 +403,9 @@ void Player::animateAttackMele()
     {
     if (!scroll&&stamina>=10)
     {
+        
+        
+
         //stamina adjust
         if(!attack)
         adjustStamina(-10);
@@ -410,6 +416,7 @@ void Player::animateAttackMele()
             std::cout << "ustawiam texture na atak w lewo" << std::endl;
             this->hero.setTexture(attack_mele_left_texture);
             this->attack = true;
+            this->hitboxSet(1);
         }
 
         //attack right
@@ -515,6 +522,50 @@ void Player::animateDeath()
          clock.restart();
      }
 }
+void Player::acctualBounds()
+{
+    this->heroDown = this->hero.getGlobalBounds().top + this->hero.getGlobalBounds().height;
+    this->heroTop = this->hero.getGlobalBounds().top;
+    this->heroRight = this->hero.getGlobalBounds().left + this->hero.getGlobalBounds().width;
+    this->heroLeft = this->hero.getGlobalBounds().left;
+}
+void Player::hitboxSet(int side)
+{
+    swordHitBox.setFillColor(sf::Color::Transparent);
+    if (this->hero.getTexture() == &this->attack_mele_left_texture)
+    {
+        swordHitBox.setSize(sf::Vector2f(16, 40));
+        swordHitBox.setPosition(this->heroLeft - 8, this->heroTop- 6);
+    }
+    else if (this->hero.getTexture() == &this->attack_mele_right_texture)
+    {
+        swordHitBox.setSize(sf::Vector2f(16, 40));
+        swordHitBox.setPosition(this->heroRight + 8, this->heroTop - 6);
+    }
+    else if (this->hero.getTexture() == &this->attack_mele_down_texture)
+    {
+        swordHitBox.setSize(sf::Vector2f(40, 16));
+        swordHitBox.setPosition(this->heroLeft, this->heroDown + 5);
+    }
+    else if (this->hero.getTexture() == &this->attack_mele_up_texture)
+    {
+        swordHitBox.setSize(sf::Vector2f(40, 16));
+        swordHitBox.setPosition(this->heroLeft, this->heroTop - 5);
+    }
+    else { swordHitBox.setPosition(-1000, -1000); }
+
+
+        //swordHitBox.setOutlineColor(sf::Color::Red);
+        //swordHitBox.setOutlineThickness(3);
+}
+void Player::swordDamage(Characters& target)
+{
+    if (this->swordHitBox.getGlobalBounds().intersects(target.getSprite().getGlobalBounds()))
+    {
+        target.adjustHp(-7);
+        //std::cout << target.getHP() << std::endl;
+    }
+}
 void Player::releasedAD()
 {
     movingLeft = false;
@@ -610,6 +661,7 @@ void Player::render(sf::RenderTarget& target)
     target.draw(this->hero);
     target.draw(this->HP);
     target.draw(this->STAMINA);
+    target.draw(this->swordHitBox);
 }
 void Player::getBounds(std::vector<sf::FloatRect> &enemy_bounds,std::vector<sf::FloatRect> &wall_bounds)
 {

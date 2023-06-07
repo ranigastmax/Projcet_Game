@@ -18,6 +18,7 @@ public:
 	float attackspeed(float);
 	void hitboxSet();
 	void attackMele(Characters* object);
+	void update();
 	sf::FloatRect enemyFloatRect();
 	
 private:
@@ -34,5 +35,7 @@ private:
 	bool moveLeft;
 	bool moveDown;
 	bool moveUp;
+
+	float maxHP = 20;	
 };
 

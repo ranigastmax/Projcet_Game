@@ -145,10 +145,13 @@ void Game::updateEvents()
 			skeleton->boundsSkeleton(this->player->herobounds());
 			skeleton->enemymove(this->player->getSprite());
 			skeleton->attackMele(this->player);
+			skeleton->update();
+			skeleton->enemymove(this->player->getSprite());
+			this->player->swordDamage(*skeleton);
 			//this->skeleton1->animateAttackMele();
 		}
-		for (auto i : enemies) { i->enemymove(this->player->getSprite()); }
 		this->player->update();
+		
 
 }
 
@@ -203,3 +206,4 @@ void Game::update()
 	}
 	
 }
+

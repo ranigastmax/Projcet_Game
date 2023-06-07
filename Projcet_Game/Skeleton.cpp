@@ -11,7 +11,12 @@ Skeleton::Skeleton()
     this->hero.setPosition((std::rand() % 542+ 30), (std::rand() % 400 + 128));
     this->hero.setScale(2, 2);
 
+    this->loadTexture("textures/HpChange.png", hp_texture);
 
+    adjustHp(this->maxHP);
+    this->HP.setTexture(hp_texture);
+    this->HP.setScale(0.4, 0.4);
+    this->HP.setOrigin(this->HP.getGlobalBounds().width / 2, this->HP.getGlobalBounds().height / 2);
 }
 
 void Skeleton::initIntRect()
@@ -237,6 +242,11 @@ void Skeleton::attackMele(Characters* object)
 
 }
 
+void Skeleton::update()
+{
+    this->HP.setPosition(this->hero.getGlobalBounds().left, this->hero.getGlobalBounds().top - 10);
+}
+
 sf::FloatRect Skeleton::enemyFloatRect()
 {
     return sf::FloatRect(hero.getGlobalBounds().left, hero.getGlobalBounds().top, hero.getGlobalBounds().width, hero.getGlobalBounds().height);
@@ -245,6 +255,7 @@ sf::FloatRect Skeleton::enemyFloatRect()
 void Skeleton::render(sf::RenderTarget& target)
 {
     target.draw(this->hero);
+    target.draw(this->HP);
 }
 void Skeleton::boundsSkeleton(sf::FloatRect herobounds)
 {
