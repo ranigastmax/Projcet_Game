@@ -12,6 +12,25 @@ void Game::initializeViriables()
 	this->menuBack1 = new Background;
 	this->menuBack2 = new Background;
 	this->p1 = new Button(150, 150, "textures/button.png", "textures/button2.png", "textures/button1.png", 5, 5);
+	this->x_player = 0;
+	this->y_player = 0;
+	if (!door_teture.loadFromFile("textures/OpenDoor.png"))
+	{
+		std::cout << "nie udalo sie zaladowac drzwi" << std::endl;
+	}
+	if (!gameOverFONT.loadFromFile("textures/Exquisite Corpse.ttf"))
+	{
+		std::cout << "nie udalo sie zaladowac font a" << std::endl;
+	}
+	door->setTexture(door_teture);
+	door->setPosition(267, 33);
+	door->setColor(sf::Color(255, 255, 255, 0));
+	gameOverText.setFont(gameOverFONT);
+	gameOverText.setString("GAME OVER");
+	gameOverText.setCharacterSize(100);
+	gameOverText.setFillColor(sf::Color(125, 7, 7, 0)); 
+	gameOverText.setPosition(85,250);
+
 }
 
 
@@ -31,8 +50,10 @@ void Game::initializeEnemies(int amount)
 
 	if (spawning)
 	{
+		
 		Skeleton* enemy = new Skeleton();
 		enemies.push_back(enemy);
+		
 	}
 	if (i < amount) { spawning = true; }
 	else { spawning = false; }
@@ -44,27 +65,9 @@ void Game::initializeEnemies(int amount)
 Game::Game()
 {
 	this->door = new sf::Sprite;
-	if (!door_teture.loadFromFile("textures/OpenDoor.png"))
-	{
-		std::cout << "nie udalo sie zaladowac drzwi" << std::endl;
-	}
-	door->setTexture(door_teture);
-	door->setPosition(267, 33);
-	door->setColor(sf::Color(255, 255, 255, 0));
 	this->initializeViriables();
 	this->initializeWindow();
-	this->x_player = 0;
-	this->y_player = 0;
 	srand(time(NULL));
-	if (!gameOverFONT.loadFromFile("textures/Exquisite Corpse.ttf"))
-	{
-		std::cout << "nie udalo sie zaladowac font a" << std::endl;
-	}
-	gameOverText.setFont(gameOverFONT);
-	gameOverText.setString("GAME OVER");
-	gameOverText.setCharacterSize(100);
-	gameOverText.setFillColor(sf::Color(125, 7, 7, 0)); 
-	gameOverText.setPosition(85,250);
 	
 }
 
@@ -88,7 +91,7 @@ const bool Game::running() const
 
 void Game::updateEvents()
 {
-		this->player->rect_collision.clear();
+	this->player->rect_collision.clear();
 
 	while (this->window->pollEvent(this->ev))
 	{
@@ -151,6 +154,11 @@ void Game::updateEvents()
 			if (!player->herodeath())
 			{
 				skeleton->boundsSkeleton(this->player->herobounds());
+				for (auto s : enemies)
+				{
+					skeleton->boundsSkeleton(s->enemyFloatRect());
+
+				}
 				skeleton->enemymove(this->player->getSprite());
 				skeleton->attackMele(this->player);
 				skeleton->update();
@@ -163,19 +171,6 @@ void Game::updateEvents()
 
 }
 
-void Game::doorAnimation()
-{
-	if (clock.getElapsedTime().asSeconds() < 3)
-	{
-
-		door->setColor(sf::Color(255, 255, 255, clock.getElapsedTime().asSeconds() * 70));
-	}
-	else
-	{
-		doorIsOpen = true;
-	}
-	
-}
 
 
 void Game::render()
@@ -187,14 +182,17 @@ void Game::render()
 	{
 		this->background->render(*this->window);
 		this->player->rendertext(*this->window);
+		window->draw(*door);
 		this->player->render(*this->window);
 		if (this->level == 0)
 		{
-			this->initializeEnemies(1);
+			this->initializeEnemies(0);	
+
 		}
 		if (this->level == 1)
 		{
 			this->initializeEnemies(3);
+			
 		}
 		if (this->level == 2)
 		{
@@ -206,7 +204,6 @@ void Game::render()
 	this->menuBack1->backgroundMove(*this->window);
 	this->menuBack2->backgroundMove(*this->window);
 	this->p1->render(*this->window);
-
 	}
 	for (auto i : enemies) { i->render(*this->window); }
 	if (player->herodeath())
@@ -221,6 +218,21 @@ void Game::render()
 	this->window->display();
 }
 
+void Game::doorAnimation()
+{
+	if (clock2.getElapsedTime().asSeconds() < 0.5)
+	{
+		door->setColor(sf::Color(255, 255, 255, clock2.getElapsedTime().asSeconds() * 150));
+		std::cout << "animation of door" << std::endl;
+		doorIsOpen = false;
+	}
+	if (clock2.getElapsedTime().asSeconds() >= 0.5)
+	{
+		std::cout << "dooropen is true" << std::endl;
+		doorIsOpen = true;
+		clock2.restart();
+	}
+}
 void Game::update()
 {
 	if (player->herodeath())
@@ -234,7 +246,7 @@ void Game::update()
 		clock.restart();
 		this->player->getBounds(enemiesBounds, background->wallbounds);
 	}
-		this->player->update();
+	this->player->update();
 	this->p1->isMouseOver(*this->window);
 	this->updateEvents();
 	mouse_position = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
@@ -244,18 +256,23 @@ void Game::update()
 		
 		enemiesBounds.push_back(skeleton->enemyFloatRect());
 	}
-	if (enemies.empty())
+
+	if (enemies.empty()&& p1->isClicked())
 	{
 		doorAnimation();
-		clock.restart();
-		
+		std::cout << level << std::endl;
+	}
+	else
+	{
+		clock2.restart();
 	}
 	if (doorIsOpen&& door->getGlobalBounds().intersects(player->herobounds()))
 	{
-
 		this->player->newlevel();
 		level++;
-
+		door->setColor(sf::Color(255, 255, 255, 0));
+		doorIsOpen = false;
+		i = 0;
 	}
 }
 

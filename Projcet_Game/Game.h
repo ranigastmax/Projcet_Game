@@ -32,6 +32,7 @@ class Game
 	sf::Font gameOverFONT;
 	sf::Text gameOverText;
 	sf::Clock clock;
+	sf::Clock clock2;
 	sf::Sprite blood;
 	sf::Texture blood_teture;
 	int level = 0;
