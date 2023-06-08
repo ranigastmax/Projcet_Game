@@ -24,6 +24,7 @@ sf::Sprite Characters::getSprite()
 
 void Characters::adjustHp(float amount)
 {
+    std::cout << hp << std::endl;
     this->hp += amount;
 }
 
