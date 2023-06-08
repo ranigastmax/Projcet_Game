@@ -72,9 +72,9 @@ bool Fireball::collision(std::vector<sf::FloatRect> &enemies, std::vector<sf::Fl
 
 }
 
-sf::FloatRect Fireball::getBounds()
+sf::Sprite Fireball::getSprite()
 {
-    return this->fireball->getGlobalBounds();
+    return *this->fireball;
 }
 
 

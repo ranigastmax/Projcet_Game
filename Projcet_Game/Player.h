@@ -66,6 +66,7 @@ public:
 	//end-constructors---------------------------------
 
 	bool walking;
+	bool fireballHit = false;
 
 	//public functions----------------------------------
 	bool herodeath();
@@ -93,5 +94,6 @@ public:
 	void swordDamage(Characters& targer);
 	void fireballDamage(Characters& targer);
 	void newlevel();
+	Fireball getFireObject();
 };
 

@@ -148,35 +148,30 @@ void Game::updateEvents()
 		this->player->bounds(this->background->wallbounds);
 	}
 
+		
+		
 	for (auto it = enemies.begin(); it != enemies.end(); ++it)
 	{
 		auto skeleton = *it;
 		if (!player->herodeath())
 		{
 			skeleton->boundsSkeleton(this->player->herobounds());
-			for (auto s : enemies)
-			{
-				skeleton->boundsSkeleton(s->enemyFloatRect());
-			}
+			
 			skeleton->enemymove(this->player->getSprite());
 			skeleton->attackMele(this->player);
 			skeleton->update();
 			skeleton->enemymove(this->player->getSprite());
 			this->player->swordDamage(*skeleton);
-			if (this->player->getFireball())
-			{
-
 			this->player->fireballDamage(*skeleton);
-			}
 			if (skeleton->herodeath())
 			{
 				enemies.erase(it);
-				break; // Zakoñcz pêtlê, poniewa¿ usuniêto obiekt skeleton
+				break;
 			}
 		}
 	}
 	this->player->update();
-
+	detectCollision(enemies);
 }
 void Game::render()
 {
@@ -228,12 +223,12 @@ void Game::doorAnimation()
 	if (clock2.getElapsedTime().asSeconds() < 0.5)
 	{
 		door->setColor(sf::Color(255, 255, 255, clock2.getElapsedTime().asSeconds() * 150));
-		std::cout << "animation of door" << std::endl;
+		//std::cout << "animation of door" << std::endl;
 		doorIsOpen = false;
 	}
 	if (clock2.getElapsedTime().asSeconds() >= 0.5)
 	{
-		std::cout << "dooropen is true" << std::endl;
+		//std::cout << "dooropen is true" << std::endl;
 		doorIsOpen = true;
 		clock2.restart();
 	}

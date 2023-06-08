@@ -59,7 +59,7 @@ Player::Player()
 
     //stamina settings
 
-    adjustStamina(this->maxStamina+10);
+    adjustStamina(this->maxStamina+20);
     this->STAMINA.setTexture(stamina_texture);
     this->STAMINA.setPosition(497, 70);
      
@@ -603,9 +603,14 @@ void Player::swordDamage(Characters& target)
 }
 void Player::fireballDamage(Characters& target)
 {
-    if (this->fireball->getBounds().intersects(target.getSprite().getGlobalBounds()))
+    if (fireball_fly)
     {
-        target.adjustHp(-15);
+        if (this->fireball->getSprite().getGlobalBounds().intersects(target.getSprite().getGlobalBounds()))
+        {
+            fireballHit = true;
+            std::cout << "uderzam" << std::endl;
+            target.adjustHp(-15);
+        }
     }
 }
 void Player::newlevel()
@@ -721,11 +726,14 @@ void Player::getBounds(std::vector<sf::FloatRect> &enemy_bounds,std::vector<sf::
         {
             fireball->movef();
             fireball->animate();
-            if (fireball->collision(enemy_bounds,wall_bounds))
+            if (fireball->collision(enemy_bounds,wall_bounds)&&fireballHit)
             {
+
                delete this->fireball;
+               std::cout << "usuwam" << std::endl;
                fireball_fly = false;
-                std::cout << "zesrany projekt" << std::endl;
+               fireballHit = false;
+
             }
         }
 }
@@ -745,6 +753,11 @@ void Player::weponChange()
 bool Player::getFireball()
 {
     return fireball_fly;
+}
+
+Fireball Player::getFireObject()
+{
+    return *this->fireball;
 }
 
 sf::Sprite Player::getSprite()
