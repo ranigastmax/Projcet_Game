@@ -186,7 +186,20 @@ void Game::render()
 		this->player->render(*this->window);
 		if (this->level == 0)
 		{
-			this->initializeEnemies(0);	
+			this->initializeEnemies(2);	
+		
+		}
+		if (this->level == 1)
+		{
+			this->initializeEnemies(4);
+			
+		}
+		if (this->level == 2)
+		{
+			this->initializeEnemies(6);
+		}
+		if (this->level == 3)
+		{
 
 			if (!isBossAlive)
 			{
@@ -197,19 +210,6 @@ void Game::render()
 				this->boss->render(*window);
 				this->boss->rangeattack();
 				this->boss->position(player->herobounds());
-		
-		}
-		if (this->level == 1)
-		{
-			this->initializeEnemies(0);
-			
-		}
-		if (this->level == 2)
-		{
-			this->initializeEnemies(0);
-		}
-		if (this->level == 3)
-		{
 
 		}
 	}
@@ -261,6 +261,8 @@ void Game::update()
 	{
 		clock.restart();
 		this->player->getBounds(enemiesBounds, background->wallbounds);
+		if (isBossAlive) { this->boss->laserAttack(this->player->getSprite().getGlobalBounds(), background->wallbounds, *this->window); }
+
 	}
 	this->player->update();
 	this->p1->isMouseOver(*this->window);

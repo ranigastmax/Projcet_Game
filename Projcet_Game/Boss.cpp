@@ -9,54 +9,62 @@ Boss::Boss()
 	maxHP = 200;
 	hero.scale(2.5, 2.5);
 	initIntRect();
+	laser1 = nullptr;
+	laser2 = nullptr;
 
 	
 }
 
-void Boss::laserAttack( sf::Vector2f target)
+
+void Boss::laserAttack(sf::FloatRect target, std::vector<sf::FloatRect>& walls,sf::RenderWindow& window)
 {
 	if (!isShootingOne)
 	{
 		if (i == 6)
 		{
-			laser1 = new Laser(hero.getGlobalBounds(), target);
-
+			laser1 = new Laser(hero.getGlobalBounds(), sf::Vector2f(target.left, target.top));
 		}
 		isShootingOne = true;
+		isShootingTwo = false;
 	}
 	if (!isShootingTwo)
 	{
 		if (i == 6)
 		{
-			laser2 = new Laser(hero.getGlobalBounds(), target);
-
+			laser2 = new Laser(hero.getGlobalBounds(), sf::Vector2f(target.left, target.top));
 		}
 		isShootingTwo = true;
+		isShootingOne = false;
 	}
 
-	laser1->movef();
-	laser2->movef();
-	laser1->collision(target,);
-
-
-}
-void Boss::getBounds(sf::FloatRect& target, std::vector<sf::FloatRect>& wall_bounds)
-{
-	if (fireball_fly)
+	if (laser1!=nullptr)
 	{
-		fireball->movef();
-		fireball->animate();
-		if (fireball->collision(target, wall_bounds) && fireballHit)
+		laser1->movef();
+		if (laser1->collision(target, walls))
 		{
+		std::cout << "strzelam" << std::endl;
+			delete this->laser1;
+			laser1 = nullptr;
+			std::cout << "usuwam1" << std::endl;
+		}
+	}
 
-			delete this->fireball;
-			std::cout << "usuwam" << std::endl;
-			fireball_fly = false;
-			fireballHit = false;
 
+
+	if (laser2!=nullptr)
+	{
+		laser2->movef();
+		if (laser2->collision(target, walls))
+		{
+			delete this->laser2;
+			laser2 = nullptr;
+			std::cout << "usuwam2" << std::endl;
 		}
 	}
 }
+
+
+
 void Boss::position(sf::FloatRect player)
 {
 	if (i==11&& clock2.getElapsedTime().asSeconds()>2.6)
@@ -134,6 +142,35 @@ void Boss::initIntRect()
 void Boss::initcharacters()
 {
 
+}
+
+void Boss::render(sf::RenderWindow& window)
+{
+	if(this->laser1 != nullptr)
+	{
+		window.draw(laser1->getSprite());
+	}
+	if (this->laser2 != nullptr)
+	{
+		window.draw(laser2->getSprite());
+	}
+	window.draw(this->hero);
+
+}
+
+void render(sf::RenderWindow& window)
+{
+
+}
+
+void* Boss::getPointer1()
+{
+	return this->laser1;
+}
+
+void* Boss::getPointer2()
+{
+	return this->laser2;
 }
 
 

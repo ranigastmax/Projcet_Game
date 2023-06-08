@@ -1,5 +1,6 @@
 #pragma once
 #include<SFML/Graphics.hpp>
+#include "iostream"
 #include"Characters.h"
 #include"Laser.h"
 class Boss :
@@ -15,8 +16,8 @@ class Boss :
    
 public:
     Boss();
-    void getBounds(std::vector<sf::FloatRect>& enemy_bounds, std::vector<sf::FloatRect>& wall_bounds)
-    void laserAttack(sf::Vector2f target);
+
+    void laserAttack(sf::FloatRect target, std::vector<sf::FloatRect>& walls, sf::RenderWindow&);
 
     void position(sf::FloatRect);
 
@@ -26,7 +27,10 @@ public:
 
     void initcharacters();
 
+    void render(sf::RenderWindow&);
 
+    void* getPointer1();
+    void* getPointer2();
 
 };
 

@@ -5,7 +5,7 @@ class Fireball
 {
 	sf::Texture fireball_texture;
 	sf::Sprite *fireball;
-	float speed = 2.f;
+	float speed = 3.f;
 	sf::Vector2f direction;
 	float length;
 	float centerX;

@@ -4,7 +4,7 @@ class Laser
 {
 sf::Texture laser_texture;
 	sf::Sprite *laser;
-	float speed = 2.f;
+	float speed = 4.f;
 	sf::Vector2f direction;
 	float length;
 	float centerX;
@@ -19,6 +19,9 @@ public:
 	sf::Sprite render();
 	void movef();
 	void animate();
+	void render(sf::RenderWindow&);
 	bool collision(sf::FloatRect &target,std::vector<sf::FloatRect> &walls);
 	sf::Sprite getSprite();
+
+	
 };

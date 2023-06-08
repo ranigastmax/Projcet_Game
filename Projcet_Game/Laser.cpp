@@ -6,9 +6,6 @@
 
 Laser::Laser(sf::FloatRect hero, sf::Vector2f target)
 {
-   // frames.emplace_back(22, 6, 18, 17);
-   // frames.emplace_back(3, 6, 18, 17);
-//frames.emplace_back(3, 27, 18, 17);
     laser = new sf::Sprite;
     if (!laser_texture.loadFromFile("textures/Laser.png"))
     {
@@ -16,7 +13,6 @@ Laser::Laser(sf::FloatRect hero, sf::Vector2f target)
     }
     laser->setTexture(laser_texture);
     laser->scale(2, 2);
-  //  laser->setTextureRect(sf::IntRect(1, 1, 13, 7));
     centerX = hero.left + hero.width / 2;
     centerY = hero.top + hero.height / 2;
     laser->setPosition(centerX, centerY);
@@ -33,8 +29,8 @@ sf::Sprite Laser::render()
 void Laser::movef()
 {
    
-    laser->move(direction.x * speed, direction.y * speed);
-    move = true;
+    this->laser->move(direction.x * speed, direction.y * speed);
+    //move = true;
 
 }
 
@@ -49,11 +45,16 @@ void Laser::animate()
     }
 }
 
-bool Laser::collision(sf::FloatRect& enemies, std::vector<sf::FloatRect>& walls)
+void Laser::render(sf::RenderWindow& window)
+{
+    window.draw(*this->laser);
+}
+
+bool Laser::collision(sf::FloatRect& enemy, std::vector<sf::FloatRect>& walls)
 {
 
    
-    if (this->laser->getGlobalBounds().intersects(enemies))
+    if (this->laser->getGlobalBounds().intersects(enemy))
     {
         return true;
     }
@@ -73,5 +74,9 @@ sf::Sprite Laser::getSprite()
 {
     return *this->laser;
 }
+
+
+
+
 
 
