@@ -188,19 +188,29 @@ void Game::render()
 		{
 			this->initializeEnemies(0);	
 
+			if (!isBossAlive)
+			{
+				this->boss = new Boss;
+				isBossAlive = true;
+				vectorBoss.emplace_back(boss);
+			}
+				this->boss->render(*window);
+				this->boss->rangeattack();
+				this->boss->position(player->herobounds());
+		
 		}
 		if (this->level == 1)
 		{
-			this->initializeEnemies(3);
+			this->initializeEnemies(0);
 			
 		}
 		if (this->level == 2)
 		{
-			this->initializeEnemies(6);
+			this->initializeEnemies(0);
 		}
 		if (this->level == 3)
 		{
-			
+
 		}
 	}
 	else
@@ -224,16 +234,18 @@ void Game::render()
 
 void Game::doorAnimation()
 {
-	if (clock2.getElapsedTime().asSeconds() < 0.5)
+	if (clock2.getElapsedTime().asSeconds() < 0.5&&vectorBoss.empty())
 	{
 		door->setColor(sf::Color(255, 255, 255, clock2.getElapsedTime().asSeconds() * 150));
-		//std::cout << "animation of door" << std::endl;
+		
 		doorIsOpen = false;
 	}
 	if (clock2.getElapsedTime().asSeconds() >= 0.5)
 	{
-		//std::cout << "dooropen is true" << std::endl;
-		doorIsOpen = true;
+		if(vectorBoss.empty())
+		{
+			doorIsOpen = true;
+		}
 		clock2.restart();
 	}
 }

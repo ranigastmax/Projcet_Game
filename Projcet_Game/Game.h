@@ -37,7 +37,7 @@ class Game
 	sf::Sprite blood;
 	sf::Texture blood_teture;
 	Boss* boss;
-
+	std::vector<Boss*> vectorBoss;
 	int level = 0;
 	int i = 0;
 	bool spawning = false;
@@ -49,6 +49,8 @@ class Game
 	void initializeWindow();
 	void initializeEnemies(int);
 	void detectCollision(std::vector<Skeleton*>& enemies);
+
+	bool isBossAlive = false;
 
 public:
 

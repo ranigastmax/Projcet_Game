@@ -92,10 +92,8 @@ public:
 
 		//public functions----------------------------------
 	void animateBreath();
-	virtual void animateWalk()=0;
-	virtual void animateAttackMele()=0;
-	virtual void animateAttackDistance()=0;
-	virtual void animateDeath()=0;
+
+	
 	
 	int getHP();
 	
