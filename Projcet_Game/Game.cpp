@@ -165,6 +165,7 @@ void Game::updateEvents()
 			this->player->swordDamage(*skeleton);
 			if (this->player->getFireball())
 			{
+
 			this->player->fireballDamage(*skeleton);
 			}
 			if (skeleton->herodeath())
@@ -175,6 +176,7 @@ void Game::updateEvents()
 		}
 	}
 	this->player->update();
+
 }
 void Game::render()
 {
