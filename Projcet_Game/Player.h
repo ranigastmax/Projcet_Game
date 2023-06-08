@@ -90,5 +90,6 @@ public:
 	void adjustStamina(float);
 	void hitboxSet(int);
 	void swordDamage(Characters& targer);
+	void newlevel();
 };
 

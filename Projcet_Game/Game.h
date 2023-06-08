@@ -37,7 +37,10 @@ class Game
 	int level = 0;
 	int i = 0;
 	bool spawning = false;
-
+	bool doorIsOpen;
+	sf::Texture door_teture;
+	sf::Sprite *door;
+	void doorAnimation();
 	void initializeViriables();
 	void initializeWindow();
 	void initializeEnemies(int);

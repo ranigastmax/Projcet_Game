@@ -43,7 +43,14 @@ void Game::initializeEnemies(int amount)
 
 Game::Game()
 {
-
+	this->door = new sf::Sprite;
+	if (!door_teture.loadFromFile("textures/OpenDoor.png"))
+	{
+		std::cout << "nie udalo sie zaladowac drzwi" << std::endl;
+	}
+	door->setTexture(door_teture);
+	door->setPosition(267, 33);
+	door->setColor(sf::Color(255, 255, 255, 0));
 	this->initializeViriables();
 	this->initializeWindow();
 	this->x_player = 0;
@@ -156,6 +163,20 @@ void Game::updateEvents()
 
 }
 
+void Game::doorAnimation()
+{
+	if (clock.getElapsedTime().asSeconds() < 3)
+	{
+
+		door->setColor(sf::Color(255, 255, 255, clock.getElapsedTime().asSeconds() * 70));
+	}
+	else
+	{
+		doorIsOpen = true;
+	}
+	
+}
+
 
 void Game::render()
 {
@@ -170,15 +191,22 @@ void Game::render()
 		if (this->level == 0)
 		{
 			this->initializeEnemies(1);
-			
 		}
-	
+		if (this->level == 1)
+		{
+			this->initializeEnemies(3);
+		}
+		if (this->level == 2)
+		{
+			this->initializeEnemies(6);
+		}
 	}
 	else
 	{
 	this->menuBack1->backgroundMove(*this->window);
 	this->menuBack2->backgroundMove(*this->window);
 	this->p1->render(*this->window);
+
 	}
 	for (auto i : enemies) { i->render(*this->window); }
 	if (player->herodeath())
@@ -216,6 +244,18 @@ void Game::update()
 		
 		enemiesBounds.push_back(skeleton->enemyFloatRect());
 	}
-	
+	if (enemies.empty())
+	{
+		doorAnimation();
+		clock.restart();
+		
+	}
+	if (doorIsOpen&& door->getGlobalBounds().intersects(player->herobounds()))
+	{
+
+		this->player->newlevel();
+		level++;
+
+	}
 }
 

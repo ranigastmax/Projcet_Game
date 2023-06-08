@@ -588,6 +588,10 @@ void Player::swordDamage(Characters& target)
         //std::cout << target.getHP() << std::endl;
     }
 }
+void Player::newlevel()
+{
+    hero.setPosition(315, 500);
+}
 void Player::releasedAD()
 {
     movingLeft = false;
