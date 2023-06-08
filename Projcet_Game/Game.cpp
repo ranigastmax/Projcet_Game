@@ -147,39 +147,14 @@ void Game::updateEvents()
 		this->player->animationattack(mouse_position);
 		this->player->bounds(this->background->wallbounds);
 	}
-		/*for (auto skeleton : enemies)
-		{
-			if (!player->herodeath())
-			{
-				skeleton->boundsSkeleton(this->player->herobounds());
-				for (auto s : enemies)
-				{
-					skeleton->boundsSkeleton(s->enemyFloatRect());
-
-				}
-				skeleton->enemymove(this->player->getSprite());
-				skeleton->attackMele(this->player);
-				skeleton->update();
-				skeleton->enemymove(this->player->getSprite());
-				this->player->swordDamage(*skeleton);
-				if (skeleton->herodeath())
-				{
-					
-				}
-			}
-		}
-		this->player->update();
-		*/
+		
 	for (auto it = enemies.begin(); it != enemies.end(); ++it)
 	{
 		auto skeleton = *it;
 		if (!player->herodeath())
 		{
 			skeleton->boundsSkeleton(this->player->herobounds());
-			for (auto s : enemies)
-			{
-				skeleton->boundsSkeleton(s->enemyFloatRect());
-			}
+			
 			skeleton->enemymove(this->player->getSprite());
 			skeleton->attackMele(this->player);
 			skeleton->update();
@@ -188,11 +163,12 @@ void Game::updateEvents()
 			if (skeleton->herodeath())
 			{
 				enemies.erase(it);
-				break; // Zakoñcz pêtlê, poniewa¿ usuniêto obiekt skeleton
+				break;
 			}
 		}
 	}
 	this->player->update();
+	detectCollision(enemies);
 }
 void Game::render()
 {
