@@ -21,5 +21,6 @@ public:
 	void movef();
 	void animate();
 	bool collision(std::vector<sf::FloatRect> &enemies,std::vector<sf::FloatRect> &walls);
+	sf::FloatRect getBounds();
 };
 

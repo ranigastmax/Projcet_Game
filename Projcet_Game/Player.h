@@ -69,6 +69,7 @@ public:
 
 	//public functions----------------------------------
 	bool herodeath();
+	bool getFireball();
 	void move();
 	void animateWalk();
 	void animateAttackMele();
@@ -90,6 +91,7 @@ public:
 	void adjustStamina(float);
 	void hitboxSet(int);
 	void swordDamage(Characters& targer);
+	void fireballDamage(Characters& targer);
 	void newlevel();
 };
 

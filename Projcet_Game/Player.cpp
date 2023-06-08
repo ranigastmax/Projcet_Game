@@ -601,6 +601,13 @@ void Player::swordDamage(Characters& target)
         }
     }
 }
+void Player::fireballDamage(Characters& target)
+{
+    if (this->fireball->getBounds().intersects(target.getSprite().getGlobalBounds()))
+    {
+        target.adjustHp(-15);
+    }
+}
 void Player::newlevel()
 {
     hero.setPosition(315, 500);
@@ -733,6 +740,11 @@ void Player::weponChange()
     {
         scroll = true;
     }
+}
+
+bool Player::getFireball()
+{
+    return fireball_fly;
 }
 
 sf::Sprite Player::getSprite()
