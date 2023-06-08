@@ -91,9 +91,9 @@ public:
 	void weponChange();
 	void adjustStamina(float);
 	void hitboxSet(int);
+	void resetHitbox();
 	void swordDamage(Characters& targer);
 	void fireballDamage(Characters& targer);
 	void newlevel();
-	Fireball getFireObject();
 };
 

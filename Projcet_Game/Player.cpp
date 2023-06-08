@@ -58,7 +58,6 @@ Player::Player()
     this->HP.setPosition(497,40);
 
     //stamina settings
-
     adjustStamina(this->maxStamina+20);
     this->STAMINA.setTexture(stamina_texture);
     this->STAMINA.setPosition(497, 70);
@@ -239,7 +238,7 @@ void Player::initIntRect()
 
 bool Player::herodeath()
 {
-    if (hpDisplay <= 0)
+    if (hp <= 0)
     {
         return true;
         i = 0;
@@ -583,7 +582,7 @@ void Player::hitboxSet(int side)
         swordHitBox.setOutlineColor(sf::Color::Red);
         swordHitBox.setOutlineThickness(3);
     }
-    else { swordHitBox.setPosition(-1000, -1000); }
+    else { resetHitbox(); }
 
 
         //swordHitBox.setOutlineColor(sf::Color::Red);
@@ -613,8 +612,16 @@ void Player::fireballDamage(Characters& target)
         }
     }
 }
+void Player::resetHitbox()
+{
+    swordHitBox.setPosition(-1000, -1000);
+}
+
 void Player::newlevel()
 {
+    adjustHp(maxHP * 0.5);
+    if (this->hp > this->maxHP) { this->hp = this->maxHP; }
+    adjustStamina(maxStamina);
     hero.setPosition(315, 500);
 }
 void Player::releasedAD()
@@ -743,10 +750,12 @@ void Player::weponChange()
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
     {
         scroll = false;
+        resetHitbox();
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
     {
         scroll = true;
+        resetHitbox();
     }
 }
 
@@ -755,10 +764,7 @@ bool Player::getFireball()
     return fireball_fly;
 }
 
-Fireball Player::getFireObject()
-{
-    return *this->fireball;
-}
+
 
 sf::Sprite Player::getSprite()
     {
@@ -774,6 +780,7 @@ void Player::rendertext(sf::RenderTarget& target)
 
 void Player::scrollChange()
 { 
+    resetHitbox();
    if (scroll) { scroll = false; }
    else { scroll = true; }
    std::cout << "dup" << std::endl;   

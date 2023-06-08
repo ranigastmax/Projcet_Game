@@ -260,7 +260,7 @@ void Game::update()
 	if (enemies.empty()&& p1->isClicked())
 	{
 		doorAnimation();
-		std::cout << level << std::endl;
+		//std::cout << level << std::endl;
 	}
 	else
 	{
