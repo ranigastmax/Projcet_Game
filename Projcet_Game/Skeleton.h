@@ -23,6 +23,7 @@ public:
 	sf::FloatRect enemyFloatRect();
 	bool attacked = false;
 	
+	void smove(sf::Vector2f mo);
 private:
 	int i = 0;
 	int j = 0;

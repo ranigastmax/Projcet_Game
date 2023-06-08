@@ -109,7 +109,7 @@ void Game::updateEvents()
 				}
 			}
 			this->player->weponChange();
-	
+
 			break;
 		case sf::Event::KeyReleased:
 			if ((ev.key.code == sf::Keyboard::W) || (ev.key.code == sf::Keyboard::S))
@@ -137,12 +137,12 @@ void Game::updateEvents()
 				this->player->scrollChange();
 			}
 			break;
-			
+
 		}
 	}
 	if (!player->herodeath())
 	{
-		
+
 		this->player->animateWalk();
 		this->player->animationattack(mouse_position);
 		this->player->bounds(this->background->wallbounds);
@@ -194,9 +194,6 @@ void Game::updateEvents()
 	}
 	this->player->update();
 }
-
-
-
 void Game::render()
 {
 	//visualasions renders the game obj
@@ -300,3 +297,30 @@ void Game::update()
 	}
 }
 
+void Game::detectCollision(std::vector<Skeleton*>& enemies) {
+	for (int i = 0; i < enemies.size(); i++) {
+		for (int j = i + 1; j < enemies.size(); j++) {
+			sf::FloatRect enemyBoundsA = enemies[i]->enemyFloatRect();
+			sf::FloatRect enemyBoundsB = enemies[j]->enemyFloatRect();
+
+			if (enemyBoundsA.intersects(enemyBoundsB)) {
+				float centerX_A = enemyBoundsA.left + enemyBoundsA.width / 2;
+				float centerY_A = enemyBoundsA.top + enemyBoundsA.height / 2;
+				float centerX_B = enemyBoundsB.left + enemyBoundsB.width / 2;
+				float centerY_B = enemyBoundsB.top + enemyBoundsB.height / 2;
+
+				float distanceX = centerX_A - centerX_B;
+				float distanceY = centerY_A - centerY_B;
+				float distance = std::sqrt(distanceX * distanceX + distanceY * distanceY);
+
+				float l = (enemyBoundsA.width + enemyBoundsB.width) / 2 - distance;
+				float pushX = l * distanceX / distance;
+				float pushY = l * distanceY / distance;
+
+				enemies[i]->smove(sf::Vector2f(pushX / 2, pushY / 2));
+				enemies[j]->smove(sf::Vector2f(-pushX / 2, -pushY / 2));
+				
+			}
+		}
+	}
+}

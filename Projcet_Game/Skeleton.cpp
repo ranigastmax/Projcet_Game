@@ -175,10 +175,7 @@ void Skeleton::animateAttackMele()
 {
     if (blockmove && clock.getElapsedTime().asSeconds() > 0.15)
     {
-      //  std::cout << moveRight << "right" << std::endl;
-       // std::cout << moveUp << "up" << std::endl;
-      //  std::cout << moveLeft << "left" << std::endl;
-      //  std::cout << moveDown << "down" << std::endl;
+     
             this->hero.setTexture(attack_texture);
         if(moveRight)
         {
@@ -263,6 +260,12 @@ sf::FloatRect Skeleton::enemyFloatRect()
     return sf::FloatRect(hero.getGlobalBounds().left, hero.getGlobalBounds().top, hero.getGlobalBounds().width, hero.getGlobalBounds().height);
 }
 
+void Skeleton::smove(sf::Vector2f mo)
+{
+    hero.move(mo);
+
+}
+
 void Skeleton::render(sf::RenderTarget& target)
 {
     target.draw(this->hero);
@@ -322,8 +325,6 @@ void Skeleton::boundsSkeleton(sf::FloatRect herobounds)
     {
         blockmove = false;
     }
-
-
 }
 
 void Skeleton::hitboxSet()
