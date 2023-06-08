@@ -9,6 +9,7 @@
 #include"Characters.h"
 #include"Background.h"
 #include"Skeleton.h"
+#include"Boss.h"
 class Game
 {
 	//class that act as game engine
@@ -35,6 +36,8 @@ class Game
 	sf::Clock clock2;
 	sf::Sprite blood;
 	sf::Texture blood_teture;
+	Boss* boss;
+
 	int level = 0;
 	int i = 0;
 	bool spawning = false;
