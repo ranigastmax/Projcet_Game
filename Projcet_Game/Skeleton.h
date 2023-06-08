@@ -20,7 +20,7 @@ public:
 	void attackMele(Characters* object);
 	void update();
 	sf::FloatRect enemyFloatRect();
-	
+	void smove(sf::Vector2f mo);
 private:
 	int i = 0;
 	int j = 0;

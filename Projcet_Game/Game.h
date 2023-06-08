@@ -45,8 +45,7 @@ class Game
 	void initializeViriables();
 	void initializeWindow();
 	void initializeEnemies(int);
-
-
+	void detectCollision(std::vector<Skeleton*>& enemies);
 
 public:
 
