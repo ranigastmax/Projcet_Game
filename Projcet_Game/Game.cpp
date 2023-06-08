@@ -49,11 +49,9 @@ void Game::initializeEnemies(int amount)
 {
 
 	if (spawning)
-	{
-		
+	{		
 		Skeleton* enemy = new Skeleton();
-		enemies.push_back(enemy);
-		
+		enemies.push_back(enemy);		
 	}
 	if (i < amount) { spawning = true; }
 	else { spawning = false; }
@@ -149,7 +147,7 @@ void Game::updateEvents()
 		this->player->animationattack(mouse_position);
 		this->player->bounds(this->background->wallbounds);
 	}
-		for (auto skeleton : enemies)
+		/*for (auto skeleton : enemies)
 		{
 			if (!player->herodeath())
 			{
@@ -164,11 +162,37 @@ void Game::updateEvents()
 				skeleton->update();
 				skeleton->enemymove(this->player->getSprite());
 				this->player->swordDamage(*skeleton);
+				if (skeleton->herodeath())
+				{
+					
+				}
 			}
 		}
 		this->player->update();
-		
-
+		*/
+	for (auto it = enemies.begin(); it != enemies.end(); ++it)
+	{
+		auto skeleton = *it;
+		if (!player->herodeath())
+		{
+			skeleton->boundsSkeleton(this->player->herobounds());
+			for (auto s : enemies)
+			{
+				skeleton->boundsSkeleton(s->enemyFloatRect());
+			}
+			skeleton->enemymove(this->player->getSprite());
+			skeleton->attackMele(this->player);
+			skeleton->update();
+			skeleton->enemymove(this->player->getSprite());
+			this->player->swordDamage(*skeleton);
+			if (skeleton->herodeath())
+			{
+				enemies.erase(it);
+				break; // Zakoñcz pêtlê, poniewa¿ usuniêto obiekt skeleton
+			}
+		}
+	}
+	this->player->update();
 }
 
 

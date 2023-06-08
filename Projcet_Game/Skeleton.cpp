@@ -153,7 +153,7 @@ void Skeleton::animateWalk()
     if (clock.getElapsedTime().asSeconds() > 0.2 && !blockmove)
     {
         if (this->i > 9) { this->i = 0; }
-        std::cout << i << std::endl;
+        //std::cout << i << std::endl;
         if (this->direction.x > this->direction.y) { this->hero.setTextureRect(walkRight[this->i]); this->moveRight = true; }
         else { this->moveRight = false; }
 
@@ -241,10 +241,21 @@ void Skeleton::attackMele(Characters* object)
     }
 
 }
+bool Skeleton::herodeath()
+{
+    if (hpDisplay <= 0)
+    {
+        return true;
+        i = 0;
+    }
+    else return false;
+}
 
 void Skeleton::update()
 {
     this->HP.setPosition(this->hero.getGlobalBounds().left, this->hero.getGlobalBounds().top - 10);
+    this->hpDisplay = (this->hp / this->maxHP) * 92;
+    this->HP.setTextureRect(sf::IntRect(0, 0, hpDisplay, 18)); 
 }
 
 sf::FloatRect Skeleton::enemyFloatRect()

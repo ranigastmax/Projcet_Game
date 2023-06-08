@@ -385,7 +385,7 @@ void Player::animateWalk()
         }
         if (movingRight && clock.getElapsedTime().asSeconds() > 0.2)
         {
-            std::cout << i << std::endl;
+            //std::cout << i << std::endl;
             this->hero.setTexture(walk_right_texture);
             if (this->i >= 6) { this->i = 0; }
             this->hero.setTextureRect(walkRight[i]);
@@ -553,26 +553,35 @@ void Player::acctualBounds()
 }
 void Player::hitboxSet(int side)
 {
+
     swordHitBox.setFillColor(sf::Color::Transparent);
     if (this->hero.getTexture() == &this->attack_mele_left_texture)
     {
         swordHitBox.setSize(sf::Vector2f(16, 40));
         swordHitBox.setPosition(this->heroLeft - 8, this->heroTop- 6);
+        swordHitBox.setOutlineColor(sf::Color::Red);
+        swordHitBox.setOutlineThickness(3);
     }
     else if (this->hero.getTexture() == &this->attack_mele_right_texture)
     {
         swordHitBox.setSize(sf::Vector2f(16, 40));
         swordHitBox.setPosition(this->heroRight + 8, this->heroTop - 6);
+        swordHitBox.setOutlineColor(sf::Color::Red);
+        swordHitBox.setOutlineThickness(3);
     }
     else if (this->hero.getTexture() == &this->attack_mele_down_texture)
     {
         swordHitBox.setSize(sf::Vector2f(40, 16));
         swordHitBox.setPosition(this->heroLeft, this->heroDown + 5);
+        swordHitBox.setOutlineColor(sf::Color::Red);
+        swordHitBox.setOutlineThickness(3);
     }
     else if (this->hero.getTexture() == &this->attack_mele_up_texture)
     {
         swordHitBox.setSize(sf::Vector2f(40, 16));
         swordHitBox.setPosition(this->heroLeft, this->heroTop - 5);
+        swordHitBox.setOutlineColor(sf::Color::Red);
+        swordHitBox.setOutlineThickness(3);
     }
     else { swordHitBox.setPosition(-1000, -1000); }
 
@@ -584,8 +593,12 @@ void Player::swordDamage(Characters& target)
 {
     if (this->swordHitBox.getGlobalBounds().intersects(target.getSprite().getGlobalBounds()))
     {
-        target.adjustHp(-7);
-        //std::cout << target.getHP() << std::endl;
+        if (delay.getElapsedTime().asSeconds() > 0.5)
+        {
+            target.adjustHp(-7);
+            delay.restart();
+            std::cout << target.getHP() << std::endl;
+        }
     }
 }
 void Player::newlevel()

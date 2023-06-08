@@ -8,6 +8,7 @@ public:
 	Skeleton();
 	void initIntRect();
 	void initcharacters();
+	bool herodeath();
 	void enemymove(sf::Sprite target);
 	void animateWalk();
 	void animateAttackMele();
@@ -20,21 +21,22 @@ public:
 	void attackMele(Characters* object);
 	void update();
 	sf::FloatRect enemyFloatRect();
+	bool attacked = false;
 	
 private:
 	int i = 0;
 	int j = 0;
-	float hp;
 	sf::Vector2f direction;
 	sf::RectangleShape hitBox;
 	bool blockmove;
 
-	sf::Clock delay;
+	float hpDisplay;
 
 	bool moveRight;
 	bool moveLeft;
 	bool moveDown;
 	bool moveUp;
+
 
 	float maxHP = 20;	
 };

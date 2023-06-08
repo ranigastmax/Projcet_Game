@@ -56,6 +56,8 @@ protected:
 	bool walkFLAG = false;
 	bool breathFLAG = false;
 
+	sf::Clock delay;
+
 	float hero_speedX = 0;
 	float hero_speedY = 0;
 
