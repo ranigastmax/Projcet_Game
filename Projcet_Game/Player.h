@@ -57,6 +57,7 @@ class Player : public Characters
 	sf::Text text;
 	sf::Sprite blood;
 	sf::Texture blood_teture;
+	bool isdead;
 public:
 
 	//constructors-------------------------------------

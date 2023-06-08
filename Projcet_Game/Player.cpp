@@ -499,47 +499,50 @@ void Player::animateAttackDistance()
 
 void Player::animateDeath()
 {
-    if (clock.getElapsedTime().asSeconds() > 0.3 && ((hero.getTexture() == &walk_left_texture) ||
-        (hero.getTexture() == &attack_mele_left_texture) || (hero.getTexture() == &attack_distance_left_texture)||
-        (hero.getTexture()==&death_texture_left)))
+    if (!isdead)
     {
-    this->hero.setTexture(death_texture_left);
-        if (i == 8) { i = 0; }
-        this->hero.setTextureRect(death_left[i]);
-        i++;
-        clock.restart();
+            if (i == 8) { isdead = true; }
+        if (clock.getElapsedTime().asSeconds() > 0.3 && ((hero.getTexture() == &walk_left_texture) ||
+            (hero.getTexture() == &attack_mele_left_texture) || (hero.getTexture() == &attack_distance_left_texture) ||
+            (hero.getTexture() == &death_texture_left)))
+        {
+            this->hero.setTexture(death_texture_left);
+            this->hero.setTextureRect(death_left[i]);
+            i++;
+            clock.restart();
+        }
+        if (clock.getElapsedTime().asSeconds() > 0.3 && ((hero.getTexture() == &walk_right_texture)
+            || (hero.getTexture() == &attack_mele_right_texture) ||
+            (hero.getTexture() == &attack_distance_right_texture)
+            || (hero.getTexture() == &death_texture_right)))
+        {
+            this->hero.setTexture(death_texture_right);
+           
+            this->hero.setTextureRect(death_right[i]);
+            i++;
+            clock.restart();
+        }
+        if (clock.getElapsedTime().asSeconds() > 0.3 && ((hero.getTexture() == &walk_down_texture) ||
+            (hero.getTexture() == &attack_mele_down_texture) || (hero.getTexture() == &attack_distance_down_texture) ||
+            (hero.getTexture() == &death_texture_down)))
+        {
+            this->hero.setTexture(death_texture_down);
+           
+            this->hero.setTextureRect(death_down[i]);
+            i++;
+            clock.restart();
+        }
+        if (clock.getElapsedTime().asSeconds() > 0.3 && ((hero.getTexture() == &walk_up_texture) ||
+            (hero.getTexture() == &attack_mele_up_texture) || (hero.getTexture() == &attack_distance_up_texture) ||
+            (hero.getTexture() == &death_texture_up)))
+        {
+            this->hero.setTexture(death_texture_up);
+        
+            this->hero.setTextureRect(death_up[i]);
+            i++;
+            clock.restart();
+        }
     }
-    if (clock.getElapsedTime().asSeconds() > 0.3 && ((hero.getTexture() == &walk_right_texture)
-        || (hero.getTexture() == &attack_mele_right_texture)||
-        (hero.getTexture() == &attack_distance_right_texture)
-        || (hero.getTexture() == &death_texture_right)))
-    {
-        this->hero.setTexture(death_texture_right);
-        if (i == 8) { i = 0; }
-        this->hero.setTextureRect(death_right[i]);
-        i++;
-        clock.restart();
-    }
-     if (clock.getElapsedTime().asSeconds() > 0.3 && ((hero.getTexture() == &walk_down_texture) ||
-        (hero.getTexture() == &attack_mele_down_texture) || (hero.getTexture() == &attack_distance_down_texture)||
-        (hero.getTexture()==&death_texture_down)))
-    {
-    this->hero.setTexture(death_texture_down);
-        if (i == 8) { i = 0; }
-        this->hero.setTextureRect(death_down[i]);
-        i++;
-        clock.restart();
-    }
-     if (clock.getElapsedTime().asSeconds() > 0.3 && ((hero.getTexture() == &walk_up_texture) ||
-         (hero.getTexture() == &attack_mele_up_texture) || (hero.getTexture() == &attack_distance_up_texture) ||
-         (hero.getTexture() == &death_texture_up)))
-     {
-         this->hero.setTexture(death_texture_up);
-         if (i == 8) { i = 0; }
-         this->hero.setTextureRect(death_up[i]);
-         i++;
-         clock.restart();
-     }
 }
 void Player::acctualBounds()
 {

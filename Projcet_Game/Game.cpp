@@ -141,13 +141,15 @@ void Game::updateEvents()
 	}
 		for (auto skeleton : enemies)
 		{
-			skeleton->boundsSkeleton(this->player->herobounds());
-			skeleton->enemymove(this->player->getSprite());
-			skeleton->attackMele(this->player);
-			skeleton->update();
-			skeleton->enemymove(this->player->getSprite());
-			this->player->swordDamage(*skeleton);
-			//this->skeleton1->animateAttackMele();
+			if (!player->herodeath())
+			{
+				skeleton->boundsSkeleton(this->player->herobounds());
+				skeleton->enemymove(this->player->getSprite());
+				skeleton->attackMele(this->player);
+				skeleton->update();
+				skeleton->enemymove(this->player->getSprite());
+				this->player->swordDamage(*skeleton);
+			}
 		}
 		this->player->update();
 		
@@ -196,6 +198,7 @@ void Game::update()
 	if (player->herodeath())
 	{
 		player->animateDeath();
+
 	}
 	//there is game
 	if (!player->herodeath())
