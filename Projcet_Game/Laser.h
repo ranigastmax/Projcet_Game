@@ -4,7 +4,7 @@ class Laser
 {
 sf::Texture laser_texture;
 	sf::Sprite *laser;
-	float speed = 4.f;
+	float speed = 2.f;
 	sf::Vector2f direction;
 	float length;
 	float centerX;

@@ -238,7 +238,7 @@ void Player::initIntRect()
 
 bool Player::herodeath()
 {
-    if (hp <= 0)
+    if (this->hp <= 0)
     {
         return true;
         i = 0;
@@ -543,6 +543,7 @@ void Player::animateDeath()
         }
     }
 }
+
 void Player::acctualBounds()
 {
     this->heroDown = this->hero.getGlobalBounds().top + this->hero.getGlobalBounds().height;
@@ -550,6 +551,7 @@ void Player::acctualBounds()
     this->heroRight = this->hero.getGlobalBounds().left + this->hero.getGlobalBounds().width;
     this->heroLeft = this->hero.getGlobalBounds().left;
 }
+
 void Player::hitboxSet(int side)
 {
 
@@ -588,6 +590,7 @@ void Player::hitboxSet(int side)
         //swordHitBox.setOutlineColor(sf::Color::Red);
         //swordHitBox.setOutlineThickness(3);
 }
+
 void Player::swordDamage(Characters& target)
 {
     if (this->swordHitBox.getGlobalBounds().intersects(target.getSprite().getGlobalBounds()))
@@ -600,6 +603,7 @@ void Player::swordDamage(Characters& target)
         }
     }
 }
+
 void Player::fireballDamage(Characters& target)
 {
     if (fireball_fly)
@@ -612,6 +616,7 @@ void Player::fireballDamage(Characters& target)
         }
     }
 }
+
 void Player::resetHitbox()
 {
     swordHitBox.setPosition(-1000, -1000);
@@ -629,7 +634,6 @@ void Player::releasedAD()
     movingLeft = false;
     movingRight = false;
 }
-
 void Player::releasedWS()
     {
         movingUp = false;
@@ -783,7 +787,7 @@ void Player::scrollChange()
     resetHitbox();
    if (scroll) { scroll = false; }
    else { scroll = true; }
-   std::cout << "dup" << std::endl;   
+   std::cout << "zmiana broni" << std::endl;   
 }
 
 void Player::bounds(std::vector<sf::FloatRect> wall_bounds)

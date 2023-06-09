@@ -193,10 +193,15 @@ void Game::render()
 				isBossAlive = true;
 				vectorBoss.emplace_back(boss);
 			}
+			if (isBossAlive)
+			{
 				this->boss->render(*window);
 				this->boss->rangeattack();
 				this->boss->position(player->herobounds());
-		
+				this->boss->bossDeath();
+				this->player->swordDamage(*boss);
+				this->player->fireballDamage(*boss);
+			}
 		}
 		if (this->level == 1)
 		{
@@ -263,7 +268,7 @@ void Game::update()
 		this->player->getBounds(enemiesBounds, background->wallbounds);
 		if (isBossAlive) 
 		{
-			this->boss->laserAttack(this->player->getSprite().getGlobalBounds(), background->wallbounds, *this->window);
+			//this->boss->laserAttack(this->player->getSprite().getGlobalBounds(), background->wallbounds, *this->window);
 			if (boss->laserAttack(this->player->getSprite().getGlobalBounds(), background->wallbounds, *this->window))
 			{
 				player->adjustHp(-5);

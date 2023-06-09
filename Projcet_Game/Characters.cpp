@@ -8,11 +8,6 @@ void Characters::loadTexture(std::string path, sf::Texture& textureName)
 }
 
 
-
-Characters::Characters()
-{
-}
-
 Characters::~Characters()
 {
 }

@@ -74,7 +74,6 @@ public:
 	std::vector<sf::FloatRect> rect_collision;
 	void loadTexture(std::string path, sf::Texture& textureName);
 	//constructors-------------------------------------
-	Characters();
 	~Characters();
 	//end-constructors---------------------------------
 	

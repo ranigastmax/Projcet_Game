@@ -13,6 +13,9 @@ class Boss :
     Laser* laser2;
     bool isShootingOne;
     bool isShootingTwo;
+    sf::Font font;
+    sf::Text text;
+    bool isBossDead;
    
 public:
     Boss();
@@ -32,5 +35,10 @@ public:
     void* getPointer1();
     void* getPointer2();
 
+    void bossHP();
+
+    void bossDeath();
+
+    sf::FloatRect bossGetbounds();
 };
 
