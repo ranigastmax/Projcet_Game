@@ -16,7 +16,7 @@ Boss::Boss()
 }
 
 
-void Boss::laserAttack(sf::FloatRect target, std::vector<sf::FloatRect>& walls,sf::RenderWindow& window)
+bool Boss::laserAttack(sf::FloatRect target, std::vector<sf::FloatRect>& walls, sf::RenderWindow& window)
 {
 	if (!isShootingOne)
 	{
@@ -37,30 +37,41 @@ void Boss::laserAttack(sf::FloatRect target, std::vector<sf::FloatRect>& walls,s
 		isShootingOne = false;
 	}
 
-	if (laser1!=nullptr)
+	if (laser1 != nullptr)
 	{
 		laser1->movef();
-		if (laser1->collision(target, walls))
+		if (laser1->collisionPlayer(target))
 		{
-		std::cout << "strzelam" << std::endl;
+			std::cout << "strzelam" << std::endl;
 			delete this->laser1;
 			laser1 = nullptr;
 			std::cout << "usuwam1" << std::endl;
+			return true;
+		}
+		if (laser1->collisionWalls(walls))
+		{
+			delete this->laser1;
+			laser1 = nullptr;
 		}
 	}
-
-
-
 	if (laser2!=nullptr)
 	{
 		laser2->movef();
-		if (laser2->collision(target, walls))
+		if (laser2->collisionPlayer(target))
 		{
 			delete this->laser2;
 			laser2 = nullptr;
 			std::cout << "usuwam2" << std::endl;
+			return true;
+
+		}
+		if (laser2->collisionWalls(walls))
+		{
+			delete this->laser2;
+			laser2 = nullptr;
 		}
 	}
+	return false;
 }
 
 

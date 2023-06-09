@@ -50,7 +50,7 @@ void Laser::render(sf::RenderWindow& window)
     window.draw(*this->laser);
 }
 
-bool Laser::collision(sf::FloatRect& enemy, std::vector<sf::FloatRect>& walls)
+bool Laser::collisionPlayer(sf::FloatRect& enemy)
 {
 
    
@@ -59,6 +59,13 @@ bool Laser::collision(sf::FloatRect& enemy, std::vector<sf::FloatRect>& walls)
         return true;
     }
     
+    return false;
+
+}
+
+bool Laser::collisionWalls(std::vector<sf::FloatRect>& walls)
+{
+
     for (auto wall : walls)
     {
         if (this->laser->getGlobalBounds().intersects(wall))
@@ -66,8 +73,9 @@ bool Laser::collision(sf::FloatRect& enemy, std::vector<sf::FloatRect>& walls)
             return true;
         }
     }
-    return false;
 
+
+    return false;
 }
 
 sf::Sprite Laser::getSprite()

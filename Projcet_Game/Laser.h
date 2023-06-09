@@ -20,7 +20,8 @@ public:
 	void movef();
 	void animate();
 	void render(sf::RenderWindow&);
-	bool collision(sf::FloatRect &target,std::vector<sf::FloatRect> &walls);
+	bool collisionPlayer(sf::FloatRect &target);
+	bool collisionWalls(std::vector<sf::FloatRect>& walls);
 	sf::Sprite getSprite();
 
 	

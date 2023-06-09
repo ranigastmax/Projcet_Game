@@ -17,7 +17,7 @@ class Boss :
 public:
     Boss();
 
-    void laserAttack(sf::FloatRect target, std::vector<sf::FloatRect>& walls, sf::RenderWindow&);
+    bool laserAttack( sf::FloatRect target, std::vector<sf::FloatRect>& walls, sf::RenderWindow&);
 
     void position(sf::FloatRect);
 
