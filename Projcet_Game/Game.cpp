@@ -148,7 +148,11 @@ void Game::updateEvents()
 		this->player->bounds(this->background->wallbounds);
 	}
 
-		
+	if (isBossAlive)
+	{
+		this->player->swordDamage(*boss);
+		this->player->fireballDamage(*boss);
+	}
 		
 	for (auto it = enemies.begin(); it != enemies.end(); ++it)
 	{
@@ -186,7 +190,20 @@ void Game::render()
 		this->player->render(*this->window);
 		if (this->level == 0)
 		{
-			this->initializeEnemies(0);	
+			this->initializeEnemies(3);	
+		}
+		if (this->level == 1)
+		{
+			this->initializeEnemies(6);
+			
+		}
+		if (this->level == 2)
+		{
+			this->initializeEnemies(9);
+		}
+		if (this->level == 3)
+		{
+
 			if (!isBossAlive)
 			{
 				this->boss = new Boss;
@@ -199,22 +216,8 @@ void Game::render()
 				this->boss->rangeattack();
 				this->boss->position(player->herobounds());
 				this->boss->bossDeath();
-				this->player->swordDamage(*boss);
-				this->player->fireballDamage(*boss);
-			}
-		}
-		if (this->level == 1)
-		{
-			this->initializeEnemies(4);
-			
-		}
-		if (this->level == 2)
-		{
-			this->initializeEnemies(6);
-		}
-		if (this->level == 3)
-		{
 
+			}
 
 		}
 	}
@@ -266,17 +269,28 @@ void Game::update()
 	{
 		clock.restart();
 		this->player->getBounds(enemiesBounds, background->wallbounds);
-		if (isBossAlive) 
+		this->player->getBounds(bossBounds, background->wallbounds);
+		
+		//this->boss->laserAttack(this->player->getSprite().getGlobalBounds(), background->wallbounds, *this->window);
+
+
+		if (this->isBossAlive)
 		{
-			//this->boss->laserAttack(this->player->getSprite().getGlobalBounds(), background->wallbounds, *this->window);
+			if (!this->boss->deathBoss())
+			{
+
+
 			if (boss->laserAttack(this->player->getSprite().getGlobalBounds(), background->wallbounds, *this->window))
 			{
 				player->adjustHp(-5);
 			}
+			}
 		}
+		
 
-	}
+
 	this->player->update();
+	}
 	this->p1->isMouseOver(*this->window);
 	this->updateEvents();
 	mouse_position = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
@@ -286,6 +300,8 @@ void Game::update()
 		
 		enemiesBounds.push_back(skeleton->enemyFloatRect());
 	}
+	if(isBossAlive) { bossBounds.push_back(boss->getSprite().getGlobalBounds()); }
+	
 
 	if (enemies.empty()&& p1->isClicked())
 	{

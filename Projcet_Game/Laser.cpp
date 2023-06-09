@@ -73,6 +73,7 @@ bool Laser::collisionWalls(std::vector<sf::FloatRect>& walls)
             return true;
         }
     }
+    
 
 
     return false;

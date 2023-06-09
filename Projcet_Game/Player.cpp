@@ -560,29 +560,21 @@ void Player::hitboxSet(int side)
     {
         swordHitBox.setSize(sf::Vector2f(16, 40));
         swordHitBox.setPosition(this->heroLeft - 8, this->heroTop- 6);
-        swordHitBox.setOutlineColor(sf::Color::Red);
-        swordHitBox.setOutlineThickness(3);
     }
     else if (this->hero.getTexture() == &this->attack_mele_right_texture)
     {
         swordHitBox.setSize(sf::Vector2f(16, 40));
         swordHitBox.setPosition(this->heroRight + 8, this->heroTop - 6);
-        swordHitBox.setOutlineColor(sf::Color::Red);
-        swordHitBox.setOutlineThickness(3);
     }
     else if (this->hero.getTexture() == &this->attack_mele_down_texture)
     {
         swordHitBox.setSize(sf::Vector2f(40, 16));
         swordHitBox.setPosition(this->heroLeft, this->heroDown + 5);
-        swordHitBox.setOutlineColor(sf::Color::Red);
-        swordHitBox.setOutlineThickness(3);
     }
     else if (this->hero.getTexture() == &this->attack_mele_up_texture)
     {
         swordHitBox.setSize(sf::Vector2f(40, 16));
         swordHitBox.setPosition(this->heroLeft, this->heroTop - 5);
-        swordHitBox.setOutlineColor(sf::Color::Red);
-        swordHitBox.setOutlineThickness(3);
     }
     else { resetHitbox(); }
 

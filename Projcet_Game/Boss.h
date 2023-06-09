@@ -2,6 +2,8 @@
 #include<SFML/Graphics.hpp>
 #include "iostream"
 #include"Characters.h"
+#include <random>
+#include <cstdlib>
 #include"Laser.h"
 class Boss :
     public Characters
@@ -38,6 +40,8 @@ public:
     void bossHP();
 
     void bossDeath();
+
+    bool deathBoss();
 
     sf::FloatRect bossGetbounds();
 };

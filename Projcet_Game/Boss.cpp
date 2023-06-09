@@ -6,7 +6,6 @@ Boss::Boss()
 	hero.setPosition(150, 150);
 	hero.setTexture(walk_right_texture);
 	hero.setTextureRect(sf::IntRect(25, 624, 48, 46));
-	maxHP = 200;
 	hero.scale(2.5, 2.5);
 	initIntRect();
 	laser1 = nullptr;
@@ -23,8 +22,8 @@ Boss::Boss()
 	text.setString("STONE GOLEM");
 	text.scale(0.8, 0.8);
 	text.setPosition(230, 555);
-	maxHP = 50;
-	hp = 50;
+	maxHP = 200;
+	hp = maxHP;
 }
 
 
@@ -94,6 +93,7 @@ bool Boss::laserAttack(sf::FloatRect target, std::vector<sf::FloatRect>& walls, 
 
 void Boss::position(sf::FloatRect player)
 {
+	srand(time(NULL));
 	if (!isBossDead)
 	{
 		if (i == 11 && clock2.getElapsedTime().asSeconds() > 2.6)
@@ -245,6 +245,22 @@ void Boss::bossDeath()
 			clock.restart();
 		}
 	}
+
+}
+
+bool Boss::deathBoss()
+{
+
+
+	if (this->isBossDead)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	
 
 }
 
