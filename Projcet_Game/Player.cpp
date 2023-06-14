@@ -577,10 +577,6 @@ void Player::hitboxSet(int side)
         swordHitBox.setPosition(this->heroLeft, this->heroTop - 5);
     }
     else { resetHitbox(); }
-
-
-        //swordHitBox.setOutlineColor(sf::Color::Red);
-        //swordHitBox.setOutlineThickness(3);
 }
 
 void Player::swordDamage(Characters& target)

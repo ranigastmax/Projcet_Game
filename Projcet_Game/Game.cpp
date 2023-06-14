@@ -59,7 +59,9 @@ void Game::initializeEnemies(int amount)
 	if (spawning)
 	{		
 		Skeleton* enemy = new Skeleton();
-		enemies.push_back(enemy);		
+		enemies.push_back(enemy);	
+		GameStart = false;
+
 	}
 	if (i < amount) { spawning = true; }
 	else { spawning = false; }
@@ -112,6 +114,7 @@ void Game::updateEvents()
 
 				if (!player->herodeath())
 				{
+					GameStart = true;
 					this->player->move();
 					this->player->walking = true;
 				}
@@ -201,23 +204,27 @@ void Game::render()
 		if (this->level == 0)
 		{
 			this->initializeEnemies(3);	
-			GameStart = true;
+		
+
 			
 		}
 		if (this->level == 1)
 		{
-			this->initializeEnemies(6);
+			this->initializeEnemies(5);
 			
+
 			
 		}
 		if (this->level == 2)
 		{
-			this->initializeEnemies(9);
+			this->initializeEnemies(8);
+			
+
 			
 		}
 		if (this->level == 3)
 		{
-
+			this->initializeEnemies(2);
 			if (!isBossAlive)
 			{
 				this->boss = new Boss;
@@ -343,23 +350,21 @@ void Game::update()
 	enemiesBounds.clear();
 	for (auto skeleton : enemies)
 	{
-		
-		enemiesBounds.push_back(skeleton->enemyFloatRect());
+			enemiesBounds.push_back(skeleton->enemyFloatRect());
 	}
-	if(isBossAlive) { bossBounds.push_back(boss->getSprite().getGlobalBounds()); }
+
+	if(isBossAlive) 
+	{ bossBounds.push_back(boss->getSprite().getGlobalBounds()); }
 	
 
 	if (enemies.empty()&& p1->isClicked())
-	{
-		
-		doorAnimation();
-	}
+	{	doorAnimation();	}
 	else
-	{
-		clock2.restart();
-	}
+	{	clock2.restart();	}
+
 	if (doorIsOpen&& door->getGlobalBounds().intersects(player->herobounds()))
 	{
+		GameStart = false;
 		this->player->newlevel();
 		isUpgradeson = false;
 		level++;
