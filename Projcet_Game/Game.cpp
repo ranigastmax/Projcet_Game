@@ -30,6 +30,14 @@ void Game::initializeViriables()
 	gameOverText.setCharacterSize(100);
 	gameOverText.setFillColor(sf::Color(125, 7, 7, 0)); 
 	gameOverText.setPosition(85,250);
+	Upgrades *upgrade_stamina = new Upgrades(50,200,"textures/button_stamina.png", "textures/button_stamina.png", "textures/button_stamina.png",3,3);
+	Upgrades* upgrade_HP = new Upgrades(200, 200, "textures/button_HP.png", "textures/button_HP.png", "textures/button_HP.png",3,3);
+	Upgrades* upgrade_meleAttack = new Upgrades(350,200, "textures/button_attack.png", "textures/button_attack.png", "textures/button_attack.png",3,3);
+	Upgrades* upgrade_fireball = new Upgrades(500, 200, "textures/button_fireball.png", "textures/button_fireball.png", "textures/button_fireball.png",3,3);
+	UpgradesButtons.emplace_back(upgrade_fireball);
+	UpgradesButtons.emplace_back(upgrade_stamina);
+	UpgradesButtons.emplace_back(upgrade_meleAttack);
+	UpgradesButtons.emplace_back(upgrade_HP);
 
 }
 
@@ -122,14 +130,14 @@ void Game::updateEvents()
 			}
 			break;
 		case sf::Event::MouseButtonPressed:
-			if (!player->herodeath())
+			if (!player->herodeath()&& p1->isClicked())
 			{
 				this->player->animateAttackMele();
 				this->player->animateAttackDistance();
 			}
 			break;
 		case sf::Event::MouseButtonReleased:
-			this->p1->click();
+			this->p1->isMouseOver(*window);
 			break;
 		case sf::Event::MouseWheelMoved:
 			if (!player->herodeath())
@@ -179,27 +187,33 @@ void Game::updateEvents()
 }
 void Game::render()
 {
+//	std::cout << "temp" << temp << std::endl;
 	//visualasions renders the game obj
 	this->window->clear();
 	//-----------------------------
 	if (p1->isClicked())
 	{
 		this->background->render(*this->window);
+		
 		this->player->rendertext(*this->window);
 		window->draw(*door);
 		this->player->render(*this->window);
 		if (this->level == 0)
 		{
 			this->initializeEnemies(3);	
+			GameStart = true;
+			
 		}
 		if (this->level == 1)
 		{
 			this->initializeEnemies(6);
 			
+			
 		}
 		if (this->level == 2)
 		{
 			this->initializeEnemies(9);
+			
 		}
 		if (this->level == 3)
 		{
@@ -219,6 +233,38 @@ void Game::render()
 
 			}
 
+		}
+		if (vectorBoss.empty()&&enemies.empty() && p1->isClicked()&&GameStart&&!isUpgradeson)
+		{
+			for (int d = 0; d < 4; d++)
+			{
+				UpgradesButtons[d]->render(*window);
+				UpgradesButtons[d]->isMouseOver(*window);
+				temp = 0;
+				if (UpgradesButtons[d]->isClicked()&&temp==0)
+				{
+					if (d == 0)
+					{
+						UpgradesButtons[d]->RangeAttack_boost(*player);
+					}
+					else if (d == 1)
+					{
+						UpgradesButtons[d]->Stamina_boost(*player);
+					}
+					else if (d == 2)
+					{
+						UpgradesButtons[d]->MeleAttack_boost(*player);
+					}
+					else if (d == 3)
+					{
+						UpgradesButtons[d]->HP_boost(*player);
+					}
+				
+					temp++;
+					isUpgradeson = true;
+				}
+
+			}
 		}
 	}
 	else
@@ -305,8 +351,8 @@ void Game::update()
 
 	if (enemies.empty()&& p1->isClicked())
 	{
+		
 		doorAnimation();
-		//std::cout << level << std::endl;
 	}
 	else
 	{
@@ -315,7 +361,9 @@ void Game::update()
 	if (doorIsOpen&& door->getGlobalBounds().intersects(player->herobounds()))
 	{
 		this->player->newlevel();
+		isUpgradeson = false;
 		level++;
+		
 		door->setColor(sf::Color(255, 255, 255, 0));
 		doorIsOpen = false;
 		i = 0;

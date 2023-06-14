@@ -1,15 +1,17 @@
 #include "Button.h"
 
-Button::Button(int top, int left, std::string pathNotClicked, std::string pathClicked, std::string pathMouseIsOver, int scalex, int scaley)
+Button::Button()
 {
-	
+}
+
+Button::Button(int top, int left, std::string pathNotClicked, std::string pathClicked, std::string pathMouseIsOver, int scalex, int scaley)
+{	
 	this->buttonTextureMouseIsOver.loadFromFile(pathMouseIsOver);
 	this->buttonTextureNotClicked.loadFromFile(pathNotClicked);
 	this->buttonTextureClicked.loadFromFile(pathClicked);
 	this->buttonSprite.setTexture(buttonTextureNotClicked);
 	this->buttonSprite.setPosition(top,left);
 	this->buttonSprite.setScale(scalex,scaley);
-
 }
 
 void Button::isMouseOver(sf::RenderWindow& window)
@@ -21,6 +23,7 @@ void Button::isMouseOver(sf::RenderWindow& window)
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
 			this->buttonSprite.setTexture(buttonTextureClicked);
+			click();
 		}
 	}
 	else { this->buttonSprite.setTexture(buttonTextureNotClicked); }
@@ -28,8 +31,10 @@ void Button::isMouseOver(sf::RenderWindow& window)
 
 void Button::click()
 {
-	clicked = true;
+		clicked = true;
 }
+
+
 
 sf::Sprite &Button::getSprite()
 {
@@ -39,7 +44,6 @@ sf::Sprite &Button::getSprite()
 void Button::render(sf::RenderTarget& target)
 {
 	target.draw(this->buttonSprite);
-
 }
 
 bool Button::isClicked()

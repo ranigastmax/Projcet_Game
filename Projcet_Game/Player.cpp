@@ -589,7 +589,7 @@ void Player::swordDamage(Characters& target)
     {
         if (delay.getElapsedTime().asSeconds() > 0.5)
         {
-            target.adjustHp(-7);
+            target.adjustHp(-1*this->damage);
             delay.restart();
             std::cout << target.getHP() << std::endl;
         }
@@ -604,7 +604,7 @@ void Player::fireballDamage(Characters& target)
         {
             fireballHit = true;
             std::cout << "uderzam" << std::endl;
-            target.adjustHp(-15);
+            target.adjustHp(-1*this->rangeDamage);
         }
     }
 }

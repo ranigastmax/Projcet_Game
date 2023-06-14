@@ -10,6 +10,7 @@
 #include"Background.h"
 #include"Skeleton.h"
 #include"Boss.h"
+#include"Upgrades.h"
 class Game
 {
 	//class that act as game engine
@@ -43,6 +44,7 @@ class Game
 	int i = 0;
 	bool spawning = false;
 	bool doorIsOpen;
+	bool GameStart;
 	sf::Texture door_teture;
 	sf::Sprite *door;
 	void doorAnimation();
@@ -51,6 +53,9 @@ class Game
 	void initializeEnemies(int);
 	void detectCollision(std::vector<Skeleton*>& enemies);
 
+	bool isUpgradeson = false;
+	std::vector<Upgrades*> UpgradesButtons;
+	int temp=0;
 	bool isBossAlive = false;
 
 public:

@@ -34,7 +34,6 @@ class Player : public Characters
 	sf::RectangleShape swordHitBox;
 	Fireball* fireball;
 	bool fireball_fly;
-	
 	//player bounds
 	int heroDown;
 	int	heroTop;
@@ -44,10 +43,8 @@ class Player : public Characters
 	//hp and stamina 
 	sf::Clock staminaClock;
 	float hpDisplay;
-	float maxHP = 50;
 	float staminaDisplay;
 	float stamina;
-	float maxStamina = 100;
 	float staminaRecovery = 1;
 	sf::Texture stamina_texture;
 	sf::Sprite STAMINA;
@@ -60,6 +57,10 @@ class Player : public Characters
 	bool isdead;
 public:
 
+	float damage = 11;
+	float rangeDamage = 9;
+	float maxStamina = 100;
+	float maxHP = 50;
 	//constructors-------------------------------------
 	Player();
 	~Player();
