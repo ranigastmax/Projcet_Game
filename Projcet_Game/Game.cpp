@@ -30,10 +30,10 @@ void Game::initializeViriables()
 	gameOverText.setCharacterSize(100);
 	gameOverText.setFillColor(sf::Color(125, 7, 7, 0)); 
 	gameOverText.setPosition(85,250);
-	Upgrades *upgrade_stamina = new Upgrades(50,200,"textures/button_stamina.png", "textures/button_stamina.png", "textures/button_stamina.png",3,3);
-	Upgrades* upgrade_HP = new Upgrades(200, 200, "textures/button_HP.png", "textures/button_HP.png", "textures/button_HP.png",3,3);
-	Upgrades* upgrade_meleAttack = new Upgrades(350,200, "textures/button_attack.png", "textures/button_attack.png", "textures/button_attack.png",3,3);
-	Upgrades* upgrade_fireball = new Upgrades(500, 200, "textures/button_fireball.png", "textures/button_fireball.png", "textures/button_fireball.png",3,3);
+	Upgrades *upgrade_stamina = new Upgrades(50,200,"textures/button_stamina.png", "textures/button_stamina_pressed.png", "textures/button_stamina_pressed.png",3,3);
+	Upgrades* upgrade_HP = new Upgrades(200, 200, "textures/button_HP.png", "textures/button_HP_pressed.png", "textures/button_HP_pressed.png",3,3);
+	Upgrades* upgrade_meleAttack = new Upgrades(350,200, "textures/button_attack.png", "textures/button_attack_pressed.png", "textures/button_attack_pressed.png",3,3);
+	Upgrades* upgrade_fireball = new Upgrades(500, 200, "textures/button_fireball.png", "textures/button_fireball_pressed.png", "textures/button_fireball_pressed.png",3,3);
 	UpgradesButtons.emplace_back(upgrade_fireball);
 	UpgradesButtons.emplace_back(upgrade_stamina);
 	UpgradesButtons.emplace_back(upgrade_meleAttack);
@@ -133,10 +133,13 @@ void Game::updateEvents()
 			}
 			break;
 		case sf::Event::MouseButtonPressed:
-			if (!player->herodeath()&& p1->isClicked())
+			if (!player->herodeath() && p1->isClicked())
 			{
-				this->player->animateAttackMele();
-				this->player->animateAttackDistance();
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+				{
+					this->player->animateAttackMele();
+					this->player->animateAttackDistance();
+				}
 			}
 			break;
 		case sf::Event::MouseButtonReleased:
@@ -190,7 +193,6 @@ void Game::updateEvents()
 }
 void Game::render()
 {
-//	std::cout << "temp" << temp << std::endl;
 	//visualasions renders the game obj
 	this->window->clear();
 	//-----------------------------
@@ -323,9 +325,7 @@ void Game::update()
 		clock.restart();
 		this->player->getBounds(enemiesBounds, background->wallbounds);
 		this->player->getBounds(bossBounds, background->wallbounds);
-		
-		//this->boss->laserAttack(this->player->getSprite().getGlobalBounds(), background->wallbounds, *this->window);
-
+			
 
 		if (this->isBossAlive)
 		{
