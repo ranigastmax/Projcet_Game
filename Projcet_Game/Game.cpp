@@ -1,6 +1,6 @@
 #include "Game.h"
 
-//private
+//do oceny
 
 
 
